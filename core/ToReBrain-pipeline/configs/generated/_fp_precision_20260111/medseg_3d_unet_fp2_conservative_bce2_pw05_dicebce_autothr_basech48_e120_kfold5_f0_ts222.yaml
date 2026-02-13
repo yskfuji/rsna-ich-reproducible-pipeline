@@ -1,0 +1,45 @@
+experiment_name: medseg_3d_unet_fp2_conservative_bce2_pw05_dicebce_autothr_basech48_e120_kfold5_f0_ts222
+
+data:
+  csv_path: /Users/yusukefujinami/ToReBrain/ToReBrain-pipeline/data/splits/kfold5_my_dataset/fold0.csv
+  root: /Users/yusukefujinami/ToReBrain/ToReBrain-pipeline/data/processed/my_dataset_ts222
+  modalities:
+  - DWI
+  - ADC
+  normalize: nonzero_zscore
+  patch_size: [96, 96, 96]
+  val_stride: [48, 48, 48]
+
+  # Pick best.pt with an automatically chosen threshold.
+  val_threshold: auto
+  val_threshold_candidates: [0.02, 0.05, 0.10, 0.15, 0.20, 0.25, 0.30, 0.35, 0.40, 0.45, 0.50]
+  val_min_size: 0
+
+  # Baseline sampling (比較のため維持)
+  foreground_prob: 0.8
+  force_fg_prob: 0.0
+  fg_component_sampling: inverse_size
+  fg_component_sampling_alpha: 1.0
+
+train:
+  batch_size: 1
+  num_workers: 0
+  epochs: 120
+  lr: 0.0002
+  min_lr: 0.0
+  weight_decay: 1.0e-05
+  grad_clip: 1.0
+  base_ch: 48
+
+  # FP抑制狙い: voxel-wise誤差(BCE)を強め、pos_weight<1で過剰陽性を抑える。
+  loss: dice_bce
+  loss_params:
+    smooth: 1.0
+    bce_weight: 2.0
+    pos_weight: 0.5
+
+  amp: true
+
+log:
+  out_dir: runs/3d_unet
+  save_interval: 1

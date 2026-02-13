@@ -1,0 +1,24 @@
+# datasets / generated artifacts (do not publish)
+Datasets/
+runs/
+results/
+logs/
+
+# common large files
+*.pt
+*.pth
+*.ckpt
+*.onnx
+*.npz
+*.npy
+*.sqlite
+*.db
+
+# python
+__pycache__/
+.pytest_cache/
+.venv/
+*.pyc
+
+# macOS
+.DS_Store

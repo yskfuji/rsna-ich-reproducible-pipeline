@@ -1,0 +1,23 @@
+.DS_Store
+__pycache__/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.venv/
+Datasets/
+data/
+logs/
+results/
+runs/
+
+# Keep large/private artifacts local
+*.pt
+*.pth
+*.ckpt
+*.safetensors
+*.onnx
+*.sqlite
+*.sqlite3
+*.db
+wandb/
+mlruns/

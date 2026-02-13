@@ -1,0 +1,88 @@
+experiment_name: medseg_3d_unet_stage2_conditional_residual_sweep_w025_nl050_cu025
+
+data:
+  csv_path: /Users/yusukefujinami/ToReBrain/ToReBrain-pipeline/data/splits/my_dataset_dwi_adc_flair_train_val_test.csv
+  root: /Users/yusukefujinami/ToReBrain/ToReBrain-pipeline/data/processed/my_dataset_dwi_adc_flair
+  modalities:
+  - DWI
+  - ADC
+  - FLAIR
+  normalize: nonzero_zscore
+
+  resample_max_zoom_mm: 2.0
+
+  stage1_probs_dir_train: /Users/yusukefujinami/ToReBrain/ToReBrain-pipeline/results/diag/cascade_stage1_20251225_150430/saveprobs_train/probs
+  stage1_probs_dir_val: /Users/yusukefujinami/ToReBrain/ToReBrain-pipeline/results/diag/cascade_stage1_20251225_150430/saveprobs_val/probs
+
+  candidate_jsonl: /Users/yusukefujinami/ToReBrain/ToReBrain-pipeline/data/cascade/stage1_candidates_train_thr0p20.jsonl
+  candidate_use_prob: 0.25
+  candidate_pos_fraction: 1.00
+
+  patch_size: [56, 56, 24]
+  val_stride: [28, 28, 12]
+
+  patches_per_volume: 2
+  patches_force_one_bg: true
+  foreground_prob: 0.33
+  force_fg_prob: 0.30
+  target_pos_patch_frac: 0.80
+  fg_component_sampling: inverse_size
+  fg_component_sampling_alpha: 2.0
+
+  hard_bg_prob: 0.6
+  hard_bg_trials: 512
+  bg_inside_prob: 1.0
+  bg_inside_trials: 128
+  ensure_empty_bg_prob: 1.0
+  ensure_empty_bg_trials: 512
+  bg_min_dist: 12
+  bg_min_dist_relax: true
+
+  val_threshold: auto
+  val_min_size: 20
+  val_threshold_candidates: [0.30, 0.35, 0.40, 0.45, 0.50, 0.55, 0.60, 0.65, 0.70, 0.75, 0.80]
+
+train:
+  epochs: 2
+  max_steps_per_epoch: 50
+  batch_size: 1
+  num_workers: 0
+  lr: 0.00005
+  min_lr: 1.0e-05
+  weight_decay: 1.0e-05
+  grad_clip: 1.0
+  base_ch: 48
+
+  deep_supervision: true
+  deep_supervision_aux2_weight: 0.50
+  deep_supervision_aux3_weight: 0.25
+
+  stage2_corrector_fusion: residual
+  stage2_corrector_stage1_logit_eps: 1.0e-04
+
+  stage2_corrector_loss: true
+  stage2_corrector_weight: 0.25
+  stage2_corrector_pos_lambda: 2.0
+  stage2_corrector_neg_lambda: 0.50
+  stage2_corrector_gamma: 2.0
+  stage2_corrector_neg_fraction: 0.02
+  stage2_corrector_min_neg: 2048
+
+  init_from: /Users/yusukefujinami/ToReBrain/ToReBrain-pipeline/runs/3d_unet/medseg_3d_unet_e20_dwi_adc_flair_phase2_patch562424_pv2bg_ffg02_bgdist12_tversky_ohem_fgccinv_a1/best.pt
+
+  loss: tversky_ohem_bce
+  loss_params:
+    alpha: 0.35
+    beta: 0.65
+    smooth: 1.0
+    neg_fraction: 0.02
+    min_neg: 2048
+    bce_weight: 0.5
+    pos_weight: 1.0
+    neg_weight: 1.0
+
+  amp: true
+
+log:
+  out_dir: runs/3d_unet
+  save_interval: 1

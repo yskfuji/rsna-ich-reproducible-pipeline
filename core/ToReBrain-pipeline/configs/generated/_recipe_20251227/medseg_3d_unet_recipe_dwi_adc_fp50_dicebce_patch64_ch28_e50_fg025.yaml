@@ -1,0 +1,39 @@
+experiment_name: "medseg_3d_unet_recipe_dwi_adc_fp50_dicebce_patch64_ch28_e50_fg025"
+
+data:
+  csv_path: "data/splits/my_dataset_train_val_test.csv"
+  root: "data/processed/my_dataset"
+  modalities: ["DWI", "ADC"]
+  normalize: "nonzero_zscore"
+
+  patch_size: [64, 64, 64]
+  val_stride: [32, 32, 32]
+
+  # keep validation threshold fixed in-training; use evaluate_isles threshold sweep for reporting
+  val_threshold: 0.5
+  val_min_size: 0
+
+  foreground_prob: 0.25
+  force_fg_prob: 0.0
+
+train:
+  batch_size: 1
+  num_workers: 0
+  epochs: 50
+  lr: 0.0002
+  min_lr: 0.0
+  weight_decay: 0.00001
+  grad_clip: 1.0
+  base_ch: 28
+
+  loss: "dice_bce"
+  loss_params:
+    smooth: 1.0
+    bce_weight: 1.0
+    pos_weight: 1.0
+
+  amp: true
+
+log:
+  out_dir: "runs/3d_unet"
+  save_interval: 1

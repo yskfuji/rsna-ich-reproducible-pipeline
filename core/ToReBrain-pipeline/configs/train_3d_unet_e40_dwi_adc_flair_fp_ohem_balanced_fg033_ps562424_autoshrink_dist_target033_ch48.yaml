@@ -1,0 +1,57 @@
+experiment_name: "medseg_3d_unet_e40_dwi_adc_flair_fp_ohem_balanced_fg033_ps562424_autoshrink_dist_target033_ch48"
+
+data:
+  csv_path: "data/splits/my_dataset_dwi_adc_flair_train_val_test.csv"
+  root: "data/processed/my_dataset_dwi_adc_flair"
+  modalities: ["DWI", "ADC", "FLAIR"]
+  normalize: "nonzero_zscore"
+
+  # Upper-bound patch; auto-shrunk per batch/case to avoid padding.
+  patch_size: [56, 56, 24]
+  val_stride: [28, 28, 12]
+
+  val_threshold: "auto"
+  val_min_size: 20
+  val_threshold_candidates: [0.30, 0.35, 0.40, 0.45, 0.50, 0.55, 0.60, 0.65, 0.70]
+
+  target_pos_patch_frac: 0.33
+  bg_min_dist_relax: true
+  bg_overlap_trials: 2048
+  bg_allow_fg_vox: 0
+
+  foreground_prob: 0.33
+  force_fg_prob: 0.00
+
+  hard_bg_prob: 0.6
+  hard_bg_trials: 512
+  bg_inside_prob: 1.0
+  bg_inside_trials: 128
+  ensure_empty_bg_prob: 0.0
+  ensure_empty_bg_trials: 512
+
+train:
+  batch_size: 1
+  num_workers: 0
+  epochs: 40
+  lr: 0.0001
+  min_lr: 0.00001
+  weight_decay: 0.00001
+  grad_clip: 1.0
+  base_ch: 48
+
+  loss: "tversky_ohem_bce"
+  loss_params:
+    alpha: 0.35
+    beta: 0.65
+    smooth: 1.0
+    neg_fraction: 0.02
+    min_neg: 2048
+    bce_weight: 0.5
+    pos_weight: 1.0
+    neg_weight: 1.0
+
+  amp: true
+
+log:
+  out_dir: "runs/3d_unet"
+  save_interval: 1

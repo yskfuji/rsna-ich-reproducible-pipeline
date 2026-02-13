@@ -1,0 +1,41 @@
+experiment_name: medseg_3d_unet_smoke2_dwi_adc_flair_pr2smoke_dice_bce_pw1p0_bw1p0
+data:
+  csv_path: data/splits/my_dataset_dwi_adc_flair_train_val_test.csv
+  root: data/processed/my_dataset_dwi_adc_flair
+  modalities:
+  - DWI
+  - ADC
+  - FLAIR
+  normalize: nonzero_zscore
+  patch_size:
+  - 48
+  - 48
+  - 32
+  val_stride:
+  - 24
+  - 24
+  - 16
+  val_threshold: 0.7
+  foreground_prob: 0.95
+  force_fg_prob: 0.5
+train:
+  batch_size: 2
+  num_workers: 0
+  epochs: 2
+  lr: 0.0001
+  min_lr: 1.0e-05
+  weight_decay: 1.0e-05
+  grad_clip: 1.0
+  base_ch: 32
+  loss: dice_bce
+  loss_params:
+    alpha: 0.4
+    beta: 0.6
+    gamma: 1.6
+    smooth: 1.0
+    pos_weight: 1.0
+    bce_weight: 1.0
+  amp: true
+log:
+  out_dir: runs/3d_unet
+  save_interval: 1

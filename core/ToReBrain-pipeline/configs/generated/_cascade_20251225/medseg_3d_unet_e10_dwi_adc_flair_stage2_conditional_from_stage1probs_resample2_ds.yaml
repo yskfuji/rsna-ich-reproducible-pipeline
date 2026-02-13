@@ -1,0 +1,92 @@
+experiment_name: medseg_3d_unet_e10_dwi_adc_flair_stage2_conditional_from_stage1probs_resample2_ds
+
+data:
+  csv_path: data/splits/my_dataset_dwi_adc_flair_train_val_test.csv
+  root: data/processed/my_dataset_dwi_adc_flair
+  modalities:
+  - DWI
+  - ADC
+  - FLAIR
+  normalize: nonzero_zscore
+
+  # Match evaluation: upsample (never downsample) so max voxel spacing <= 2.0mm.
+  resample_max_zoom_mm: 2.0
+
+  # Conditional cascade: append Stage1 probmap as an extra input channel.
+  # Expected files: <dir>/<case_id>.npz with key 'probs' (Z,Y,X).
+  stage1_probs_dir_train: results/diag/cascade_stage1_20251225_150430/saveprobs_train/probs
+  stage1_probs_dir_val: results/diag/cascade_stage1_20251225_150430/saveprobs_val/probs
+
+  # Stage2 sampling: crop around Stage1 candidates sometimes (focus on positives).
+  candidate_jsonl: data/cascade/stage1_candidates_train_thr0p20.jsonl
+  candidate_use_prob: 0.50
+  candidate_pos_fraction: 1.00
+
+  patch_size: [56, 56, 24]
+  val_stride: [28, 28, 12]
+
+  patches_per_volume: 2
+  patches_force_one_bg: true
+  foreground_prob: 0.33
+  force_fg_prob: 0.30
+  target_pos_patch_frac: 0.80
+  fg_component_sampling: inverse_size
+  fg_component_sampling_alpha: 2.0
+
+  hard_bg_prob: 0.6
+  hard_bg_trials: 512
+  bg_inside_prob: 1.0
+  bg_inside_trials: 128
+  ensure_empty_bg_prob: 1.0
+  ensure_empty_bg_trials: 512
+  bg_min_dist: 12
+  bg_min_dist_relax: true
+
+  val_threshold: auto
+  val_min_size: 20
+  val_threshold_candidates: [0.30, 0.35, 0.40, 0.45, 0.50, 0.55, 0.60, 0.65, 0.70, 0.75, 0.80]
+
+train:
+  epochs: 10
+  batch_size: 1
+  num_workers: 0
+  lr: 0.00005
+  min_lr: 1.0e-05
+  weight_decay: 1.0e-05
+  grad_clip: 1.0
+  base_ch: 48
+
+  # Deep supervision tends to help tiny lesions.
+  deep_supervision: true
+  deep_supervision_aux2_weight: 0.50
+  deep_supervision_aux3_weight: 0.25
+
+  # Stage2 corrector objective: emphasize missed positives (low Stage1 prob) and
+  # suppress new FP in areas where Stage1 is confidently negative.
+  stage2_corrector_loss: true
+  stage2_corrector_weight: 0.50
+  stage2_corrector_pos_lambda: 2.0
+  stage2_corrector_neg_lambda: 1.0
+  stage2_corrector_gamma: 2.0
+  stage2_corrector_neg_fraction: 0.02
+  stage2_corrector_min_neg: 2048
+
+  # Warm-start from Stage1 best; train_3d_unet.py adapts enc1 weights if in_ch differs.
+  init_from: runs/3d_unet/medseg_3d_unet_e20_dwi_adc_flair_phase2_patch562424_pv2bg_ffg02_bgdist12_tversky_ohem_fgccinv_a1/best.pt
+
+  loss: tversky_ohem_bce
+  loss_params:
+    alpha: 0.35
+    beta: 0.65
+    smooth: 1.0
+    neg_fraction: 0.02
+    min_neg: 2048
+    bce_weight: 0.5
+    pos_weight: 1.0
+    neg_weight: 1.0
+
+  amp: true
+
+log:
+  out_dir: runs/3d_unet
+  save_interval: 1

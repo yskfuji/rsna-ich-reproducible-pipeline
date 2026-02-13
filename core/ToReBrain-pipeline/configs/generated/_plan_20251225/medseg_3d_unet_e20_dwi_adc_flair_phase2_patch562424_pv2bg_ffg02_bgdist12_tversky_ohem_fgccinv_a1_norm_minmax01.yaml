@@ -1,0 +1,89 @@
+experiment_name: medseg_3d_unet_e20_dwi_adc_flair_phase2_patch562424_pv2bg_ffg02_bgdist12_tversky_ohem_fgccinv_a1_norm_minmax01
+
+data:
+  csv_path: data/splits/my_dataset_dwi_adc_flair_train_val_test.csv
+  root: data/processed/my_dataset_dwi_adc_flair
+  modalities:
+  - DWI
+  - ADC
+  - FLAIR
+  normalize: nonzero_minmax01
+
+  # Phase2後半: patch拡大（XYのみ）
+  patch_size:
+  - 56
+  - 56
+  - 24
+  val_stride:
+  - 28
+  - 28
+  - 12
+
+  # Validation: include 0.8 since test often peaks there.
+  val_threshold: auto
+  val_min_size: 20
+  val_threshold_candidates:
+  - 0.3
+  - 0.35
+  - 0.4
+  - 0.45
+  - 0.5
+  - 0.55
+  - 0.6
+  - 0.65
+  - 0.7
+  - 0.75
+  - 0.8
+
+  # Phase1継承: always mix FG/BG within a step
+  patches_per_volume: 2
+  patches_force_one_bg: true
+
+  foreground_prob: 0.33
+  force_fg_prob: 0.2
+  fg_component_sampling: inverse_size
+  fg_component_sampling_alpha: 1.0
+
+  # Background sampling/regularization
+  hard_bg_prob: 0.6
+  hard_bg_trials: 512
+  bg_inside_prob: 1.0
+  bg_inside_trials: 128
+
+  # Force the BG patch (2nd patch) to be truly empty whenever possible.
+  ensure_empty_bg_prob: 1.0
+  ensure_empty_bg_trials: 512
+
+  # Prefer BG far from FG to reduce FG leakage in BG patch.
+  bg_min_dist: 12
+  bg_min_dist_relax: true
+
+train:
+  batch_size: 1
+  num_workers: 0
+  epochs: 20
+  lr: 0.0001
+  min_lr: 1.0e-05
+  weight_decay: 1.0e-05
+  grad_clip: 1.0
+  base_ch: 48
+
+  # Deep supervisionはOFF（Phase1ベースでpatchのみ拡大）
+  deep_supervision: false
+
+  loss: tversky_ohem_bce
+  loss_params:
+    alpha: 0.35
+    beta: 0.65
+    smooth: 1.0
+    neg_fraction: 0.02
+    min_neg: 2048
+    bce_weight: 0.5
+    pos_weight: 1.0
+    neg_weight: 1.0
+
+  amp: true
+
+log:
+  out_dir: runs/3d_unet
+  save_interval: 1

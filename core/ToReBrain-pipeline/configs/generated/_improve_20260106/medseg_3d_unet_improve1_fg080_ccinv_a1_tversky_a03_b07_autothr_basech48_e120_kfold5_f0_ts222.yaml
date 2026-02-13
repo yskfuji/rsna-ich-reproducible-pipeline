@@ -1,0 +1,47 @@
+experiment_name: medseg_3d_unet_improve1_fg080_ccinv_a1_tversky_a03_b07_autothr_basech48_e120_kfold5_f0_ts222
+
+data:
+  csv_path: /Users/yusukefujinami/ToReBrain/ToReBrain-pipeline/data/splits/kfold5_my_dataset/fold0.csv
+  root: /Users/yusukefujinami/ToReBrain/ToReBrain-pipeline/data/processed/my_dataset_ts222
+  modalities:
+  - DWI
+  - ADC
+  normalize: nonzero_zscore
+  patch_size: [96, 96, 96]
+  val_stride: [48, 48, 48]
+
+  # Pick best.pt with an automatically chosen threshold.
+  val_threshold: auto
+  val_threshold_candidates: [0.02, 0.05, 0.10, 0.15, 0.20, 0.25, 0.30, 0.35, 0.40, 0.45, 0.50]
+  val_min_size: 0
+
+  # Sampling: show lesions more often, and emphasize smaller connected components.
+  foreground_prob: 0.8
+  force_fg_prob: 0.0
+  fg_component_sampling: inverse_size
+  fg_component_sampling_alpha: 1.0
+
+train:
+  batch_size: 1
+  num_workers: 0
+  epochs: 120
+  lr: 0.0002
+  min_lr: 0.0
+  weight_decay: 1.0e-05
+  grad_clip: 1.0
+  base_ch: 48
+
+  # Continue from the latest checkpoint if training was interrupted.
+  init_from: runs/3d_unet/medseg_3d_unet_improve1_fg080_ccinv_a1_tversky_a03_b07_autothr_basech48_e120_kfold5_f0_ts222/last.pt
+
+  loss: tversky
+  loss_params:
+    alpha: 0.3
+    beta: 0.7
+    smooth: 1.0
+
+  amp: true
+
+log:
+  out_dir: runs/3d_unet
+  save_interval: 1

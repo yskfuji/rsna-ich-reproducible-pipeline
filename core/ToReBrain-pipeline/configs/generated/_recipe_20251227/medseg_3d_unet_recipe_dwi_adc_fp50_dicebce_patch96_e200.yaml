@@ -1,0 +1,42 @@
+experiment_name: "medseg_3d_unet_recipe_dwi_adc_fp50_dicebce_patch96_e200"
+
+data:
+  csv_path: "data/splits/my_dataset_train_val_test.csv"
+  root: "data/processed/my_dataset"
+  modalities: ["DWI", "ADC"]
+  normalize: "nonzero_zscore"
+
+  # Recipe-aligned larger 3D patches (tune down if MPS OOM).
+  patch_size: [96, 96, 96]
+  val_stride: [48, 48, 48]
+
+  # Keep evaluation definition stable (start from fixed 0.5).
+  val_threshold: 0.5
+  val_min_size: 0
+
+  # Foreground sampling: 50% lesion-centered, 50% random.
+  foreground_prob: 0.5
+  force_fg_prob: 0.0
+
+train:
+  batch_size: 1
+  num_workers: 0
+  epochs: 200
+  lr: 0.0002
+  min_lr: 0.0
+  weight_decay: 0.00001
+  grad_clip: 1.0
+  base_ch: 32
+
+  # Dice + BCE (1:1) baseline.
+  loss: "dice_bce"
+  loss_params:
+    smooth: 1.0
+    bce_weight: 1.0
+    pos_weight: 1.0
+
+  amp: true
+
+log:
+  out_dir: "runs/3d_unet"
+  save_interval: 1

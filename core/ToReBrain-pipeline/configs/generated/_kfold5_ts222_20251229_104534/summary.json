@@ -1,0 +1,13 @@
+{
+  "base_config": "/Users/yusukefujinami/ToReBrain/ToReBrain-pipeline/configs/generated/_recipe_20251227/medseg_3d_unet_recipe_dwi_adc_fp50_dicebce_patch96_e200.yaml",
+  "kfold_dir": "/Users/yusukefujinami/ToReBrain/ToReBrain-pipeline/data/splits/kfold5_my_dataset",
+  "data_root": "/Users/yusukefujinami/ToReBrain/ToReBrain-pipeline/data/processed/my_dataset_ts222",
+  "k": 5,
+  "written": [
+    "/Users/yusukefujinami/ToReBrain/ToReBrain-pipeline/configs/generated/_kfold5_ts222_20251229_104534/medseg_3d_unet_recipe_dwi_adc_fp50_dicebce_patch96_e200_kfold5_f0_ts222.yaml",
+    "/Users/yusukefujinami/ToReBrain/ToReBrain-pipeline/configs/generated/_kfold5_ts222_20251229_104534/medseg_3d_unet_recipe_dwi_adc_fp50_dicebce_patch96_e200_kfold5_f1_ts222.yaml",
+    "/Users/yusukefujinami/ToReBrain/ToReBrain-pipeline/configs/generated/_kfold5_ts222_20251229_104534/medseg_3d_unet_recipe_dwi_adc_fp50_dicebce_patch96_e200_kfold5_f2_ts222.yaml",
+    "/Users/yusukefujinami/ToReBrain/ToReBrain-pipeline/configs/generated/_kfold5_ts222_20251229_104534/medseg_3d_unet_recipe_dwi_adc_fp50_dicebce_patch96_e200_kfold5_f3_ts222.yaml",
+    "/Users/yusukefujinami/ToReBrain/ToReBrain-pipeline/configs/generated/_kfold5_ts222_20251229_104534/medseg_3d_unet_recipe_dwi_adc_fp50_dicebce_patch96_e200_kfold5_f4_ts222.yaml"
+  ]
+}

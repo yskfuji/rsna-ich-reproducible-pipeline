@@ -1,0 +1,65 @@
+{
+  "base_config": "/Users/yusukefujinami/ToReBrain/ToReBrain-pipeline/configs/train_3d_unet_smoke2_dwi_adc_flair.yaml",
+  "generated": [
+    {
+      "path": "/Users/yusukefujinami/ToReBrain/ToReBrain-pipeline/configs/generated/_pr2_loss_20251220_115416/medseg_3d_unet_smoke2_dwi_adc_flair_pr2_dice_bce_pw1p0_bw0p5.yaml",
+      "train.loss": "dice_bce",
+      "pos_weight": 1.0,
+      "bce_weight": 0.5
+    },
+    {
+      "path": "/Users/yusukefujinami/ToReBrain/ToReBrain-pipeline/configs/generated/_pr2_loss_20251220_115416/medseg_3d_unet_smoke2_dwi_adc_flair_pr2_dice_bce_pw1p0_bw1p0.yaml",
+      "train.loss": "dice_bce",
+      "pos_weight": 1.0,
+      "bce_weight": 1.0
+    },
+    {
+      "path": "/Users/yusukefujinami/ToReBrain/ToReBrain-pipeline/configs/generated/_pr2_loss_20251220_115416/medseg_3d_unet_smoke2_dwi_adc_flair_pr2_dice_bce_pw4p0_bw0p5.yaml",
+      "train.loss": "dice_bce",
+      "pos_weight": 4.0,
+      "bce_weight": 0.5
+    },
+    {
+      "path": "/Users/yusukefujinami/ToReBrain/ToReBrain-pipeline/configs/generated/_pr2_loss_20251220_115416/medseg_3d_unet_smoke2_dwi_adc_flair_pr2_dice_bce_pw4p0_bw1p0.yaml",
+      "train.loss": "dice_bce",
+      "pos_weight": 4.0,
+      "bce_weight": 1.0
+    },
+    {
+      "path": "/Users/yusukefujinami/ToReBrain/ToReBrain-pipeline/configs/generated/_pr2_loss_20251220_115416/medseg_3d_unet_smoke2_dwi_adc_flair_pr2_dice_bce_pw8p0_bw0p5.yaml",
+      "train.loss": "dice_bce",
+      "pos_weight": 8.0,
+      "bce_weight": 0.5
+    },
+    {
+      "path": "/Users/yusukefujinami/ToReBrain/ToReBrain-pipeline/configs/generated/_pr2_loss_20251220_115416/medseg_3d_unet_smoke2_dwi_adc_flair_pr2_dice_bce_pw8p0_bw1p0.yaml",
+      "train.loss": "dice_bce",
+      "pos_weight": 8.0,
+      "bce_weight": 1.0
+    },
+    {
+      "path": "/Users/yusukefujinami/ToReBrain/ToReBrain-pipeline/configs/generated/_pr2_loss_20251220_115416/medseg_3d_unet_smoke2_dwi_adc_flair_pr2_tversky_a0p3_b0p6.yaml",
+      "train.loss": "tversky",
+      "alpha": 0.3,
+      "beta": 0.6
+    },
+    {
+      "path": "/Users/yusukefujinami/ToReBrain/ToReBrain-pipeline/configs/generated/_pr2_loss_20251220_115416/medseg_3d_unet_smoke2_dwi_adc_flair_pr2_tversky_a0p3_b0p7.yaml",
+      "train.loss": "tversky",
+      "alpha": 0.3,
+      "beta": 0.7
+    },
+    {
+      "path": "/Users/yusukefujinami/ToReBrain/ToReBrain-pipeline/configs/generated/_pr2_loss_20251220_115416/medseg_3d_unet_smoke2_dwi_adc_flair_pr2_tversky_a0p4_b0p6.yaml",
+      "train.loss": "tversky",
+      "alpha": 0.4,
+      "beta": 0.6
+    },
+    {
+      "path": "/Users/yusukefujinami/ToReBrain/ToReBrain-pipeline/configs/generated/_pr2_loss_20251220_115416/medseg_3d_unet_smoke2_dwi_adc_flair_pr2_tversky_a0p4_b0p7.yaml",
+      "train.loss": "tversky",
+      "alpha": 0.4,
+      "beta": 0.7
+    }
+  ]
+}

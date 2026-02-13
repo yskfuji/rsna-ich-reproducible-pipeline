@@ -1,0 +1,60 @@
+experiment_name: medseg_3d_unet_e20_dwi_adc_flair_fp_ohem_balanced_fg033_ps482424_ch48_pr2prod_dice_bce_pw4p0_bw0p5
+data:
+  csv_path: data/splits/my_dataset_dwi_adc_flair_train_val_test.csv
+  root: data/processed/my_dataset_dwi_adc_flair
+  modalities:
+  - DWI
+  - ADC
+  - FLAIR
+  normalize: nonzero_zscore
+  patch_size:
+  - 48
+  - 48
+  - 24
+  val_stride:
+  - 24
+  - 24
+  - 12
+  val_threshold: auto
+  val_min_size: 20
+  val_threshold_candidates:
+  - 0.3
+  - 0.35
+  - 0.4
+  - 0.45
+  - 0.5
+  - 0.55
+  - 0.6
+  - 0.65
+  - 0.7
+  foreground_prob: 0.33
+  force_fg_prob: 0.0
+  hard_bg_prob: 0.6
+  hard_bg_trials: 512
+  bg_inside_prob: 1.0
+  bg_inside_trials: 128
+  ensure_empty_bg_prob: 0.5
+  ensure_empty_bg_trials: 512
+train:
+  batch_size: 1
+  num_workers: 0
+  epochs: 20
+  lr: 0.0001
+  min_lr: 1.0e-05
+  weight_decay: 1.0e-05
+  grad_clip: 1.0
+  base_ch: 48
+  loss: dice_bce
+  loss_params:
+    alpha: 0.35
+    beta: 0.65
+    smooth: 1.0
+    neg_fraction: 0.02
+    min_neg: 2048
+    bce_weight: 0.5
+    pos_weight: 4.0
+    neg_weight: 1.0
+  amp: true
+log:
+  out_dir: runs/3d_unet
+  save_interval: 1

@@ -1,0 +1,56 @@
+experiment_name: "medseg_3d_unet_e20_dwi_adc_flair_fp_ohem_balanced_fg033_ps4016_ds"
+
+data:
+  csv_path: "data/splits/my_dataset_dwi_adc_flair_train_val_test.csv"
+  root: "data/processed/my_dataset_dwi_adc_flair"
+  modalities: ["DWI", "ADC", "FLAIR"]
+  normalize: "nonzero_zscore"
+
+  patch_size: [40, 48, 16]
+  val_stride: [20, 24, 8]
+
+  val_threshold: "auto"
+  val_min_size: 20
+  val_threshold_candidates: [0.30, 0.35, 0.40, 0.45, 0.50, 0.55, 0.60, 0.65, 0.70]
+
+  foreground_prob: 0.33
+  force_fg_prob: 0.00
+
+  hard_bg_prob: 0.6
+  hard_bg_trials: 512
+  bg_inside_prob: 1.0
+  bg_inside_trials: 128
+  ensure_empty_bg_prob: 1.0
+  ensure_empty_bg_trials: 2048
+
+train:
+  batch_size: 1
+  num_workers: 0
+  epochs: 20
+  lr: 0.0001
+  min_lr: 0.00001
+  weight_decay: 0.00001
+  grad_clip: 1.0
+  base_ch: 32
+
+  # Deep supervision: add auxiliary losses at 1/2 and 1/4 resolution
+  deep_supervision: true
+  deep_supervision_aux2_weight: 0.5
+  deep_supervision_aux3_weight: 0.25
+
+  loss: "tversky_ohem_bce"
+  loss_params:
+    alpha: 0.25
+    beta: 0.75
+    smooth: 1.0
+    neg_fraction: 0.02
+    min_neg: 2048
+    bce_weight: 0.5
+    pos_weight: 1.0
+    neg_weight: 1.0
+
+  amp: true
+
+log:
+  out_dir: "runs/3d_unet"
+  save_interval: 1

@@ -1,0 +1,21 @@
+experiment_name: "medseg_2_5d_unet_v1"
+
+data:
+  csv_path: "data/splits/my_dataset_train_val_test.csv"
+  root: "data/processed/my_dataset"
+  modalities: ["DWI", "ADC"]
+  k_slices: 2
+  img_size: [256, 256]
+
+train:
+  batch_size: 8
+  num_workers: 0
+  epochs: 1
+  lr: 0.0001
+  weight_decay: 0.00001
+  loss: "dice_bce"
+  amp: true
+
+log:
+  out_dir: "runs/2_5d_unet"
+  save_interval: 2

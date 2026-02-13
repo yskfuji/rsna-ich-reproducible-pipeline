@@ -1,0 +1,52 @@
+experiment_name: "medseg_3d_unet_smoke2_dwi_adc_flair_fp_ohem"
+
+data:
+  csv_path: "data/splits/my_dataset_dwi_adc_flair_train_val_test.csv"
+  root: "data/processed/my_dataset_dwi_adc_flair"
+  modalities: ["DWI", "ADC", "FLAIR"]
+  normalize: "nonzero_zscore"
+  patch_size: [48, 48, 32]
+  val_stride: [24, 24, 16]
+  val_threshold: "auto"
+  val_min_size: 20
+
+  # More background exposure
+  foreground_prob: 0.7
+  force_fg_prob: 0.2
+
+  # Hard negatives (confusing background)
+  hard_bg_prob: 0.9
+  hard_bg_trials: 512
+  # Avoid easy outside-brain negatives
+  bg_inside_prob: 1.0
+  bg_inside_trials: 128
+
+train:
+  batch_size: 2
+  num_workers: 0
+  epochs: 2
+  lr: 0.0001
+  min_lr: 0.00001
+  weight_decay: 0.00001
+  grad_clip: 1.0
+  base_ch: 32
+
+  # FP-focused: Tversky (FP-weighted) + OHEM BCE (hard negatives)
+  loss: "tversky_ohem_bce"
+  loss_params:
+    alpha: 0.7
+    beta: 0.3
+    smooth: 1.0
+
+    # OHEM params
+    neg_fraction: 0.05
+    min_neg: 4096
+    bce_weight: 1.0
+    pos_weight: 1.0
+    neg_weight: 2.0
+
+  amp: true
+
+log:
+  out_dir: "runs/3d_unet"
+  save_interval: 1

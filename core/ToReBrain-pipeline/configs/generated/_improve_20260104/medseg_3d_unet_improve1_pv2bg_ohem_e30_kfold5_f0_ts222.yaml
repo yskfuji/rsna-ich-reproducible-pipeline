@@ -1,0 +1,65 @@
+experiment_name: medseg_3d_unet_improve1_pv2bg_ohem_e30_kfold5_f0_ts222
+
+data:
+  csv_path: /Users/yusukefujinami/ToReBrain/ToReBrain-pipeline/data/splits/kfold5_my_dataset/fold0.csv
+  root: /Users/yusukefujinami/ToReBrain/ToReBrain-pipeline/data/processed/my_dataset_ts222
+  modalities:
+  - DWI
+  - ADC
+  normalize: nonzero_zscore
+  patch_size: [96, 96, 96]
+  val_stride: [48, 48, 48]
+
+  # Use auto threshold for selecting best.pt during training.
+  # (Evaluation still does its own threshold sweep.)
+  val_threshold: auto
+  val_threshold_candidates: [0.02, 0.05, 0.10, 0.15, 0.20, 0.25, 0.30, 0.35, 0.40, 0.45, 0.50]
+  val_min_size: 0
+
+  # Patch sampling: always include a BG patch in each step to suppress FP,
+  # while keeping a high chance of seeing FG on positive cases.
+  patches_per_volume: 2
+  patches_force_one_bg: true
+
+  foreground_prob: 0.33
+  force_fg_prob: 0.20
+  target_pos_patch_frac: 0.80
+
+  fg_component_sampling: inverse_size
+  fg_component_sampling_alpha: 1.0
+
+  hard_bg_prob: 0.60
+  hard_bg_trials: 512
+  bg_inside_prob: 1.00
+  bg_inside_trials: 128
+
+  ensure_empty_bg_prob: 1.00
+  ensure_empty_bg_trials: 512
+
+  bg_min_dist: 12
+  bg_min_dist_relax: true
+
+train:
+  batch_size: 1
+  num_workers: 0
+  epochs: 30
+  lr: 0.0002
+  min_lr: 0.0
+  weight_decay: 1.0e-05
+  grad_clip: 1.0
+  base_ch: 32
+
+  loss: dice_ohem_bce
+  loss_params:
+    smooth: 1.0
+    bce_weight: 1.0
+    pos_weight: 1.0
+    neg_fraction: 0.10
+    min_neg: 1024
+    neg_weight: 1.0
+
+  amp: true
+
+log:
+  out_dir: runs/3d_unet
+  save_interval: 1

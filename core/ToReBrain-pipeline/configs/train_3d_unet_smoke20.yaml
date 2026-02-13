@@ -1,0 +1,32 @@
+experiment_name: "medseg_3d_unet_smoke20"
+
+data:
+  csv_path: "data/splits/my_dataset_train_val_test.csv"
+  root: "data/processed/my_dataset_v2"
+  modalities: ["DWI", "ADC"]
+  normalize: "nonzero_zscore"
+  patch_size: [64, 64, 48]
+  val_stride: [32, 32, 24]
+  foreground_prob: 0.95
+  force_fg_prob: 0.5
+
+train:
+  batch_size: 2
+  num_workers: 0
+  epochs: 20
+  lr: 0.0001
+  min_lr: 0.00001
+  weight_decay: 0.00001
+  grad_clip: 1.0
+  base_ch: 32
+  loss: "tversky_focal"
+  loss_params:
+    alpha: 0.4
+    beta: 0.6
+    gamma: 1.6
+    smooth: 1.0
+  amp: true
+
+log:
+  out_dir: "runs/3d_unet"
+  save_interval: 1

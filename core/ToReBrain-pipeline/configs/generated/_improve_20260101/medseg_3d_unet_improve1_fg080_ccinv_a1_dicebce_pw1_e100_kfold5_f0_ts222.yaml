@@ -1,0 +1,45 @@
+experiment_name: medseg_3d_unet_improve1_fg080_ccinv_a1_dicebce_pw1_e100_kfold5_f0_ts222
+
+data:
+  csv_path: /Users/yusukefujinami/ToReBrain/ToReBrain-pipeline/data/splits/kfold5_my_dataset/fold0.csv
+  root: /Users/yusukefujinami/ToReBrain/ToReBrain-pipeline/data/processed/my_dataset_ts222
+  modalities:
+  - DWI
+  - ADC
+  normalize: nonzero_zscore
+  patch_size:
+  - 96
+  - 96
+  - 96
+  val_stride:
+  - 48
+  - 48
+  - 48
+  val_threshold: 0.5
+  val_min_size: 0
+
+  # Sampling: show lesions more often, and emphasize smaller connected components.
+  foreground_prob: 0.8
+  force_fg_prob: 0.0
+  fg_component_sampling: inverse_size
+  fg_component_sampling_alpha: 1.0
+
+train:
+  batch_size: 1
+  num_workers: 0
+  epochs: 100
+  lr: 0.0002
+  min_lr: 0.0
+  weight_decay: 1.0e-05
+  grad_clip: 1.0
+  base_ch: 32
+  loss: dice_bce
+  loss_params:
+    smooth: 1.0
+    bce_weight: 1.0
+    pos_weight: 1.0
+  amp: true
+
+log:
+  out_dir: runs/3d_unet
+  save_interval: 1
