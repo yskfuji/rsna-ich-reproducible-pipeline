@@ -1,6 +1,8 @@
-# RSNA ICH Reproducible Audit Package
+# rsna-ich-reproducible-pipeline
 
 このディレクトリは **RSNA Intracranial Hemorrhage (Kaggle 2019)** の公開・監査用パッケージです。
+
+推奨リポジトリ名: `rsna-ich-reproducible-pipeline`
 
 ## 入口
 

@@ -2,6 +2,8 @@
 
 このフォルダは RSNA ICH 公開物の入口です。
 
+- 対応する公開リポジトリ名: `rsna-ich-reproducible-pipeline`
+
 - 主要コード: `../core/ToReBrain-pipeline/`
 - 実験README（JP/EN）:
   - `../core/ToReBrain-pipeline/README.md`
