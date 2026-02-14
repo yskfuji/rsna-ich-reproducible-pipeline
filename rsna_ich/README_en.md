@@ -2,10 +2,10 @@
 
 This folder is the RSNA public-entry point for auditors and reviewers.
 
-- Main code: `../core/ToReBrain-pipeline/`
+- Main code: `../core/pipeline/`
 - Experiment READMEs (JP/EN):
-  - `../core/ToReBrain-pipeline/README.md`
-  - `../core/ToReBrain-pipeline/README_en.md`
+  - `../core/pipeline/README.md`
+  - `../core/pipeline/README_en.md`
 - Audit quick guide:
   - `./AUDIT_GUIDE.md`
 

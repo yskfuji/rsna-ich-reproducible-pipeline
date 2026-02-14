@@ -5,8 +5,8 @@
 ## 1. 読む順番
 
 1. `./rsna_ich/AUDIT_GUIDE.md`
-2. `./core/ToReBrain-pipeline/README.md`（または `README_en.md`）
-3. `./core/ToReBrain-pipeline/tools/` の監査スクリプト
+2. `./core/pipeline/README.md`（または `README_en.md`）
+3. `./core/pipeline/tools/` の監査スクリプト
 
 ## 2. 主な監査ポイント
 

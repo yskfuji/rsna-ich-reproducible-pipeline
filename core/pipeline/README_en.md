@@ -2,7 +2,7 @@
 
 Japanese version: [README.md](README.md)
 
-This folder (ToReBrain-pipeline/) is a minimal pipeline to run RSNA ICH training/evaluation/inference in an **auditable, reproducible** way.
+This folder (pipeline/) is a minimal pipeline to run RSNA ICH training/evaluation/inference in an **auditable, reproducible** way.
 To help a reviewer decide quickly, this README prioritizes **reproducibility / split design (leakage prevention) / comparison axes / ablation**.
 
 ---
@@ -169,8 +169,8 @@ Preprocessing fit boundary (explicit, to avoid leakage suspicion):
 - The preprocessed SQLite stores transformed images and metadata (Study/Series UID etc.); it does not depend on labels or splits.
 
 Data example (used in these runs):
-- `rsna_root`: `ToReBrain-pipeline/Datasets/rsna_preprocessed_gpt52_img384_w3_f32/rsna_meta`
-- `preprocessed_root`: `ToReBrain-pipeline/Datasets/rsna_preprocessed_gpt52_img384_w3_f32`
+- `rsna_root`: `pipeline/Datasets/rsna_preprocessed_gpt52_img384_w3_f32/rsna_meta`
+- `preprocessed_root`: `pipeline/Datasets/rsna_preprocessed_gpt52_img384_w3_f32`
 
 ---
 
@@ -181,7 +181,7 @@ Entry point:
   - implementation: `src/training/train_rsna_cnn2d_classifier.py` (Typer app)
 
 ```bash
-cd ToReBrain-pipeline
+cd pipeline
 
 TORCH_DEVICE=mps python train_rsna_cnn2d_classifier.py train \
   --rsna-root "Datasets/rsna_preprocessed_gpt52_img384_w3_f32/rsna_meta" \
@@ -241,7 +241,7 @@ Notes:
 - When `--cv-folds >= 2`, the split is determined by fold index and `--val-frac` does not decide the split (it must still satisfy `0 <= val_frac < 1`).
 
 ```bash
-cd ToReBrain-pipeline
+cd pipeline
 
 BASE="results/<YOUR_CV_DIR>"
 for FOLD in 0 1 2 3 4; do
@@ -295,7 +295,7 @@ Here, `auc_max_abs_diff=0.0` means:
 ### 3.2 Comparison command (copy/paste)
 
 ```bash
-cd ToReBrain-pipeline
+cd pipeline
 python -c 'import json; from pathlib import Path
 r1=Path("results/rsna_convnext25d_ft_repro_val05_short_20260210_101836_run1"); r2=Path("results/rsna_convnext25d_ft_repro_val05_short_20260210_111323_run2")
 m1=json.loads(r1.joinpath("meta.json").read_text()); m2=json.loads(r2.joinpath("meta.json").read_text())
@@ -344,7 +344,7 @@ Pass criteria: n_group_intersection == 0 and n_imageid_intersection == 0.
 Audit script to verify “group intersection is 0”:
 
 ```bash
-cd ToReBrain-pipeline
+cd pipeline
 python tools/audit_rsna_split.py \
   --rsna-root "Datasets/rsna_preprocessed_gpt52_img384_w3_f32/rsna_meta" \
   --preprocessed-root "Datasets/rsna_preprocessed_gpt52_img384_w3_f32" \
@@ -365,7 +365,7 @@ For reference, `split_by=slice` can have no image-id overlap but still leak stud
 Leakage indicator (slice split): n_study_intersection > 0 (non-zero means study leakage into val).
 
 ```bash
-cd ToReBrain-pipeline
+cd pipeline
 python tools/audit_rsna_slice_leakage.py \
   --rsna-root "Datasets/rsna_preprocessed_gpt52_img384_w3_f32/rsna_meta" \
   --preprocessed-root "Datasets/rsna_preprocessed_gpt52_img384_w3_f32" \
@@ -494,7 +494,7 @@ Calibration (temperature scaling) + ECE + coverage–risk curve (one PNG) + cove
   - improvement in `accuracy(any)` at coverage=0.8 (percentage points)
 
 ```bash
-cd ToReBrain-pipeline
+cd pipeline
 
 TORCH_DEVICE=mps python tools/eval_rsna_uncertainty.py \
   --rsna-root "Datasets/rsna_preprocessed_gpt52_img384_w3_f32/rsna_meta" \

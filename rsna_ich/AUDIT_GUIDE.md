@@ -4,8 +4,8 @@
 
 ## 1) まず読むファイル
 
-1. `../core/ToReBrain-pipeline/README.md`（日本語）
-2. `../core/ToReBrain-pipeline/README_en.md`（英語）
+1. `../core/pipeline/README.md`（日本語）
+2. `../core/pipeline/README_en.md`（英語）
 
 ## 2) 監査で見る主要成果物
 

@@ -4,10 +4,10 @@
 
 - 対応する公開リポジトリ名: `rsna-ich-reproducible-pipeline`
 
-- 主要コード: `../core/ToReBrain-pipeline/`
+- 主要コード: `../core/pipeline/`
 - 実験README（JP/EN）:
-  - `../core/ToReBrain-pipeline/README.md`
-  - `../core/ToReBrain-pipeline/README_en.md`
+  - `../core/pipeline/README.md`
+  - `../core/pipeline/README_en.md`
 - 監査用ショートガイド:
   - `./AUDIT_GUIDE.md`
 

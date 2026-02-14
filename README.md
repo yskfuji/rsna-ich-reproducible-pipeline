@@ -9,8 +9,8 @@
 - 監査マップ: `./AUDIT_MAP.md`
 - RSNA監査ガイド: `./rsna_ich/AUDIT_GUIDE.md`
 - 実験README（JP/EN）:
-  - `./core/ToReBrain-pipeline/README.md`
-  - `./core/ToReBrain-pipeline/README_en.md`
+  - `./core/pipeline/README.md`
+  - `./core/pipeline/README_en.md`
 
 ## 同梱方針
 

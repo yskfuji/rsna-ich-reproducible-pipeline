@@ -2,7 +2,7 @@
 
 英語版: [README_en.md](README_en.md)
 
-このフォルダ（ToReBrain-pipeline/）は RSNA ICH の学習・評価・推論を「**再現できる形で**」回すための最小パイプラインです。
+このフォルダ（pipeline/）は RSNA ICH の学習・評価・推論を「**再現できる形で**」回すための最小パイプラインです。
 読者が短時間で判断できるよう、**再現性 / 分割設計（リーク対策）/ 比較軸 / Ablation** を先頭にまとめています。
 
 ---
@@ -169,8 +169,8 @@ run:
 - preprocessed SQLite は「画像の変換結果」と「Study/Series UID などのメタ情報」を保持するだけで、ラベルや split に依存しません（split はその後の段階で group 単位に行います）
 
 データ例（今回の run で使用）:
-- `rsna_root`: `ToReBrain-pipeline/Datasets/rsna_preprocessed_gpt52_img384_w3_f32/rsna_meta`
-- `preprocessed_root`: `ToReBrain-pipeline/Datasets/rsna_preprocessed_gpt52_img384_w3_f32`
+- `rsna_root`: `pipeline/Datasets/rsna_preprocessed_gpt52_img384_w3_f32/rsna_meta`
+- `preprocessed_root`: `pipeline/Datasets/rsna_preprocessed_gpt52_img384_w3_f32`
 
 ### 2.2 実行コマンド（fine-tune short / val_frac=0.05）
 
@@ -179,7 +179,7 @@ run:
   - 実装本体は `src/training/train_rsna_cnn2d_classifier.py`（Typer app）
 
 ```bash
-cd ToReBrain-pipeline
+cd pipeline
 
 TORCH_DEVICE=mps python train_rsna_cnn2d_classifier.py train \
   --rsna-root "Datasets/rsna_preprocessed_gpt52_img384_w3_f32/rsna_meta" \
@@ -239,7 +239,7 @@ GroupKFold(5) の再現（fast CV）は、`--cv-folds 5` と `--cv-fold-index <0
 注: `--cv-folds >= 2` のとき split は fold index により決まり、`--val-frac` は分割の決定には使われません（値は `0 <= val_frac < 1` の範囲である必要があります）。
 
 ```bash
-cd ToReBrain-pipeline
+cd pipeline
 
 BASE="results/<YOUR_CV_DIR>"
 for FOLD in 0 1 2 3 4; do
@@ -295,7 +295,7 @@ python tools/summarize_cv.py --cv-root "$BASE" --format md
 ### 3.2 比較コマンド（そのまま貼って使える）
 
 ```bash
-cd ToReBrain-pipeline
+cd pipeline
 python -c 'import json; from pathlib import Path
 r1=Path("results/rsna_convnext25d_ft_repro_val05_short_20260210_101836_run1"); r2=Path("results/rsna_convnext25d_ft_repro_val05_short_20260210_111323_run2")
 m1=json.loads(r1.joinpath("meta.json").read_text()); m2=json.loads(r2.joinpath("meta.json").read_text())
@@ -344,7 +344,7 @@ RSNA ICH は同一患者・同一検査（Study/Series）の画像が多数含�
 以下は **group の交差が 0 か**を検証する監査スクリプトです。
 
 ```bash
-cd ToReBrain-pipeline
+cd pipeline
 python tools/audit_rsna_split.py \
   --rsna-root "Datasets/rsna_preprocessed_gpt52_img384_w3_f32/rsna_meta" \
   --preprocessed-root "Datasets/rsna_preprocessed_gpt52_img384_w3_f32" \
@@ -365,7 +365,7 @@ python tools/audit_rsna_split.py \
 リーク指標（slice split）: n_study_intersection > 0（0以外なら val に Study がリーク）。
 
 ```bash
-cd ToReBrain-pipeline
+cd pipeline
 python tools/audit_rsna_slice_leakage.py \
   --rsna-root "Datasets/rsna_preprocessed_gpt52_img384_w3_f32/rsna_meta" \
   --preprocessed-root "Datasets/rsna_preprocessed_gpt52_img384_w3_f32" \
@@ -517,7 +517,7 @@ $$
   - coverage=0.8 のときの `accuracy(any)` の改善（percentage points）
 
 ```bash
-cd ToReBrain-pipeline
+cd pipeline
 
 TORCH_DEVICE=mps python tools/eval_rsna_uncertainty.py \
   --rsna-root "Datasets/rsna_preprocessed_gpt52_img384_w3_f32/rsna_meta" \

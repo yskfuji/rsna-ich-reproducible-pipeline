@@ -4,14 +4,14 @@
 
 ## 前提
 - RSNAデータ配置: `<RSNA_ROOT>/stage_2_train.csv` と `<RSNA_ROOT>/stage_2_train/*.dcm`
-- 実行は `ToReBrain-pipeline/` から（スクリプトが `cd` します）
+- 実行は `pipeline/` から（スクリプトが `cd` します）
 - デバイスは `TORCH_DEVICE`（例: `mps`）で選択
 
 ## 実行（推奨順）
 最小のA/Bで「不均衡対策（pos_weight vs sampler）」と「2.5D + 強バックボーン」の効きを確認します。
 
 ```zsh
-cd /Users/yusukefujinami/ToReBrain/ToReBrain-pipeline
+cd /Users/yusukefujinami/ToReBrain/pipeline
 chmod +x scripts/run_rsna_p1_tierA_ab.zsh
 
 # 例: MPS
@@ -39,7 +39,7 @@ chmod +x scripts/run_rsna_p1_tierA_ab.zsh
 最短（best run を自動選択して submission 生成）:
 
 ```zsh
-cd /Users/yusukefujinami/ToReBrain/ToReBrain-pipeline
+cd /Users/yusukefujinami/ToReBrain/pipeline
 chmod +x scripts/make_rsna_submission_from_best.zsh
 ./scripts/make_rsna_submission_from_best.zsh <RSNA_ROOT> results/rsna_p1 submission.csv mps
 ```

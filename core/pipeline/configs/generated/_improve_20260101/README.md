@@ -5,11 +5,11 @@ Fold0 / ts222 / patch96 の「改善スクリーニング」用config（まず�
 ## Run
 
 ```bash
-cd /Users/yusukefujinami/ToReBrain/ToReBrain-pipeline
+cd /Users/yusukefujinami/ToReBrain/pipeline
 
 /opt/anaconda3/envs/medseg_unet/bin/python tools/run_train_queue.py \
   --python /opt/anaconda3/envs/medseg_unet/bin/python \
-  --repo /Users/yusukefujinami/ToReBrain/ToReBrain-pipeline \
+  --repo /Users/yusukefujinami/ToReBrain/pipeline \
   --configs \
     configs/generated/_improve_20260101/medseg_3d_unet_improve1_fg080_ccinv_a1_dicebce_pw1_e100_kfold5_f0_ts222.yaml \
     configs/generated/_improve_20260101/medseg_3d_unet_improve2_fg080_ccinv_a1_dicebce_pw2_e100_kfold5_f0_ts222.yaml \

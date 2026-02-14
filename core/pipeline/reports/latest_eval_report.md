@@ -2,7 +2,7 @@
 
 Generated: 2025-12-15 17:45:07
 
-Results root: `/Users/yusukefujinami/ToReBrain/ToReBrain-pipeline/results/3d_unet_medseg`
+Results root: `/Users/yusukefujinami/ToReBrain/pipeline/results/3d_unet_medseg`
 
 ## Summary
 
@@ -97,15 +97,15 @@ Results root: `/Users/yusukefujinami/ToReBrain/ToReBrain-pipeline/results/3d_une
 
 ### val_postproc_patch48_dwi_adc_flair
 
-- path: `/Users/yusukefujinami/ToReBrain/ToReBrain-pipeline/results/3d_unet_medseg/val_postproc_patch48_dwi_adc_flair`
+- path: `/Users/yusukefujinami/ToReBrain/pipeline/results/3d_unet_medseg/val_postproc_patch48_dwi_adc_flair`
 - min_size: 20
 - n: 25 (gt_pos=-)
 - dice: mean=0.0127 median=0.0058 min=0.0000 max=0.0655 (n>0.1=0, n>0.3=0)
 
 ### test_e20_fp_ohem_bal_fromrunbest_cc20
 
-- path: `/Users/yusukefujinami/ToReBrain/ToReBrain-pipeline/results/3d_unet_medseg/test_e20_fp_ohem_bal_fromrunbest_cc20`
-- model_path: `/Users/yusukefujinami/ToReBrain/ToReBrain-pipeline/runs/3d_unet/medseg_3d_unet_e20_dwi_adc_flair_fp_ohem_balanced/best.pt`
+- path: `/Users/yusukefujinami/ToReBrain/pipeline/results/3d_unet_medseg/test_e20_fp_ohem_bal_fromrunbest_cc20`
+- model_path: `/Users/yusukefujinami/ToReBrain/pipeline/runs/3d_unet/medseg_3d_unet_e20_dwi_adc_flair_fp_ohem_balanced/best.pt`
 - thresholds: 0.5
 - min_size: 20
 - n: 25 (gt_pos=25)
@@ -115,7 +115,7 @@ Results root: `/Users/yusukefujinami/ToReBrain/ToReBrain-pipeline/results/3d_une
 
 ### score_max_ge0.8
 
-- path: `/Users/yusukefujinami/ToReBrain/ToReBrain-pipeline/results/3d_unet_medseg/test_e20_thr022_cc20_score_sweep/score_max_ge0.8`
+- path: `/Users/yusukefujinami/ToReBrain/pipeline/results/3d_unet_medseg/test_e20_thr022_cc20_score_sweep/score_max_ge0.8`
 - model_path: `runs/3d_unet/medseg_3d_unet_e20_dwi_adc_flair_fp_ohem_balanced/best.pt`
 - thresholds: 0.22
 - min_size: 20
@@ -126,7 +126,7 @@ Results root: `/Users/yusukefujinami/ToReBrain/ToReBrain-pipeline/results/3d_une
 
 ### score_p95_ge0.65
 
-- path: `/Users/yusukefujinami/ToReBrain/ToReBrain-pipeline/results/3d_unet_medseg/test_e20_thr022_cc20_score_sweep/score_p95_ge0.65`
+- path: `/Users/yusukefujinami/ToReBrain/pipeline/results/3d_unet_medseg/test_e20_thr022_cc20_score_sweep/score_p95_ge0.65`
 - model_path: `runs/3d_unet/medseg_3d_unet_e20_dwi_adc_flair_fp_ohem_balanced/best.pt`
 - thresholds: 0.22
 - min_size: 20
@@ -137,7 +137,7 @@ Results root: `/Users/yusukefujinami/ToReBrain/ToReBrain-pipeline/results/3d_une
 
 ### score_p95_ge0.7
 
-- path: `/Users/yusukefujinami/ToReBrain/ToReBrain-pipeline/results/3d_unet_medseg/test_e20_thr022_cc20_score_sweep/score_p95_ge0.7`
+- path: `/Users/yusukefujinami/ToReBrain/pipeline/results/3d_unet_medseg/test_e20_thr022_cc20_score_sweep/score_p95_ge0.7`
 - model_path: `runs/3d_unet/medseg_3d_unet_e20_dwi_adc_flair_fp_ohem_balanced/best.pt`
 - thresholds: 0.22
 - min_size: 20
@@ -148,7 +148,7 @@ Results root: `/Users/yusukefujinami/ToReBrain/ToReBrain-pipeline/results/3d_une
 
 ### score_mean_ge0.35
 
-- path: `/Users/yusukefujinami/ToReBrain/ToReBrain-pipeline/results/3d_unet_medseg/test_e20_thr022_cc20_score_sweep/score_mean_ge0.35`
+- path: `/Users/yusukefujinami/ToReBrain/pipeline/results/3d_unet_medseg/test_e20_thr022_cc20_score_sweep/score_mean_ge0.35`
 - model_path: `runs/3d_unet/medseg_3d_unet_e20_dwi_adc_flair_fp_ohem_balanced/best.pt`
 - thresholds: 0.22
 - min_size: 20
@@ -159,7 +159,7 @@ Results root: `/Users/yusukefujinami/ToReBrain/ToReBrain-pipeline/results/3d_une
 
 ### score_p95_ge0.45
 
-- path: `/Users/yusukefujinami/ToReBrain/ToReBrain-pipeline/results/3d_unet_medseg/test_e20_thr022_cc20_score_sweep/score_p95_ge0.45`
+- path: `/Users/yusukefujinami/ToReBrain/pipeline/results/3d_unet_medseg/test_e20_thr022_cc20_score_sweep/score_p95_ge0.45`
 - model_path: `runs/3d_unet/medseg_3d_unet_e20_dwi_adc_flair_fp_ohem_balanced/best.pt`
 - thresholds: 0.22
 - min_size: 20
@@ -170,7 +170,7 @@ Results root: `/Users/yusukefujinami/ToReBrain/ToReBrain-pipeline/results/3d_une
 
 ### score_p95_ge0.6
 
-- path: `/Users/yusukefujinami/ToReBrain/ToReBrain-pipeline/results/3d_unet_medseg/test_e20_thr022_cc20_score_sweep/score_p95_ge0.6`
+- path: `/Users/yusukefujinami/ToReBrain/pipeline/results/3d_unet_medseg/test_e20_thr022_cc20_score_sweep/score_p95_ge0.6`
 - model_path: `runs/3d_unet/medseg_3d_unet_e20_dwi_adc_flair_fp_ohem_balanced/best.pt`
 - thresholds: 0.22
 - min_size: 20
@@ -181,7 +181,7 @@ Results root: `/Users/yusukefujinami/ToReBrain/ToReBrain-pipeline/results/3d_une
 
 ### test_smoke2_fp_ohem_autothr_cc20
 
-- path: `/Users/yusukefujinami/ToReBrain/ToReBrain-pipeline/results/3d_unet_medseg/test_smoke2_fp_ohem_autothr_cc20`
+- path: `/Users/yusukefujinami/ToReBrain/pipeline/results/3d_unet_medseg/test_smoke2_fp_ohem_autothr_cc20`
 - model_path: `runs/3d_unet/medseg_3d_unet_smoke2_dwi_adc_flair_fp_ohem/best.pt`
 - thresholds: 0.5
 - min_size: 20
@@ -192,7 +192,7 @@ Results root: `/Users/yusukefujinami/ToReBrain/ToReBrain-pipeline/results/3d_une
 
 ### test_smoke2_fp_ohem_thr0p5_cc20
 
-- path: `/Users/yusukefujinami/ToReBrain/ToReBrain-pipeline/results/3d_unet_medseg/test_smoke2_fp_ohem_thr0p5_cc20`
+- path: `/Users/yusukefujinami/ToReBrain/pipeline/results/3d_unet_medseg/test_smoke2_fp_ohem_thr0p5_cc20`
 - model_path: `runs/3d_unet/medseg_3d_unet_smoke2_dwi_adc_flair_fp_ohem/best.pt`
 - thresholds: 0.5, 0.6, 0.7
 - min_size: 20
@@ -203,7 +203,7 @@ Results root: `/Users/yusukefujinami/ToReBrain/ToReBrain-pipeline/results/3d_une
 
 ### score_max_ge0.85
 
-- path: `/Users/yusukefujinami/ToReBrain/ToReBrain-pipeline/results/3d_unet_medseg/test_e20_thr022_cc20_score_sweep/score_max_ge0.85`
+- path: `/Users/yusukefujinami/ToReBrain/pipeline/results/3d_unet_medseg/test_e20_thr022_cc20_score_sweep/score_max_ge0.85`
 - model_path: `runs/3d_unet/medseg_3d_unet_e20_dwi_adc_flair_fp_ohem_balanced/best.pt`
 - thresholds: 0.22
 - min_size: 20
@@ -214,7 +214,7 @@ Results root: `/Users/yusukefujinami/ToReBrain/ToReBrain-pipeline/results/3d_une
 
 ### score_max_ge0.5
 
-- path: `/Users/yusukefujinami/ToReBrain/ToReBrain-pipeline/results/3d_unet_medseg/test_e20_thr022_cc20_score_sweep/score_max_ge0.5`
+- path: `/Users/yusukefujinami/ToReBrain/pipeline/results/3d_unet_medseg/test_e20_thr022_cc20_score_sweep/score_max_ge0.5`
 - model_path: `runs/3d_unet/medseg_3d_unet_e20_dwi_adc_flair_fp_ohem_balanced/best.pt`
 - thresholds: 0.22
 - min_size: 20
@@ -225,7 +225,7 @@ Results root: `/Users/yusukefujinami/ToReBrain/ToReBrain-pipeline/results/3d_une
 
 ### score_p95_ge0.55
 
-- path: `/Users/yusukefujinami/ToReBrain/ToReBrain-pipeline/results/3d_unet_medseg/test_e20_thr022_cc20_score_sweep/score_p95_ge0.55`
+- path: `/Users/yusukefujinami/ToReBrain/pipeline/results/3d_unet_medseg/test_e20_thr022_cc20_score_sweep/score_p95_ge0.55`
 - model_path: `runs/3d_unet/medseg_3d_unet_e20_dwi_adc_flair_fp_ohem_balanced/best.pt`
 - thresholds: 0.22
 - min_size: 20
@@ -236,7 +236,7 @@ Results root: `/Users/yusukefujinami/ToReBrain/ToReBrain-pipeline/results/3d_une
 
 ### score_max_ge0.75
 
-- path: `/Users/yusukefujinami/ToReBrain/ToReBrain-pipeline/results/3d_unet_medseg/test_e20_thr022_cc20_score_sweep/score_max_ge0.75`
+- path: `/Users/yusukefujinami/ToReBrain/pipeline/results/3d_unet_medseg/test_e20_thr022_cc20_score_sweep/score_max_ge0.75`
 - model_path: `runs/3d_unet/medseg_3d_unet_e20_dwi_adc_flair_fp_ohem_balanced/best.pt`
 - thresholds: 0.22
 - min_size: 20
@@ -247,7 +247,7 @@ Results root: `/Users/yusukefujinami/ToReBrain/ToReBrain-pipeline/results/3d_une
 
 ### score_max_ge0.9
 
-- path: `/Users/yusukefujinami/ToReBrain/ToReBrain-pipeline/results/3d_unet_medseg/test_e20_thr022_cc20_score_sweep/score_max_ge0.9`
+- path: `/Users/yusukefujinami/ToReBrain/pipeline/results/3d_unet_medseg/test_e20_thr022_cc20_score_sweep/score_max_ge0.9`
 - model_path: `runs/3d_unet/medseg_3d_unet_e20_dwi_adc_flair_fp_ohem_balanced/best.pt`
 - thresholds: 0.22
 - min_size: 20
@@ -258,7 +258,7 @@ Results root: `/Users/yusukefujinami/ToReBrain/ToReBrain-pipeline/results/3d_une
 
 ### score_max_ge0.6
 
-- path: `/Users/yusukefujinami/ToReBrain/ToReBrain-pipeline/results/3d_unet_medseg/test_e20_thr022_cc20_score_sweep/score_max_ge0.6`
+- path: `/Users/yusukefujinami/ToReBrain/pipeline/results/3d_unet_medseg/test_e20_thr022_cc20_score_sweep/score_max_ge0.6`
 - model_path: `runs/3d_unet/medseg_3d_unet_e20_dwi_adc_flair_fp_ohem_balanced/best.pt`
 - thresholds: 0.22
 - min_size: 20
@@ -269,7 +269,7 @@ Results root: `/Users/yusukefujinami/ToReBrain/ToReBrain-pipeline/results/3d_une
 
 ### score_max_ge0.55
 
-- path: `/Users/yusukefujinami/ToReBrain/ToReBrain-pipeline/results/3d_unet_medseg/test_e20_thr022_cc20_score_sweep/score_max_ge0.55`
+- path: `/Users/yusukefujinami/ToReBrain/pipeline/results/3d_unet_medseg/test_e20_thr022_cc20_score_sweep/score_max_ge0.55`
 - model_path: `runs/3d_unet/medseg_3d_unet_e20_dwi_adc_flair_fp_ohem_balanced/best.pt`
 - thresholds: 0.22
 - min_size: 20
@@ -280,7 +280,7 @@ Results root: `/Users/yusukefujinami/ToReBrain/ToReBrain-pipeline/results/3d_une
 
 ### score_mean_ge0.3
 
-- path: `/Users/yusukefujinami/ToReBrain/ToReBrain-pipeline/results/3d_unet_medseg/test_e20_thr022_cc20_score_sweep/score_mean_ge0.3`
+- path: `/Users/yusukefujinami/ToReBrain/pipeline/results/3d_unet_medseg/test_e20_thr022_cc20_score_sweep/score_mean_ge0.3`
 - model_path: `runs/3d_unet/medseg_3d_unet_e20_dwi_adc_flair_fp_ohem_balanced/best.pt`
 - thresholds: 0.22
 - min_size: 20
@@ -291,7 +291,7 @@ Results root: `/Users/yusukefujinami/ToReBrain/ToReBrain-pipeline/results/3d_une
 
 ### score_p95_ge0.5
 
-- path: `/Users/yusukefujinami/ToReBrain/ToReBrain-pipeline/results/3d_unet_medseg/test_e20_thr022_cc20_score_sweep/score_p95_ge0.5`
+- path: `/Users/yusukefujinami/ToReBrain/pipeline/results/3d_unet_medseg/test_e20_thr022_cc20_score_sweep/score_p95_ge0.5`
 - model_path: `runs/3d_unet/medseg_3d_unet_e20_dwi_adc_flair_fp_ohem_balanced/best.pt`
 - thresholds: 0.22
 - min_size: 20
@@ -302,7 +302,7 @@ Results root: `/Users/yusukefujinami/ToReBrain/ToReBrain-pipeline/results/3d_une
 
 ### score_max_ge0.7
 
-- path: `/Users/yusukefujinami/ToReBrain/ToReBrain-pipeline/results/3d_unet_medseg/test_e20_thr022_cc20_score_sweep/score_max_ge0.7`
+- path: `/Users/yusukefujinami/ToReBrain/pipeline/results/3d_unet_medseg/test_e20_thr022_cc20_score_sweep/score_max_ge0.7`
 - model_path: `runs/3d_unet/medseg_3d_unet_e20_dwi_adc_flair_fp_ohem_balanced/best.pt`
 - thresholds: 0.22
 - min_size: 20
@@ -313,7 +313,7 @@ Results root: `/Users/yusukefujinami/ToReBrain/ToReBrain-pipeline/results/3d_une
 
 ### score_max_ge0.65
 
-- path: `/Users/yusukefujinami/ToReBrain/ToReBrain-pipeline/results/3d_unet_medseg/test_e20_thr022_cc20_score_sweep/score_max_ge0.65`
+- path: `/Users/yusukefujinami/ToReBrain/pipeline/results/3d_unet_medseg/test_e20_thr022_cc20_score_sweep/score_max_ge0.65`
 - model_path: `runs/3d_unet/medseg_3d_unet_e20_dwi_adc_flair_fp_ohem_balanced/best.pt`
 - thresholds: 0.22
 - min_size: 20
@@ -324,7 +324,7 @@ Results root: `/Users/yusukefujinami/ToReBrain/ToReBrain-pipeline/results/3d_une
 
 ### score_p95_ge0.4
 
-- path: `/Users/yusukefujinami/ToReBrain/ToReBrain-pipeline/results/3d_unet_medseg/test_e20_thr022_cc20_score_sweep/score_p95_ge0.4`
+- path: `/Users/yusukefujinami/ToReBrain/pipeline/results/3d_unet_medseg/test_e20_thr022_cc20_score_sweep/score_p95_ge0.4`
 - model_path: `runs/3d_unet/medseg_3d_unet_e20_dwi_adc_flair_fp_ohem_balanced/best.pt`
 - thresholds: 0.22
 - min_size: 20
@@ -335,7 +335,7 @@ Results root: `/Users/yusukefujinami/ToReBrain/ToReBrain-pipeline/results/3d_une
 
 ### score_p95_ge0.75
 
-- path: `/Users/yusukefujinami/ToReBrain/ToReBrain-pipeline/results/3d_unet_medseg/test_e20_thr022_cc20_score_sweep/score_p95_ge0.75`
+- path: `/Users/yusukefujinami/ToReBrain/pipeline/results/3d_unet_medseg/test_e20_thr022_cc20_score_sweep/score_p95_ge0.75`
 - model_path: `runs/3d_unet/medseg_3d_unet_e20_dwi_adc_flair_fp_ohem_balanced/best.pt`
 - thresholds: 0.22
 - min_size: 20
@@ -346,7 +346,7 @@ Results root: `/Users/yusukefujinami/ToReBrain/ToReBrain-pipeline/results/3d_une
 
 ### score_max_ge0.45
 
-- path: `/Users/yusukefujinami/ToReBrain/ToReBrain-pipeline/results/3d_unet_medseg/test_e20_thr022_cc20_score_sweep/score_max_ge0.45`
+- path: `/Users/yusukefujinami/ToReBrain/pipeline/results/3d_unet_medseg/test_e20_thr022_cc20_score_sweep/score_max_ge0.45`
 - model_path: `runs/3d_unet/medseg_3d_unet_e20_dwi_adc_flair_fp_ohem_balanced/best.pt`
 - thresholds: 0.22
 - min_size: 20
@@ -357,7 +357,7 @@ Results root: `/Users/yusukefujinami/ToReBrain/ToReBrain-pipeline/results/3d_une
 
 ### score_p95_ge0.35
 
-- path: `/Users/yusukefujinami/ToReBrain/ToReBrain-pipeline/results/3d_unet_medseg/test_e20_thr022_cc20_score_sweep/score_p95_ge0.35`
+- path: `/Users/yusukefujinami/ToReBrain/pipeline/results/3d_unet_medseg/test_e20_thr022_cc20_score_sweep/score_p95_ge0.35`
 - model_path: `runs/3d_unet/medseg_3d_unet_e20_dwi_adc_flair_fp_ohem_balanced/best.pt`
 - thresholds: 0.22
 - min_size: 20
@@ -368,7 +368,7 @@ Results root: `/Users/yusukefujinami/ToReBrain/ToReBrain-pipeline/results/3d_une
 
 ### score_max_ge0.95
 
-- path: `/Users/yusukefujinami/ToReBrain/ToReBrain-pipeline/results/3d_unet_medseg/test_e20_thr022_cc20_score_sweep/score_max_ge0.95`
+- path: `/Users/yusukefujinami/ToReBrain/pipeline/results/3d_unet_medseg/test_e20_thr022_cc20_score_sweep/score_max_ge0.95`
 - model_path: `runs/3d_unet/medseg_3d_unet_e20_dwi_adc_flair_fp_ohem_balanced/best.pt`
 - thresholds: 0.22
 - min_size: 20
@@ -379,7 +379,7 @@ Results root: `/Users/yusukefujinami/ToReBrain/ToReBrain-pipeline/results/3d_une
 
 ### score_max_ge0.4
 
-- path: `/Users/yusukefujinami/ToReBrain/ToReBrain-pipeline/results/3d_unet_medseg/test_e20_thr022_cc20_score_sweep/score_max_ge0.4`
+- path: `/Users/yusukefujinami/ToReBrain/pipeline/results/3d_unet_medseg/test_e20_thr022_cc20_score_sweep/score_max_ge0.4`
 - model_path: `runs/3d_unet/medseg_3d_unet_e20_dwi_adc_flair_fp_ohem_balanced/best.pt`
 - thresholds: 0.22
 - min_size: 20
@@ -390,7 +390,7 @@ Results root: `/Users/yusukefujinami/ToReBrain/ToReBrain-pipeline/results/3d_une
 
 ### score_max_ge0.35
 
-- path: `/Users/yusukefujinami/ToReBrain/ToReBrain-pipeline/results/3d_unet_medseg/test_e20_thr022_cc20_score_sweep/score_max_ge0.35`
+- path: `/Users/yusukefujinami/ToReBrain/pipeline/results/3d_unet_medseg/test_e20_thr022_cc20_score_sweep/score_max_ge0.35`
 - model_path: `runs/3d_unet/medseg_3d_unet_e20_dwi_adc_flair_fp_ohem_balanced/best.pt`
 - thresholds: 0.22
 - min_size: 20
@@ -401,7 +401,7 @@ Results root: `/Users/yusukefujinami/ToReBrain/ToReBrain-pipeline/results/3d_une
 
 ### cc150
 
-- path: `/Users/yusukefujinami/ToReBrain/ToReBrain-pipeline/results/3d_unet_medseg/test_e20_thr022_min_size_sweep/cc150`
+- path: `/Users/yusukefujinami/ToReBrain/pipeline/results/3d_unet_medseg/test_e20_thr022_min_size_sweep/cc150`
 - model_path: `runs/3d_unet/medseg_3d_unet_e20_dwi_adc_flair_fp_ohem_balanced/best.pt`
 - thresholds: 0.22
 - min_size: 150
@@ -412,7 +412,7 @@ Results root: `/Users/yusukefujinami/ToReBrain/ToReBrain-pipeline/results/3d_une
 
 ### score_p95_ge0.3
 
-- path: `/Users/yusukefujinami/ToReBrain/ToReBrain-pipeline/results/3d_unet_medseg/test_e20_thr022_cc20_score_sweep/score_p95_ge0.3`
+- path: `/Users/yusukefujinami/ToReBrain/pipeline/results/3d_unet_medseg/test_e20_thr022_cc20_score_sweep/score_p95_ge0.3`
 - model_path: `runs/3d_unet/medseg_3d_unet_e20_dwi_adc_flair_fp_ohem_balanced/best.pt`
 - thresholds: 0.22
 - min_size: 20
@@ -423,7 +423,7 @@ Results root: `/Users/yusukefujinami/ToReBrain/ToReBrain-pipeline/results/3d_une
 
 ### score_mean_ge0.25
 
-- path: `/Users/yusukefujinami/ToReBrain/ToReBrain-pipeline/results/3d_unet_medseg/test_e20_thr022_cc20_score_sweep/score_mean_ge0.25`
+- path: `/Users/yusukefujinami/ToReBrain/pipeline/results/3d_unet_medseg/test_e20_thr022_cc20_score_sweep/score_mean_ge0.25`
 - model_path: `runs/3d_unet/medseg_3d_unet_e20_dwi_adc_flair_fp_ohem_balanced/best.pt`
 - thresholds: 0.22
 - min_size: 20
@@ -434,7 +434,7 @@ Results root: `/Users/yusukefujinami/ToReBrain/ToReBrain-pipeline/results/3d_une
 
 ### cc200
 
-- path: `/Users/yusukefujinami/ToReBrain/ToReBrain-pipeline/results/3d_unet_medseg/test_e20_thr022_min_size_sweep/cc200`
+- path: `/Users/yusukefujinami/ToReBrain/pipeline/results/3d_unet_medseg/test_e20_thr022_min_size_sweep/cc200`
 - model_path: `runs/3d_unet/medseg_3d_unet_e20_dwi_adc_flair_fp_ohem_balanced/best.pt`
 - thresholds: 0.22
 - min_size: 200
@@ -445,7 +445,7 @@ Results root: `/Users/yusukefujinami/ToReBrain/ToReBrain-pipeline/results/3d_une
 
 ### cc75
 
-- path: `/Users/yusukefujinami/ToReBrain/ToReBrain-pipeline/results/3d_unet_medseg/test_e20_thr022_min_size_sweep/cc75`
+- path: `/Users/yusukefujinami/ToReBrain/pipeline/results/3d_unet_medseg/test_e20_thr022_min_size_sweep/cc75`
 - model_path: `runs/3d_unet/medseg_3d_unet_e20_dwi_adc_flair_fp_ohem_balanced/best.pt`
 - thresholds: 0.22
 - min_size: 75
@@ -456,7 +456,7 @@ Results root: `/Users/yusukefujinami/ToReBrain/ToReBrain-pipeline/results/3d_une
 
 ### cc100
 
-- path: `/Users/yusukefujinami/ToReBrain/ToReBrain-pipeline/results/3d_unet_medseg/test_e20_thr022_min_size_sweep/cc100`
+- path: `/Users/yusukefujinami/ToReBrain/pipeline/results/3d_unet_medseg/test_e20_thr022_min_size_sweep/cc100`
 - model_path: `runs/3d_unet/medseg_3d_unet_e20_dwi_adc_flair_fp_ohem_balanced/best.pt`
 - thresholds: 0.22
 - min_size: 100
@@ -467,7 +467,7 @@ Results root: `/Users/yusukefujinami/ToReBrain/ToReBrain-pipeline/results/3d_une
 
 ### cc50
 
-- path: `/Users/yusukefujinami/ToReBrain/ToReBrain-pipeline/results/3d_unet_medseg/test_e20_thr022_min_size_sweep/cc50`
+- path: `/Users/yusukefujinami/ToReBrain/pipeline/results/3d_unet_medseg/test_e20_thr022_min_size_sweep/cc50`
 - model_path: `runs/3d_unet/medseg_3d_unet_e20_dwi_adc_flair_fp_ohem_balanced/best.pt`
 - thresholds: 0.22
 - min_size: 50
@@ -478,7 +478,7 @@ Results root: `/Users/yusukefujinami/ToReBrain/ToReBrain-pipeline/results/3d_une
 
 ### cc40
 
-- path: `/Users/yusukefujinami/ToReBrain/ToReBrain-pipeline/results/3d_unet_medseg/test_e20_thr022_min_size_sweep/cc40`
+- path: `/Users/yusukefujinami/ToReBrain/pipeline/results/3d_unet_medseg/test_e20_thr022_min_size_sweep/cc40`
 - model_path: `runs/3d_unet/medseg_3d_unet_e20_dwi_adc_flair_fp_ohem_balanced/best.pt`
 - thresholds: 0.22
 - min_size: 40
@@ -489,7 +489,7 @@ Results root: `/Users/yusukefujinami/ToReBrain/ToReBrain-pipeline/results/3d_une
 
 ### score_max_ge0.3
 
-- path: `/Users/yusukefujinami/ToReBrain/ToReBrain-pipeline/results/3d_unet_medseg/test_e20_thr022_cc20_score_sweep/score_max_ge0.3`
+- path: `/Users/yusukefujinami/ToReBrain/pipeline/results/3d_unet_medseg/test_e20_thr022_cc20_score_sweep/score_max_ge0.3`
 - model_path: `runs/3d_unet/medseg_3d_unet_e20_dwi_adc_flair_fp_ohem_balanced/best.pt`
 - thresholds: 0.22
 - min_size: 20
@@ -500,7 +500,7 @@ Results root: `/Users/yusukefujinami/ToReBrain/ToReBrain-pipeline/results/3d_une
 
 ### score_p95_ge0.25
 
-- path: `/Users/yusukefujinami/ToReBrain/ToReBrain-pipeline/results/3d_unet_medseg/test_e20_thr022_cc20_score_sweep/score_p95_ge0.25`
+- path: `/Users/yusukefujinami/ToReBrain/pipeline/results/3d_unet_medseg/test_e20_thr022_cc20_score_sweep/score_p95_ge0.25`
 - model_path: `runs/3d_unet/medseg_3d_unet_e20_dwi_adc_flair_fp_ohem_balanced/best.pt`
 - thresholds: 0.22
 - min_size: 20
@@ -511,7 +511,7 @@ Results root: `/Users/yusukefujinami/ToReBrain/ToReBrain-pipeline/results/3d_une
 
 ### score_max_ge0.25
 
-- path: `/Users/yusukefujinami/ToReBrain/ToReBrain-pipeline/results/3d_unet_medseg/test_e20_thr022_cc20_score_sweep/score_max_ge0.25`
+- path: `/Users/yusukefujinami/ToReBrain/pipeline/results/3d_unet_medseg/test_e20_thr022_cc20_score_sweep/score_max_ge0.25`
 - model_path: `runs/3d_unet/medseg_3d_unet_e20_dwi_adc_flair_fp_ohem_balanced/best.pt`
 - thresholds: 0.22
 - min_size: 20
@@ -522,7 +522,7 @@ Results root: `/Users/yusukefujinami/ToReBrain/ToReBrain-pipeline/results/3d_une
 
 ### cc30
 
-- path: `/Users/yusukefujinami/ToReBrain/ToReBrain-pipeline/results/3d_unet_medseg/test_e20_thr022_min_size_sweep/cc30`
+- path: `/Users/yusukefujinami/ToReBrain/pipeline/results/3d_unet_medseg/test_e20_thr022_min_size_sweep/cc30`
 - model_path: `runs/3d_unet/medseg_3d_unet_e20_dwi_adc_flair_fp_ohem_balanced/best.pt`
 - thresholds: 0.22
 - min_size: 30
@@ -533,7 +533,7 @@ Results root: `/Users/yusukefujinami/ToReBrain/ToReBrain-pipeline/results/3d_une
 
 ### cc20
 
-- path: `/Users/yusukefujinami/ToReBrain/ToReBrain-pipeline/results/3d_unet_medseg/test_e20_thr022_min_size_sweep/cc20`
+- path: `/Users/yusukefujinami/ToReBrain/pipeline/results/3d_unet_medseg/test_e20_thr022_min_size_sweep/cc20`
 - model_path: `runs/3d_unet/medseg_3d_unet_e20_dwi_adc_flair_fp_ohem_balanced/best.pt`
 - thresholds: 0.22
 - min_size: 20
@@ -544,7 +544,7 @@ Results root: `/Users/yusukefujinami/ToReBrain/ToReBrain-pipeline/results/3d_une
 
 ### score_max_ge0
 
-- path: `/Users/yusukefujinami/ToReBrain/ToReBrain-pipeline/results/3d_unet_medseg/test_e20_thr022_cc20_score_sweep/score_max_ge0`
+- path: `/Users/yusukefujinami/ToReBrain/pipeline/results/3d_unet_medseg/test_e20_thr022_cc20_score_sweep/score_max_ge0`
 - model_path: `runs/3d_unet/medseg_3d_unet_e20_dwi_adc_flair_fp_ohem_balanced/best.pt`
 - thresholds: 0.22
 - min_size: 20
@@ -555,7 +555,7 @@ Results root: `/Users/yusukefujinami/ToReBrain/ToReBrain-pipeline/results/3d_une
 
 ### score_max_ge0.05
 
-- path: `/Users/yusukefujinami/ToReBrain/ToReBrain-pipeline/results/3d_unet_medseg/test_e20_thr022_cc20_score_sweep/score_max_ge0.05`
+- path: `/Users/yusukefujinami/ToReBrain/pipeline/results/3d_unet_medseg/test_e20_thr022_cc20_score_sweep/score_max_ge0.05`
 - model_path: `runs/3d_unet/medseg_3d_unet_e20_dwi_adc_flair_fp_ohem_balanced/best.pt`
 - thresholds: 0.22
 - min_size: 20
@@ -566,7 +566,7 @@ Results root: `/Users/yusukefujinami/ToReBrain/ToReBrain-pipeline/results/3d_une
 
 ### score_max_ge0.1
 
-- path: `/Users/yusukefujinami/ToReBrain/ToReBrain-pipeline/results/3d_unet_medseg/test_e20_thr022_cc20_score_sweep/score_max_ge0.1`
+- path: `/Users/yusukefujinami/ToReBrain/pipeline/results/3d_unet_medseg/test_e20_thr022_cc20_score_sweep/score_max_ge0.1`
 - model_path: `runs/3d_unet/medseg_3d_unet_e20_dwi_adc_flair_fp_ohem_balanced/best.pt`
 - thresholds: 0.22
 - min_size: 20
@@ -577,7 +577,7 @@ Results root: `/Users/yusukefujinami/ToReBrain/ToReBrain-pipeline/results/3d_une
 
 ### score_max_ge0.15
 
-- path: `/Users/yusukefujinami/ToReBrain/ToReBrain-pipeline/results/3d_unet_medseg/test_e20_thr022_cc20_score_sweep/score_max_ge0.15`
+- path: `/Users/yusukefujinami/ToReBrain/pipeline/results/3d_unet_medseg/test_e20_thr022_cc20_score_sweep/score_max_ge0.15`
 - model_path: `runs/3d_unet/medseg_3d_unet_e20_dwi_adc_flair_fp_ohem_balanced/best.pt`
 - thresholds: 0.22
 - min_size: 20
@@ -588,7 +588,7 @@ Results root: `/Users/yusukefujinami/ToReBrain/ToReBrain-pipeline/results/3d_une
 
 ### score_max_ge0.2
 
-- path: `/Users/yusukefujinami/ToReBrain/ToReBrain-pipeline/results/3d_unet_medseg/test_e20_thr022_cc20_score_sweep/score_max_ge0.2`
+- path: `/Users/yusukefujinami/ToReBrain/pipeline/results/3d_unet_medseg/test_e20_thr022_cc20_score_sweep/score_max_ge0.2`
 - model_path: `runs/3d_unet/medseg_3d_unet_e20_dwi_adc_flair_fp_ohem_balanced/best.pt`
 - thresholds: 0.22
 - min_size: 20
@@ -599,7 +599,7 @@ Results root: `/Users/yusukefujinami/ToReBrain/ToReBrain-pipeline/results/3d_une
 
 ### score_mean_ge0
 
-- path: `/Users/yusukefujinami/ToReBrain/ToReBrain-pipeline/results/3d_unet_medseg/test_e20_thr022_cc20_score_sweep/score_mean_ge0`
+- path: `/Users/yusukefujinami/ToReBrain/pipeline/results/3d_unet_medseg/test_e20_thr022_cc20_score_sweep/score_mean_ge0`
 - model_path: `runs/3d_unet/medseg_3d_unet_e20_dwi_adc_flair_fp_ohem_balanced/best.pt`
 - thresholds: 0.22
 - min_size: 20
@@ -610,7 +610,7 @@ Results root: `/Users/yusukefujinami/ToReBrain/ToReBrain-pipeline/results/3d_une
 
 ### score_mean_ge0.05
 
-- path: `/Users/yusukefujinami/ToReBrain/ToReBrain-pipeline/results/3d_unet_medseg/test_e20_thr022_cc20_score_sweep/score_mean_ge0.05`
+- path: `/Users/yusukefujinami/ToReBrain/pipeline/results/3d_unet_medseg/test_e20_thr022_cc20_score_sweep/score_mean_ge0.05`
 - model_path: `runs/3d_unet/medseg_3d_unet_e20_dwi_adc_flair_fp_ohem_balanced/best.pt`
 - thresholds: 0.22
 - min_size: 20
@@ -621,7 +621,7 @@ Results root: `/Users/yusukefujinami/ToReBrain/ToReBrain-pipeline/results/3d_une
 
 ### score_mean_ge0.1
 
-- path: `/Users/yusukefujinami/ToReBrain/ToReBrain-pipeline/results/3d_unet_medseg/test_e20_thr022_cc20_score_sweep/score_mean_ge0.1`
+- path: `/Users/yusukefujinami/ToReBrain/pipeline/results/3d_unet_medseg/test_e20_thr022_cc20_score_sweep/score_mean_ge0.1`
 - model_path: `runs/3d_unet/medseg_3d_unet_e20_dwi_adc_flair_fp_ohem_balanced/best.pt`
 - thresholds: 0.22
 - min_size: 20
@@ -632,7 +632,7 @@ Results root: `/Users/yusukefujinami/ToReBrain/ToReBrain-pipeline/results/3d_une
 
 ### score_mean_ge0.15
 
-- path: `/Users/yusukefujinami/ToReBrain/ToReBrain-pipeline/results/3d_unet_medseg/test_e20_thr022_cc20_score_sweep/score_mean_ge0.15`
+- path: `/Users/yusukefujinami/ToReBrain/pipeline/results/3d_unet_medseg/test_e20_thr022_cc20_score_sweep/score_mean_ge0.15`
 - model_path: `runs/3d_unet/medseg_3d_unet_e20_dwi_adc_flair_fp_ohem_balanced/best.pt`
 - thresholds: 0.22
 - min_size: 20
@@ -643,7 +643,7 @@ Results root: `/Users/yusukefujinami/ToReBrain/ToReBrain-pipeline/results/3d_une
 
 ### score_mean_ge0.2
 
-- path: `/Users/yusukefujinami/ToReBrain/ToReBrain-pipeline/results/3d_unet_medseg/test_e20_thr022_cc20_score_sweep/score_mean_ge0.2`
+- path: `/Users/yusukefujinami/ToReBrain/pipeline/results/3d_unet_medseg/test_e20_thr022_cc20_score_sweep/score_mean_ge0.2`
 - model_path: `runs/3d_unet/medseg_3d_unet_e20_dwi_adc_flair_fp_ohem_balanced/best.pt`
 - thresholds: 0.22
 - min_size: 20
@@ -654,7 +654,7 @@ Results root: `/Users/yusukefujinami/ToReBrain/ToReBrain-pipeline/results/3d_une
 
 ### score_p95_ge0
 
-- path: `/Users/yusukefujinami/ToReBrain/ToReBrain-pipeline/results/3d_unet_medseg/test_e20_thr022_cc20_score_sweep/score_p95_ge0`
+- path: `/Users/yusukefujinami/ToReBrain/pipeline/results/3d_unet_medseg/test_e20_thr022_cc20_score_sweep/score_p95_ge0`
 - model_path: `runs/3d_unet/medseg_3d_unet_e20_dwi_adc_flair_fp_ohem_balanced/best.pt`
 - thresholds: 0.22
 - min_size: 20
@@ -665,7 +665,7 @@ Results root: `/Users/yusukefujinami/ToReBrain/ToReBrain-pipeline/results/3d_une
 
 ### score_p95_ge0.05
 
-- path: `/Users/yusukefujinami/ToReBrain/ToReBrain-pipeline/results/3d_unet_medseg/test_e20_thr022_cc20_score_sweep/score_p95_ge0.05`
+- path: `/Users/yusukefujinami/ToReBrain/pipeline/results/3d_unet_medseg/test_e20_thr022_cc20_score_sweep/score_p95_ge0.05`
 - model_path: `runs/3d_unet/medseg_3d_unet_e20_dwi_adc_flair_fp_ohem_balanced/best.pt`
 - thresholds: 0.22
 - min_size: 20
@@ -676,7 +676,7 @@ Results root: `/Users/yusukefujinami/ToReBrain/ToReBrain-pipeline/results/3d_une
 
 ### score_p95_ge0.1
 
-- path: `/Users/yusukefujinami/ToReBrain/ToReBrain-pipeline/results/3d_unet_medseg/test_e20_thr022_cc20_score_sweep/score_p95_ge0.1`
+- path: `/Users/yusukefujinami/ToReBrain/pipeline/results/3d_unet_medseg/test_e20_thr022_cc20_score_sweep/score_p95_ge0.1`
 - model_path: `runs/3d_unet/medseg_3d_unet_e20_dwi_adc_flair_fp_ohem_balanced/best.pt`
 - thresholds: 0.22
 - min_size: 20
@@ -687,7 +687,7 @@ Results root: `/Users/yusukefujinami/ToReBrain/ToReBrain-pipeline/results/3d_une
 
 ### score_p95_ge0.15
 
-- path: `/Users/yusukefujinami/ToReBrain/ToReBrain-pipeline/results/3d_unet_medseg/test_e20_thr022_cc20_score_sweep/score_p95_ge0.15`
+- path: `/Users/yusukefujinami/ToReBrain/pipeline/results/3d_unet_medseg/test_e20_thr022_cc20_score_sweep/score_p95_ge0.15`
 - model_path: `runs/3d_unet/medseg_3d_unet_e20_dwi_adc_flair_fp_ohem_balanced/best.pt`
 - thresholds: 0.22
 - min_size: 20
@@ -698,7 +698,7 @@ Results root: `/Users/yusukefujinami/ToReBrain/ToReBrain-pipeline/results/3d_une
 
 ### score_p95_ge0.2
 
-- path: `/Users/yusukefujinami/ToReBrain/ToReBrain-pipeline/results/3d_unet_medseg/test_e20_thr022_cc20_score_sweep/score_p95_ge0.2`
+- path: `/Users/yusukefujinami/ToReBrain/pipeline/results/3d_unet_medseg/test_e20_thr022_cc20_score_sweep/score_p95_ge0.2`
 - model_path: `runs/3d_unet/medseg_3d_unet_e20_dwi_adc_flair_fp_ohem_balanced/best.pt`
 - thresholds: 0.22
 - min_size: 20
@@ -709,7 +709,7 @@ Results root: `/Users/yusukefujinami/ToReBrain/ToReBrain-pipeline/results/3d_une
 
 ### cc300
 
-- path: `/Users/yusukefujinami/ToReBrain/ToReBrain-pipeline/results/3d_unet_medseg/test_e20_thr022_min_size_sweep/cc300`
+- path: `/Users/yusukefujinami/ToReBrain/pipeline/results/3d_unet_medseg/test_e20_thr022_min_size_sweep/cc300`
 - model_path: `runs/3d_unet/medseg_3d_unet_e20_dwi_adc_flair_fp_ohem_balanced/best.pt`
 - thresholds: 0.22
 - min_size: 300
@@ -720,7 +720,7 @@ Results root: `/Users/yusukefujinami/ToReBrain/ToReBrain-pipeline/results/3d_une
 
 ### cc15
 
-- path: `/Users/yusukefujinami/ToReBrain/ToReBrain-pipeline/results/3d_unet_medseg/test_e20_thr022_min_size_sweep/cc15`
+- path: `/Users/yusukefujinami/ToReBrain/pipeline/results/3d_unet_medseg/test_e20_thr022_min_size_sweep/cc15`
 - model_path: `runs/3d_unet/medseg_3d_unet_e20_dwi_adc_flair_fp_ohem_balanced/best.pt`
 - thresholds: 0.22
 - min_size: 15
@@ -731,7 +731,7 @@ Results root: `/Users/yusukefujinami/ToReBrain/ToReBrain-pipeline/results/3d_une
 
 ### cc10
 
-- path: `/Users/yusukefujinami/ToReBrain/ToReBrain-pipeline/results/3d_unet_medseg/test_e20_thr022_min_size_sweep/cc10`
+- path: `/Users/yusukefujinami/ToReBrain/pipeline/results/3d_unet_medseg/test_e20_thr022_min_size_sweep/cc10`
 - model_path: `runs/3d_unet/medseg_3d_unet_e20_dwi_adc_flair_fp_ohem_balanced/best.pt`
 - thresholds: 0.22
 - min_size: 10
@@ -742,7 +742,7 @@ Results root: `/Users/yusukefujinami/ToReBrain/ToReBrain-pipeline/results/3d_une
 
 ### score_p95_ge0.8
 
-- path: `/Users/yusukefujinami/ToReBrain/ToReBrain-pipeline/results/3d_unet_medseg/test_e20_thr022_cc20_score_sweep/score_p95_ge0.8`
+- path: `/Users/yusukefujinami/ToReBrain/pipeline/results/3d_unet_medseg/test_e20_thr022_cc20_score_sweep/score_p95_ge0.8`
 - model_path: `runs/3d_unet/medseg_3d_unet_e20_dwi_adc_flair_fp_ohem_balanced/best.pt`
 - thresholds: 0.22
 - min_size: 20
@@ -753,7 +753,7 @@ Results root: `/Users/yusukefujinami/ToReBrain/ToReBrain-pipeline/results/3d_une
 
 ### cc5
 
-- path: `/Users/yusukefujinami/ToReBrain/ToReBrain-pipeline/results/3d_unet_medseg/test_e20_thr022_min_size_sweep/cc5`
+- path: `/Users/yusukefujinami/ToReBrain/pipeline/results/3d_unet_medseg/test_e20_thr022_min_size_sweep/cc5`
 - model_path: `runs/3d_unet/medseg_3d_unet_e20_dwi_adc_flair_fp_ohem_balanced/best.pt`
 - thresholds: 0.22
 - min_size: 5
@@ -764,7 +764,7 @@ Results root: `/Users/yusukefujinami/ToReBrain/ToReBrain-pipeline/results/3d_une
 
 ### cc0
 
-- path: `/Users/yusukefujinami/ToReBrain/ToReBrain-pipeline/results/3d_unet_medseg/test_e20_thr022_min_size_sweep/cc0`
+- path: `/Users/yusukefujinami/ToReBrain/pipeline/results/3d_unet_medseg/test_e20_thr022_min_size_sweep/cc0`
 - model_path: `runs/3d_unet/medseg_3d_unet_e20_dwi_adc_flair_fp_ohem_balanced/best.pt`
 - thresholds: 0.22
 - min_size: 0
@@ -775,7 +775,7 @@ Results root: `/Users/yusukefujinami/ToReBrain/ToReBrain-pipeline/results/3d_une
 
 ### score_mean_ge0.4
 
-- path: `/Users/yusukefujinami/ToReBrain/ToReBrain-pipeline/results/3d_unet_medseg/test_e20_thr022_cc20_score_sweep/score_mean_ge0.4`
+- path: `/Users/yusukefujinami/ToReBrain/pipeline/results/3d_unet_medseg/test_e20_thr022_cc20_score_sweep/score_mean_ge0.4`
 - model_path: `runs/3d_unet/medseg_3d_unet_e20_dwi_adc_flair_fp_ohem_balanced/best.pt`
 - thresholds: 0.22
 - min_size: 20
@@ -786,7 +786,7 @@ Results root: `/Users/yusukefujinami/ToReBrain/ToReBrain-pipeline/results/3d_une
 
 ### score_p95_ge0.85
 
-- path: `/Users/yusukefujinami/ToReBrain/ToReBrain-pipeline/results/3d_unet_medseg/test_e20_thr022_cc20_score_sweep/score_p95_ge0.85`
+- path: `/Users/yusukefujinami/ToReBrain/pipeline/results/3d_unet_medseg/test_e20_thr022_cc20_score_sweep/score_p95_ge0.85`
 - model_path: `runs/3d_unet/medseg_3d_unet_e20_dwi_adc_flair_fp_ohem_balanced/best.pt`
 - thresholds: 0.22
 - min_size: 20
@@ -797,7 +797,7 @@ Results root: `/Users/yusukefujinami/ToReBrain/ToReBrain-pipeline/results/3d_une
 
 ### cc500
 
-- path: `/Users/yusukefujinami/ToReBrain/ToReBrain-pipeline/results/3d_unet_medseg/test_e20_thr022_min_size_sweep/cc500`
+- path: `/Users/yusukefujinami/ToReBrain/pipeline/results/3d_unet_medseg/test_e20_thr022_min_size_sweep/cc500`
 - model_path: `runs/3d_unet/medseg_3d_unet_e20_dwi_adc_flair_fp_ohem_balanced/best.pt`
 - thresholds: 0.22
 - min_size: 500
@@ -808,7 +808,7 @@ Results root: `/Users/yusukefujinami/ToReBrain/ToReBrain-pipeline/results/3d_une
 
 ### score_p95_ge0.9
 
-- path: `/Users/yusukefujinami/ToReBrain/ToReBrain-pipeline/results/3d_unet_medseg/test_e20_thr022_cc20_score_sweep/score_p95_ge0.9`
+- path: `/Users/yusukefujinami/ToReBrain/pipeline/results/3d_unet_medseg/test_e20_thr022_cc20_score_sweep/score_p95_ge0.9`
 - model_path: `runs/3d_unet/medseg_3d_unet_e20_dwi_adc_flair_fp_ohem_balanced/best.pt`
 - thresholds: 0.22
 - min_size: 20
@@ -819,7 +819,7 @@ Results root: `/Users/yusukefujinami/ToReBrain/ToReBrain-pipeline/results/3d_une
 
 ### test_e20_fp_ohem_bal_thr_sweep_cc20
 
-- path: `/Users/yusukefujinami/ToReBrain/ToReBrain-pipeline/results/3d_unet_medseg/test_e20_fp_ohem_bal_thr_sweep_cc20`
+- path: `/Users/yusukefujinami/ToReBrain/pipeline/results/3d_unet_medseg/test_e20_fp_ohem_bal_thr_sweep_cc20`
 - model_path: `runs/3d_unet/medseg_3d_unet_e20_dwi_adc_flair_fp_ohem_balanced/best.pt`
 - thresholds: 0.2, 0.25, 0.3, 0.35, 0.4, 0.45, 0.5, 0.55, 0.6, 0.65, 0.7
 - min_size: 20
@@ -830,7 +830,7 @@ Results root: `/Users/yusukefujinami/ToReBrain/ToReBrain-pipeline/results/3d_une
 
 ### test_e20_fp_ohem_bal_thr_sweep_cc20_zoom020_025
 
-- path: `/Users/yusukefujinami/ToReBrain/ToReBrain-pipeline/results/3d_unet_medseg/test_e20_fp_ohem_bal_thr_sweep_cc20_zoom020_025`
+- path: `/Users/yusukefujinami/ToReBrain/pipeline/results/3d_unet_medseg/test_e20_fp_ohem_bal_thr_sweep_cc20_zoom020_025`
 - model_path: `runs/3d_unet/medseg_3d_unet_e20_dwi_adc_flair_fp_ohem_balanced/best.pt`
 - thresholds: 0.2, 0.21, 0.22, 0.23, 0.24, 0.25
 - min_size: 20
@@ -841,7 +841,7 @@ Results root: `/Users/yusukefujinami/ToReBrain/ToReBrain-pipeline/results/3d_une
 
 ### score_p95_ge0.95
 
-- path: `/Users/yusukefujinami/ToReBrain/ToReBrain-pipeline/results/3d_unet_medseg/test_e20_thr022_cc20_score_sweep/score_p95_ge0.95`
+- path: `/Users/yusukefujinami/ToReBrain/pipeline/results/3d_unet_medseg/test_e20_thr022_cc20_score_sweep/score_p95_ge0.95`
 - model_path: `runs/3d_unet/medseg_3d_unet_e20_dwi_adc_flair_fp_ohem_balanced/best.pt`
 - thresholds: 0.22
 - min_size: 20
@@ -852,7 +852,7 @@ Results root: `/Users/yusukefujinami/ToReBrain/ToReBrain-pipeline/results/3d_une
 
 ### score_mean_ge0.45
 
-- path: `/Users/yusukefujinami/ToReBrain/ToReBrain-pipeline/results/3d_unet_medseg/test_e20_thr022_cc20_score_sweep/score_mean_ge0.45`
+- path: `/Users/yusukefujinami/ToReBrain/pipeline/results/3d_unet_medseg/test_e20_thr022_cc20_score_sweep/score_mean_ge0.45`
 - model_path: `runs/3d_unet/medseg_3d_unet_e20_dwi_adc_flair_fp_ohem_balanced/best.pt`
 - thresholds: 0.22
 - min_size: 20
@@ -863,7 +863,7 @@ Results root: `/Users/yusukefujinami/ToReBrain/ToReBrain-pipeline/results/3d_une
 
 ### score_mean_ge0.5
 
-- path: `/Users/yusukefujinami/ToReBrain/ToReBrain-pipeline/results/3d_unet_medseg/test_e20_thr022_cc20_score_sweep/score_mean_ge0.5`
+- path: `/Users/yusukefujinami/ToReBrain/pipeline/results/3d_unet_medseg/test_e20_thr022_cc20_score_sweep/score_mean_ge0.5`
 - model_path: `runs/3d_unet/medseg_3d_unet_e20_dwi_adc_flair_fp_ohem_balanced/best.pt`
 - thresholds: 0.22
 - min_size: 20
@@ -874,7 +874,7 @@ Results root: `/Users/yusukefujinami/ToReBrain/ToReBrain-pipeline/results/3d_une
 
 ### test_smoke2_fromrunbest_cc20
 
-- path: `/Users/yusukefujinami/ToReBrain/ToReBrain-pipeline/results/3d_unet_medseg/test_smoke2_fromrunbest_cc20`
+- path: `/Users/yusukefujinami/ToReBrain/pipeline/results/3d_unet_medseg/test_smoke2_fromrunbest_cc20`
 - model_path: `runs/3d_unet/medseg_3d_unet_smoke2_dwi_adc_flair/best.pt`
 - thresholds: 0.7
 - min_size: 20
@@ -885,7 +885,7 @@ Results root: `/Users/yusukefujinami/ToReBrain/ToReBrain-pipeline/results/3d_une
 
 ### test_smoke2_fp_fromrunbest_cc20
 
-- path: `/Users/yusukefujinami/ToReBrain/ToReBrain-pipeline/results/3d_unet_medseg/test_smoke2_fp_fromrunbest_cc20`
+- path: `/Users/yusukefujinami/ToReBrain/pipeline/results/3d_unet_medseg/test_smoke2_fp_fromrunbest_cc20`
 - model_path: `runs/3d_unet/medseg_3d_unet_smoke2_dwi_adc_flair_fp/best.pt`
 - thresholds: 0.7
 - min_size: 20
@@ -896,7 +896,7 @@ Results root: `/Users/yusukefujinami/ToReBrain/ToReBrain-pipeline/results/3d_une
 
 ### score_mean_ge0.55
 
-- path: `/Users/yusukefujinami/ToReBrain/ToReBrain-pipeline/results/3d_unet_medseg/test_e20_thr022_cc20_score_sweep/score_mean_ge0.55`
+- path: `/Users/yusukefujinami/ToReBrain/pipeline/results/3d_unet_medseg/test_e20_thr022_cc20_score_sweep/score_mean_ge0.55`
 - model_path: `runs/3d_unet/medseg_3d_unet_e20_dwi_adc_flair_fp_ohem_balanced/best.pt`
 - thresholds: 0.22
 - min_size: 20
@@ -907,7 +907,7 @@ Results root: `/Users/yusukefujinami/ToReBrain/ToReBrain-pipeline/results/3d_une
 
 ### test_smoke2_fp_ohem_fromrunbest_cc20
 
-- path: `/Users/yusukefujinami/ToReBrain/ToReBrain-pipeline/results/3d_unet_medseg/test_smoke2_fp_ohem_fromrunbest_cc20`
+- path: `/Users/yusukefujinami/ToReBrain/pipeline/results/3d_unet_medseg/test_smoke2_fp_ohem_fromrunbest_cc20`
 - model_path: `runs/3d_unet/medseg_3d_unet_smoke2_dwi_adc_flair_fp_ohem/best.pt`
 - thresholds: 0.7
 - min_size: 20
@@ -918,7 +918,7 @@ Results root: `/Users/yusukefujinami/ToReBrain/ToReBrain-pipeline/results/3d_une
 
 ### score_mean_ge0.6
 
-- path: `/Users/yusukefujinami/ToReBrain/ToReBrain-pipeline/results/3d_unet_medseg/test_e20_thr022_cc20_score_sweep/score_mean_ge0.6`
+- path: `/Users/yusukefujinami/ToReBrain/pipeline/results/3d_unet_medseg/test_e20_thr022_cc20_score_sweep/score_mean_ge0.6`
 - model_path: `runs/3d_unet/medseg_3d_unet_e20_dwi_adc_flair_fp_ohem_balanced/best.pt`
 - thresholds: 0.22
 - min_size: 20
@@ -929,7 +929,7 @@ Results root: `/Users/yusukefujinami/ToReBrain/ToReBrain-pipeline/results/3d_une
 
 ### score_mean_ge0.65
 
-- path: `/Users/yusukefujinami/ToReBrain/ToReBrain-pipeline/results/3d_unet_medseg/test_e20_thr022_cc20_score_sweep/score_mean_ge0.65`
+- path: `/Users/yusukefujinami/ToReBrain/pipeline/results/3d_unet_medseg/test_e20_thr022_cc20_score_sweep/score_mean_ge0.65`
 - model_path: `runs/3d_unet/medseg_3d_unet_e20_dwi_adc_flair_fp_ohem_balanced/best.pt`
 - thresholds: 0.22
 - min_size: 20
@@ -940,7 +940,7 @@ Results root: `/Users/yusukefujinami/ToReBrain/ToReBrain-pipeline/results/3d_une
 
 ### score_mean_ge0.7
 
-- path: `/Users/yusukefujinami/ToReBrain/ToReBrain-pipeline/results/3d_unet_medseg/test_e20_thr022_cc20_score_sweep/score_mean_ge0.7`
+- path: `/Users/yusukefujinami/ToReBrain/pipeline/results/3d_unet_medseg/test_e20_thr022_cc20_score_sweep/score_mean_ge0.7`
 - model_path: `runs/3d_unet/medseg_3d_unet_e20_dwi_adc_flair_fp_ohem_balanced/best.pt`
 - thresholds: 0.22
 - min_size: 20
@@ -951,7 +951,7 @@ Results root: `/Users/yusukefujinami/ToReBrain/ToReBrain-pipeline/results/3d_une
 
 ### score_mean_ge0.75
 
-- path: `/Users/yusukefujinami/ToReBrain/ToReBrain-pipeline/results/3d_unet_medseg/test_e20_thr022_cc20_score_sweep/score_mean_ge0.75`
+- path: `/Users/yusukefujinami/ToReBrain/pipeline/results/3d_unet_medseg/test_e20_thr022_cc20_score_sweep/score_mean_ge0.75`
 - model_path: `runs/3d_unet/medseg_3d_unet_e20_dwi_adc_flair_fp_ohem_balanced/best.pt`
 - thresholds: 0.22
 - min_size: 20
@@ -962,7 +962,7 @@ Results root: `/Users/yusukefujinami/ToReBrain/ToReBrain-pipeline/results/3d_une
 
 ### test_smoke2_fp_ohem_thr_sweep_cc20
 
-- path: `/Users/yusukefujinami/ToReBrain/ToReBrain-pipeline/results/3d_unet_medseg/test_smoke2_fp_ohem_thr_sweep_cc20`
+- path: `/Users/yusukefujinami/ToReBrain/pipeline/results/3d_unet_medseg/test_smoke2_fp_ohem_thr_sweep_cc20`
 - model_path: `runs/3d_unet/medseg_3d_unet_smoke2_dwi_adc_flair_fp_ohem/best.pt`
 - thresholds: 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7
 - min_size: 20
@@ -973,7 +973,7 @@ Results root: `/Users/yusukefujinami/ToReBrain/ToReBrain-pipeline/results/3d_une
 
 ### score_mean_ge0.8
 
-- path: `/Users/yusukefujinami/ToReBrain/ToReBrain-pipeline/results/3d_unet_medseg/test_e20_thr022_cc20_score_sweep/score_mean_ge0.8`
+- path: `/Users/yusukefujinami/ToReBrain/pipeline/results/3d_unet_medseg/test_e20_thr022_cc20_score_sweep/score_mean_ge0.8`
 - model_path: `runs/3d_unet/medseg_3d_unet_e20_dwi_adc_flair_fp_ohem_balanced/best.pt`
 - thresholds: 0.22
 - min_size: 20
@@ -984,7 +984,7 @@ Results root: `/Users/yusukefujinami/ToReBrain/ToReBrain-pipeline/results/3d_une
 
 ### score_mean_ge0.85
 
-- path: `/Users/yusukefujinami/ToReBrain/ToReBrain-pipeline/results/3d_unet_medseg/test_e20_thr022_cc20_score_sweep/score_mean_ge0.85`
+- path: `/Users/yusukefujinami/ToReBrain/pipeline/results/3d_unet_medseg/test_e20_thr022_cc20_score_sweep/score_mean_ge0.85`
 - model_path: `runs/3d_unet/medseg_3d_unet_e20_dwi_adc_flair_fp_ohem_balanced/best.pt`
 - thresholds: 0.22
 - min_size: 20
@@ -995,7 +995,7 @@ Results root: `/Users/yusukefujinami/ToReBrain/ToReBrain-pipeline/results/3d_une
 
 ### score_mean_ge0.9
 
-- path: `/Users/yusukefujinami/ToReBrain/ToReBrain-pipeline/results/3d_unet_medseg/test_e20_thr022_cc20_score_sweep/score_mean_ge0.9`
+- path: `/Users/yusukefujinami/ToReBrain/pipeline/results/3d_unet_medseg/test_e20_thr022_cc20_score_sweep/score_mean_ge0.9`
 - model_path: `runs/3d_unet/medseg_3d_unet_e20_dwi_adc_flair_fp_ohem_balanced/best.pt`
 - thresholds: 0.22
 - min_size: 20
@@ -1006,7 +1006,7 @@ Results root: `/Users/yusukefujinami/ToReBrain/ToReBrain-pipeline/results/3d_une
 
 ### score_mean_ge0.95
 
-- path: `/Users/yusukefujinami/ToReBrain/ToReBrain-pipeline/results/3d_unet_medseg/test_e20_thr022_cc20_score_sweep/score_mean_ge0.95`
+- path: `/Users/yusukefujinami/ToReBrain/pipeline/results/3d_unet_medseg/test_e20_thr022_cc20_score_sweep/score_mean_ge0.95`
 - model_path: `runs/3d_unet/medseg_3d_unet_e20_dwi_adc_flair_fp_ohem_balanced/best.pt`
 - thresholds: 0.22
 - min_size: 20
