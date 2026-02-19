@@ -11,8 +11,8 @@ from .blocks_unet import conv_block_3d
 class UNet3DEncoderClassifier(nn.Module):
     """UNet3D encoder-only classifier.
 
-    - Reuses the exact encoder/bottleneck module naming from `UNet3D` so that
-      ISLES checkpoints (`best.pt` which stores `model.state_dict()`) can be loaded
+        - Reuses the exact encoder/bottleneck module naming from `UNet3D` so that
+            compatible checkpoints (`best.pt` storing `model.state_dict()`) can be loaded
       directly (or with minimal adaptation).
     - Uses multi-scale pooled features (e3 + bottleneck) to improve stability.
 
@@ -59,13 +59,13 @@ class UNet3DEncoderClassifier(nn.Module):
         return self.head(feat)
 
 
-def load_isles_unet_weights_into_classifier(
+def load_unet_weights_into_classifier(
     model: UNet3DEncoderClassifier,
     ckpt_path: str,
     device: torch.device | str = "cpu",
     allow_input_channel_adapt: bool = True,
 ) -> tuple[list[str], list[str]]:
-    """Load an ISLES `UNet3D` checkpoint (`best.pt` = state_dict) into this classifier.
+    """Load a compatible `UNet3D` checkpoint (`best.pt` = state_dict) into this classifier.
 
     Returns (missing_keys, unexpected_keys).
     """

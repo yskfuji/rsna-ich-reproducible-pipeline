@@ -9,7 +9,7 @@ import typer
 from torch.utils.data import DataLoader
 
 from ..datasets.rsna_ich_dataset import RSNA_CLASSES, RsnaIchSliceDataset, iter_rsna_stage2_records_from_csv
-from ..models.unet3d_encoder_classifier import UNet3DEncoderClassifier, load_isles_unet_weights_into_classifier
+from ..models.unet3d_encoder_classifier import UNet3DEncoderClassifier, load_unet_weights_into_classifier
 
 app = typer.Typer(add_completion=False)
 
@@ -41,7 +41,7 @@ def train(
     epochs: int = typer.Option(3, help="Epochs (quick baseline)"),
     lr: float = typer.Option(3e-4, help="Learning rate"),
     weight_decay: float = typer.Option(1e-4, help="Weight decay"),
-    init_from_isles: Path | None = typer.Option(None, help="Optional ISLES UNet3D checkpoint best.pt"),
+    init_from_encoder: Path | None = typer.Option(None, help="Optional compatible UNet3D checkpoint best.pt"),
 ):
     """Train a quick RSNA ICH slice-level multi-label classifier using UNet3D encoder."""
 
@@ -103,10 +103,10 @@ def train(
     ).to(dev)
 
     init_report = None
-    if init_from_isles is not None:
-        missing, unexpected = load_isles_unet_weights_into_classifier(
+    if init_from_encoder is not None:
+        missing, unexpected = load_unet_weights_into_classifier(
             model,
-            ckpt_path=str(init_from_isles.expanduser().resolve()),
+            ckpt_path=str(init_from_encoder.expanduser().resolve()),
             device=dev,
             allow_input_channel_adapt=True,
         )
@@ -132,7 +132,7 @@ def train(
         "lr": float(lr),
         "weight_decay": float(weight_decay),
         "classes": list(RSNA_CLASSES),
-        "init_from_isles": str(init_from_isles) if init_from_isles is not None else None,
+        "init_from_encoder": str(init_from_encoder) if init_from_encoder is not None else None,
         "init_report": init_report,
         "device": str(dev),
         "n_train": len(train_ds),
