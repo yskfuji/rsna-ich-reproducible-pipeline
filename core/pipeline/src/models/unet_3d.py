@@ -76,13 +76,15 @@ class UNet3D(nn.Module):
         rd, rh, rw = ref.shape[2:]
         diff_d, diff_h, diff_w = rd - x.size(2), rh - x.size(3), rw - x.size(4)
 
+        # F.pad order: (W_left, W_right, H_left, H_right, D_left, D_right)
+        # Extra pixel for odd diffs goes to the right (after) side.
         pad = [
-            max(diff_w, 0) // 2 + max(diff_w, 0) % 2,
             max(diff_w, 0) // 2,
-            max(diff_h, 0) // 2 + max(diff_h, 0) % 2,
+            max(diff_w, 0) // 2 + max(diff_w, 0) % 2,
             max(diff_h, 0) // 2,
-            max(diff_d, 0) // 2 + max(diff_d, 0) % 2,
+            max(diff_h, 0) // 2 + max(diff_h, 0) % 2,
             max(diff_d, 0) // 2,
+            max(diff_d, 0) // 2 + max(diff_d, 0) % 2,
         ]
         if any(pad):
             x = F.pad(x, pad)

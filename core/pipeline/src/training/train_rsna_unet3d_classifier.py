@@ -64,6 +64,12 @@ def train(
     if not records:
         raise FileNotFoundError(f"No DICOM files found under: {dcm_dir}")
 
+    # NOTE: This is a slice-level split (no study-level grouping).
+    # Same-patient slices may appear in both train and val.
+    # For study-level splits, use train_rsna_cnn2d_classifier.py (split_by=study).
+    import random as _random
+    _random.seed(int(seed))
+    _random.shuffle(records)
     n = len(records)
     n_val = int(max(1, round(float(val_frac) * n)))
     n_tr = int(max(1, n - n_val))
@@ -91,8 +97,8 @@ def train(
 
     dev = _device()
 
-    # 3 window channels by default
-    in_channels = int(len(windows.split(";"))) if str(windows).strip() else 1
+    # Count windows, filtering empty tokens from trailing semicolons.
+    in_channels = int(len([p for p in windows.split(";") if p.strip()])) if str(windows).strip() else 1
 
     model = UNet3DEncoderClassifier(
         in_channels=in_channels,

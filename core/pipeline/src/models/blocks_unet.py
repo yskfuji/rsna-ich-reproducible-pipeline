@@ -14,7 +14,7 @@ def _norm2d(kind: str, ch: int) -> nn.Module:
     if k in {"batch", "bn", "batchnorm"}:
         return nn.BatchNorm2d(ch)
     if k in {"instance", "in", "instancenorm"}:
-        return nn.InstanceNorm2d(ch, affine=True, track_running_stats=True)
+        return nn.InstanceNorm2d(ch, affine=True, track_running_stats=False)
     if k in {"group", "gn", "groupnorm"}:
         return nn.GroupNorm(_pick_groupnorm_groups(ch), ch)
     raise ValueError(f"Unknown norm kind: {kind!r}")
@@ -25,7 +25,7 @@ def _norm3d(kind: str, ch: int) -> nn.Module:
     if k in {"batch", "bn", "batchnorm"}:
         return nn.BatchNorm3d(ch)
     if k in {"instance", "in", "instancenorm"}:
-        return nn.InstanceNorm3d(ch, affine=True, track_running_stats=True)
+        return nn.InstanceNorm3d(ch, affine=True, track_running_stats=False)
     if k in {"group", "gn", "groupnorm"}:
         return nn.GroupNorm(_pick_groupnorm_groups(ch), ch)
     raise ValueError(f"Unknown norm kind: {kind!r}")

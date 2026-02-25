@@ -122,10 +122,12 @@ class DiceFocalLoss(nn.Module):
         dice = (2 * inter + self.smooth) / (den + self.smooth)
         dice_loss = 1 - dice.mean()
 
-        # Focal BCE part
+        # Focal BCE part (Lin et al. 2017)
+        # alpha applies to positives, (1-alpha) to negatives
         ce = F.binary_cross_entropy_with_logits(logits, targets, reduction="none")
         pt = torch.exp(-ce)
-        focal = (self.alpha * (1 - pt) ** self.gamma * ce).mean()
+        alpha_t = self.alpha * targets + (1.0 - self.alpha) * (1.0 - targets)
+        focal = (alpha_t * (1 - pt) ** self.gamma * ce).mean()
 
         return dice_loss + focal
 

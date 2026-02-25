@@ -15,10 +15,10 @@ def prepare_device():
     override = os.environ.get("TORCH_DEVICE")
     if override:
         return torch.device(override)
-    if torch.backends.mps.is_available():
-        return torch.device("mps")
     if torch.cuda.is_available():
         return torch.device("cuda")
+    if torch.backends.mps.is_available():
+        return torch.device("mps")
     return torch.device("cpu")
 
 

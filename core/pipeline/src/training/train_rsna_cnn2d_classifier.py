@@ -803,8 +803,8 @@ def train(
 
     dev = _device()
 
-    # 3 window channels by default
-    n_win = int(len(windows.split(";"))) if str(windows).strip() else 1
+    # Count windows, filtering empty tokens from trailing semicolons.
+    n_win = int(len([p for p in windows.split(";") if p.strip()])) if str(windows).strip() else 1
     in_channels = n_win * int(stack_slices)
 
     arch_s = str(arch).strip().lower()
