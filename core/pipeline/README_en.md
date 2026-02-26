@@ -433,12 +433,15 @@ $$
 **[Important] Evaluation space caveat (`enforce_any_max`)**:
 - `val_logloss_weighted` is computed against probabilities obtained **after** applying `enforce_any_max` (default: **ON**) on top of `sigmoid(logit)`.
   - `enforce_any_max = True`: `p(any) = max(p(any), max(p(subtypes)))` — forcibly raises the `any` probability when it falls below the maximum subtype probability.
-  - This corrects a logical inconsistency (if a subtype is positive, `any` should be at least as high); necessary because the model is trained with independent per-class BCE and can produce contradictory outputs.
   - Therefore, this metric is **not in the raw model output space** (logit → sigmoid); it reflects post-processed probabilities.
+- **Effect of `enforce_any_max` on the metric (important)**:
+  - By raising `p(any)` to the max of 5 subtype probs, **false positive subtype predictions (y_sub=0 but p_sub high) propagate to the `any` class**.
+  - ~83% of val samples are any-negative (y_any=0), and among them many will have `max(p_subtypes) > p(any)` (upward bias from taking max of 5 variables).
+  - As a result, `val_logloss_weighted` tends to be **worse (higher) than val_logloss_weighted_raw** in practice (verified via simulation).
+  - In other words, `val_logloss_weighted = 0.055` is likely a conservative (pessimistic) estimate of true model performance.
+  - Whether it improves or worsens depends on the model's actual FP/TP structure. The difference (now logged as `val_logloss_weighted_raw` in `log.jsonl`) serves as a diagnostic.
 - **Not directly comparable to Kaggle LB**: the Kaggle competition evaluates raw probabilities without post-processing.
-  - However, if you also apply `enforce_any_max` when generating your submission, the reported metric is a proxy for the submitted prediction's expected logloss.
-- Impact magnitude: for a well-calibrated model with low inconsistency, the effect is small (estimated ~0.001 improvement per 10% inconsistency at val=400). Higher inconsistency → larger effect.
-- To measure raw model output without this adjustment, add `--no-enforce-any-max`.
+- Raw model output is now available as `val_logloss_weighted_raw` (new `log.jsonl` field).
 
 **Naive baseline comparison (score context)**:
 
@@ -446,7 +449,8 @@ $$
 |:--|--:|:--|
 | Always predict p=0.5 | 0.693 | Maximum uncertainty (= ln 2) |
 | Always predict class prior | ~0.241 | e.g., pos_rate_any ≈ 0.1496 |
-| **This model (enforce_any_max=True)** | **0.054** | mean over seeds 0/1/2 |
+| **This model (enforce_any_max=True)** | **0.054** | mean over seeds 0/1/2 (conservative estimate) |
+| **This model (raw output, enforce=False)** | **<0.054** | check `val_logloss_weighted_raw` on next run |
 | Kaggle LB reference (public) | ~0.046–0.060 | Full dataset, raw probs, different eval conditions |
 
 - vs. class-prior baseline: ~4.5× improvement (confirms the model is working).

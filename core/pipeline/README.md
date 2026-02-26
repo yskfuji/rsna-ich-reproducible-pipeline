@@ -450,12 +450,15 @@ $$
 **【重要】評価スペースの注意 (`enforce_any_max`)**:
 - `val_logloss_weighted` は `sigmoid(logit)` の後に `enforce_any_max`（既定: **ON**）を適用した確率に対して計算されます。
   - `enforce_any_max = True`: `p(any) = max(p(any), max(p(subtypes)))` — any が subtype 最大値を下回る場合に強制的に引き上げます。
-  - 論理的一貫性の補正（「subtype陽性ならanyも高い」）であり、モデルが独立BCEで訓練された場合に不整合を事後修正します。
   - したがって、これはモデルの **生の出力空間（raw logit → sigmoid）ではなく**、post-process済みの確率に対する指標です。
+- **`enforce_any_max` の評価指標への影響（重要）**:
+  - `p(any)` を 5 subtype の最大値まで引き上げることで、**false positive な subtype 予測（y_sub=0 なのに p_sub が高い）が any 方向にも伝播**します。
+  - val set の 83% 程度は any-negative（y_any=0）であり、その中で `max(p_subtypes) > p(any)` となる症例が多数生じます（5 変数の max による上方バイアス）。
+  - 結果として、**val_logloss_weighted は val_logloss_weighted_raw より悪化（大きくなる）傾向**があります（シミュレーション検証済み）。
+  - つまり `val_logloss_weighted = 0.055` は真のモデル性能より保守的（悪め）な推定である可能性があります。
+  - 改善/悪化どちらになるかは実際のモデルの FP/TP 構成次第。`val_logloss_weighted_raw` との差 (`log.jsonl` に記録）が diagnosis になります。
 - **Kaggle LB との直接比較は無効**: Kaggle 本番はpost-processingなしの生確率で評価します。
-  - ただし submission を Kaggle に提出する際にも `enforce_any_max` を適用するなら、その submit の期待スコアとは比較可能です。
-- `enforce_any_max` の影響の大きさ: inconsistency（subtype > any）が少ない well-calibrated モデルでは影響はわずか（推定 ~0.001 改善/10%inconsistency @ val=400）。inconsistency が多いモデルでは影響が大きくなります。
-- 生のモデル出力での指標を見たい場合は `--no-enforce-any-max` を追加してください。
+- 生のモデル出力での指標は `val_logloss_weighted_raw`（新規 log.jsonl フィールド）で確認できます。
 
 **ナイーブベースライン比較（スコアの文脈）**:
 
@@ -463,7 +466,8 @@ $$
 |:--|--:|:--|
 | 常に p=0.5 を予測 | 0.693 | 最大不確実性 (= ln 2) |
 | 常にクラス事前確率を予測 | ~0.241 | pos_rate_any≈0.1496 等の場合 |
-| **本モデル（enforce_any_max=True）** | **0.054** | seed 0/1/2 mean |
+| **本モデル（enforce_any_max=True）** | **0.054** | seed 0/1/2 mean（保守的推定）|
+| **本モデル（生モデル出力、enforce=False）** | **<0.054** | 次回 run で val_logloss_weighted_raw として確認 |
 | Kaggle LB 参考（公知）| ~0.046–0.060 | 全データ使用・生確率・異なる評価条件 |
 
 - 事前確率ベースラインとの比較: 約 4.5x 改善（モデルとして機能していることの確認）
