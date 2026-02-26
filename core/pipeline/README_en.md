@@ -450,7 +450,7 @@ $$
 | Always predict p=0.5 | 0.693 | Maximum uncertainty (= ln 2) |
 | Always predict class prior | ~0.241 | e.g., pos_rate_any ≈ 0.1496 |
 | **This model (enforce_any_max=True)** | **0.054** | mean over seeds 0/1/2 (conservative estimate) |
-| **This model (raw output, enforce=False)** | **<0.054** | check `val_logloss_weighted_raw` on next run |
+| **This model (raw output, enforce=False)** | **0.0551** | `val_logloss_weighted_raw` (repro run seed=0 measured: 0.05507) |
 | Kaggle LB reference (public) | ~0.046–0.060 | Full dataset, raw probs, different eval conditions |
 
 - vs. class-prior baseline: ~4.5× improvement (confirms the model is working).
