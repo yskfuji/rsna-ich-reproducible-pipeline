@@ -1061,14 +1061,25 @@ def train(
             lg = np.concatenate(all_logits, axis=0)
             yy = np.concatenate(all_y, axis=0)
             prob = _sigmoid_np(lg)
+
+            # Raw metric (before enforce_any_max) — reflects true model output space.
+            val_wlogloss_raw, val_logloss_per_class_raw = _weighted_multilabel_logloss(
+                y_true=yy,
+                p=prob,
+                class_names=list(RSNA_CLASSES),
+                class_weights=RSNA_LOGLOSS_CLASS_WEIGHTS,
+            )
+
             if bool(enforce_any_max):
                 any_i = int(RSNA_CLASSES.index("any"))
                 sub_max = prob[:, :any_i].max(axis=1)
                 prob[:, any_i] = np.maximum(prob[:, any_i], sub_max)
+
             aucs = [_roc_auc_binary(yy[:, i], prob[:, i]) for i in range(yy.shape[1])]
             val_auc_per_class = {RSNA_CLASSES[i]: float(aucs[i]) for i in range(len(RSNA_CLASSES))}
             val_auc_mean = float(np.nanmean(np.asarray(aucs, dtype=np.float64)))
 
+            # Post-processed metric (after enforce_any_max) — matches submission-time post-processing.
             val_wlogloss, val_logloss_per_class = _weighted_multilabel_logloss(
                 y_true=yy,
                 p=prob,
@@ -1077,7 +1088,9 @@ def train(
             )
         else:
             val_wlogloss = float("nan")
+            val_wlogloss_raw = float("nan")
             val_logloss_per_class = None
+            val_logloss_per_class_raw = None
 
         lr_now = float(opt.param_groups[0]["lr"])
         log = {
@@ -1089,7 +1102,9 @@ def train(
             "val_auc_mean": val_auc_mean,
             "val_auc": val_auc_per_class,
             "val_logloss_weighted": val_wlogloss,
+            "val_logloss_weighted_raw": val_wlogloss_raw,
             "val_logloss_per_class": val_logloss_per_class,
+            "val_logloss_per_class_raw": val_logloss_per_class_raw,
             "lr": lr_now,
         }
         with (out_dir / "log.jsonl").open("a", encoding="utf-8") as f:
