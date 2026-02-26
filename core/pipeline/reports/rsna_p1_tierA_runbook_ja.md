@@ -35,6 +35,7 @@ chmod +x scripts/run_rsna_p1_tierA_ab.zsh
 - `val_logloss_weighted` が一番小さい run を採用
 - その run の `best_wlogloss.pt` を使って `src/inference/predict_rsna_ich_submission.py` で submission を作る
   - `enforce_any_max` はON推奨（anyの論理整合）
+  - ただし `enforce_any_max` は `val_logloss_weighted` を悪化させる傾向があるため、必要に応じて `log.jsonl` の `val_logloss_weighted_raw`（後処理前）も併記して診断
 
 最短（best run を自動選択して submission 生成）:
 
