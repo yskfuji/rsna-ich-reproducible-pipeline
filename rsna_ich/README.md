@@ -1,5 +1,13 @@
 # RSNA Intracranial Hemorrhage (Kaggle 2019)
 
+## Stable Portfolio Version
+
+The reproducible evaluation reviewed during recruitment corresponds to:
+
+✅ rsna-ich-v1.0-interview
+
+Active development continues on the repository.
+
 このフォルダは RSNA ICH 公開物の入口です。
 
 - 対応する公開リポジトリ名: `rsna-ich-reproducible-pipeline`

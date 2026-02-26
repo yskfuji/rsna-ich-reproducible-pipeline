@@ -1,5 +1,13 @@
 # RSNA Intracranial Hemorrhage (Kaggle 2019) — 再現性つき実験README（ポートフォリオ向け）
 
+## Stable Portfolio Version
+
+The reproducible evaluation reviewed during recruitment corresponds to:
+
+✅ rsna-ich-v1.0-interview
+
+Active development continues on the repository.
+
 英語版: [README_en.md](README_en.md)
 
 このフォルダ（pipeline/）は RSNA ICH の学習・評価・推論を「**再現できる形で**」回すための最小パイプラインです。

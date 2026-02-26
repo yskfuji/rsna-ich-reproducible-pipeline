@@ -1,5 +1,13 @@
 # RSNA Intracranial Hemorrhage (Kaggle 2019) — Auditable, Reproducible Experiment README (Portfolio)
 
+## Stable Portfolio Version
+
+The reproducible evaluation reviewed during recruitment corresponds to:
+
+✅ rsna-ich-v1.0-interview
+
+Active development continues on the repository.
+
 Japanese version: [README.md](README.md)
 
 This folder (pipeline/) is a minimal pipeline to run RSNA ICH training/evaluation/inference in an **auditable, reproducible** way.
