@@ -69,6 +69,8 @@ CV results (val):
 - `val_logloss_weighted`: **0.05346 ± 0.00624** (min 0.04732 / max 0.06347)
 - `val_auc_mean`: **0.98815 ± 0.00311** (min 0.98441 / max 0.99188)
 
+Note: all scores above are computed with `enforce_any_max=True` (default) applied after sigmoid (see §5.1 for details).
+
 Aggregation (reproducible definition):
 - Extract `val_logloss_weighted` / `val_auc_mean` from the **last line** of each fold’s `log.jsonl`, then compute mean±std (and min/max) across folds.
 - Use `tools/summarize_cv.py` to aggregate automatically (see §2.3).
@@ -106,7 +108,7 @@ Runs:
 - `results/rsna_convnext25d_ft_repro_val05_short_20260210_111323_run2`
 
 Key metrics (val):
-- `val_logloss_weighted = 0.0555525`
+- `val_logloss_weighted = 0.0555525` (with `enforce_any_max=True`)
 - `val_auc_mean = 0.9915841`
 
 Reproducibility outcome:
@@ -427,6 +429,33 @@ $$
 \mathrm{ll}_c = \frac{1}{N}\sum_{i=1}^{N}\ell_{i,c},\quad
 \mathrm{wlogloss} = \frac{\sum_c w_c\,\mathrm{ll}_c}{\sum_c w_c}
 $$
+
+**[Important] Evaluation space caveat (`enforce_any_max`)**:
+- `val_logloss_weighted` is computed against probabilities obtained **after** applying `enforce_any_max` (default: **ON**) on top of `sigmoid(logit)`.
+  - `enforce_any_max = True`: `p(any) = max(p(any), max(p(subtypes)))` — forcibly raises the `any` probability when it falls below the maximum subtype probability.
+  - This corrects a logical inconsistency (if a subtype is positive, `any` should be at least as high); necessary because the model is trained with independent per-class BCE and can produce contradictory outputs.
+  - Therefore, this metric is **not in the raw model output space** (logit → sigmoid); it reflects post-processed probabilities.
+- **Not directly comparable to Kaggle LB**: the Kaggle competition evaluates raw probabilities without post-processing.
+  - However, if you also apply `enforce_any_max` when generating your submission, the reported metric is a proxy for the submitted prediction's expected logloss.
+- Impact magnitude: for a well-calibrated model with low inconsistency, the effect is small (estimated ~0.001 improvement per 10% inconsistency at val=400). Higher inconsistency → larger effect.
+- To measure raw model output without this adjustment, add `--no-enforce-any-max`.
+
+**Naive baseline comparison (score context)**:
+
+| Baseline | val_logloss_weighted | Notes |
+|:--|--:|:--|
+| Always predict p=0.5 | 0.693 | Maximum uncertainty (= ln 2) |
+| Always predict class prior | ~0.241 | e.g., pos_rate_any ≈ 0.1496 |
+| **This model (enforce_any_max=True)** | **0.054** | mean over seeds 0/1/2 |
+| Kaggle LB reference (public) | ~0.046–0.060 | Full dataset, raw probs, different eval conditions |
+
+- vs. class-prior baseline: ~4.5× improvement (confirms the model is working).
+- Kaggle LB comparison is **not direct**: data volume (this README uses limit_images=8000 ≈ 1.2% of full data), `enforce_any_max` use, and val set size all differ.
+
+**Statistical uncertainty of single-holdout estimates**:
+- val_frac=0.05 × limit_images=8000 ≈ **~400 samples** in the val set.
+- Rough 95% CI assuming individual logloss SD ≈ 0.3: ±0.029 (= 1.96 × 0.3 / √400).
+- A single holdout score is too noisy to reliably compare two runs. GroupKFold CV (each fold ~1370 samples, CI ≈ ±0.016) is more reliable, which is exactly why the GroupKFold section is included.
 
 ### 5.2 Auxiliary metric (sanity check)
 

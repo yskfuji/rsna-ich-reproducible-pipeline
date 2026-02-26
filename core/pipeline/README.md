@@ -68,6 +68,8 @@ CV結果（val）:
 - `val_logloss_weighted`: **0.05346 ± 0.00624**（min 0.04732 / max 0.06347）
 - `val_auc_mean`: **0.98815 ± 0.00311**（min 0.98441 / max 0.99188）
 
+※ 上記スコアはいずれも `enforce_any_max=True`（既定）適用後の確率に対する指標です（詳細は「5.1」参照）。
+
 集計方法（再現可能な定義）:
 - 各 fold の `log.jsonl` **最終行**から `val_logloss_weighted` / `val_auc_mean` を抽出し、fold 間で mean±std（および min/max）を計算
 - まとめ出力は `tools/summarize_cv.py` で自動集計できます（下記 2.3 参照）
@@ -107,7 +109,7 @@ run:
 - results/rsna_convnext25d_ft_repro_val05_short_20260210_111323_run2
 
 主要指標（val）:
-- `val_logloss_weighted = 0.0555525`
+- `val_logloss_weighted = 0.0555525`（`enforce_any_max=True` 適用後）
 - `val_auc_mean = 0.9915841`
 
 再現性の確認結果:
@@ -444,6 +446,33 @@ $$
 $$
 
 補足: 重み $w_c$ がサンプル $i$ に依存せず、欠損が無い前提では、**「サンプル内でクラス方向に重み付き平均→サンプル平均」**の書き方とも同値です。
+
+**【重要】評価スペースの注意 (`enforce_any_max`)**:
+- `val_logloss_weighted` は `sigmoid(logit)` の後に `enforce_any_max`（既定: **ON**）を適用した確率に対して計算されます。
+  - `enforce_any_max = True`: `p(any) = max(p(any), max(p(subtypes)))` — any が subtype 最大値を下回る場合に強制的に引き上げます。
+  - 論理的一貫性の補正（「subtype陽性ならanyも高い」）であり、モデルが独立BCEで訓練された場合に不整合を事後修正します。
+  - したがって、これはモデルの **生の出力空間（raw logit → sigmoid）ではなく**、post-process済みの確率に対する指標です。
+- **Kaggle LB との直接比較は無効**: Kaggle 本番はpost-processingなしの生確率で評価します。
+  - ただし submission を Kaggle に提出する際にも `enforce_any_max` を適用するなら、その submit の期待スコアとは比較可能です。
+- `enforce_any_max` の影響の大きさ: inconsistency（subtype > any）が少ない well-calibrated モデルでは影響はわずか（推定 ~0.001 改善/10%inconsistency @ val=400）。inconsistency が多いモデルでは影響が大きくなります。
+- 生のモデル出力での指標を見たい場合は `--no-enforce-any-max` を追加してください。
+
+**ナイーブベースライン比較（スコアの文脈）**:
+
+| ベースライン | val_logloss_weighted | 備考 |
+|:--|--:|:--|
+| 常に p=0.5 を予測 | 0.693 | 最大不確実性 (= ln 2) |
+| 常にクラス事前確率を予測 | ~0.241 | pos_rate_any≈0.1496 等の場合 |
+| **本モデル（enforce_any_max=True）** | **0.054** | seed 0/1/2 mean |
+| Kaggle LB 参考（公知）| ~0.046–0.060 | 全データ使用・生確率・異なる評価条件 |
+
+- 事前確率ベースラインとの比較: 約 4.5x 改善（モデルとして機能していることの確認）
+- Kaggle LB との比較は **データ量（本 README は limit_images=8000≈全体の1.2%）、enforce_any_max の有無、val セット規模** が異なるため、直接対応しません。
+
+**単発holdoutの統計的不確かさ**:
+- val_frac=0.05 × limit_images=8000 ≈ **~400 サンプル**の val セット
+- logloss の個別値の SD を ~0.3 と仮定した 95% CI: ±0.029（= 1.96 × 0.3 / √400）
+- 単発 holdout スコアのみで「A が B より良い」を主張するには CI が広すぎます。GroupKFold CV（各 fold ~1370 サンプル: CI ±0.016）の方が信頼性が高い理由はここにあります。
 
 ### 5.2 補助指標（健康診断）
 
