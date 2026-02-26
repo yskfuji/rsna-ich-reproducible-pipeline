@@ -39,6 +39,26 @@ class InputNormalizeMode(str, Enum):
     none = "none"
 
 
+def _flatten_metrics(prefix: str, obj: Any) -> dict[str, float]:
+    """Flatten nested metric dicts (e.g., per-class) into MLflow-friendly scalars."""
+
+    out: dict[str, float] = {}
+    if obj is None:
+        return out
+    if isinstance(obj, (int, float, np.floating)):
+        try:
+            out[prefix] = float(obj)
+        except Exception:
+            pass
+        return out
+    if isinstance(obj, dict):
+        for k, v in obj.items():
+            kk = f"{prefix}/{k}" if prefix else str(k)
+            out.update(_flatten_metrics(kk, v))
+        return out
+    return out
+
+
 def _parse_input_normalize_mode(x: InputNormalizeMode | str) -> InputNormalizeMode:
     if isinstance(x, InputNormalizeMode):
         return x
@@ -544,6 +564,38 @@ def train(
         help="Backprop using plain BCEWithLogitsLoss (unweighted). Useful when targeting val_loss_plain. ",
     ),
     log_every_steps: int = typer.Option(200, help="Print train progress every N steps (0=disable)."),
+    wandb: bool = typer.Option(
+        False,
+        help="Enable Weights & Biases logging. (bool flags: --wandb/--no-wandb)",
+    ),
+    wandb_project: str = typer.Option(
+        "rsna-ich",
+        help="W&B project name (requires --wandb).",
+    ),
+    wandb_entity: str | None = typer.Option(
+        None,
+        help="W&B entity/team (optional; requires --wandb).",
+    ),
+    wandb_run_name: str | None = typer.Option(
+        None,
+        help="W&B run name (default: out_dir name; requires --wandb).",
+    ),
+    mlflow: bool = typer.Option(
+        False,
+        help="Enable MLflow logging. (bool flags: --mlflow/--no-mlflow)",
+    ),
+    mlflow_tracking_uri: str | None = typer.Option(
+        None,
+        help="MLflow tracking URI (optional; falls back to MLFLOW_TRACKING_URI env). Requires --mlflow.",
+    ),
+    mlflow_experiment: str = typer.Option(
+        "rsna-ich",
+        help="MLflow experiment name (requires --mlflow).",
+    ),
+    mlflow_run_name: str | None = typer.Option(
+        None,
+        help="MLflow run name (default: out_dir name; requires --mlflow).",
+    ),
 ):
     """Train a quick RSNA ICH slice-level multi-label classifier using a small 2D CNN.
 
@@ -959,6 +1011,63 @@ def train(
     }
     (out_dir / "meta.json").write_text(json.dumps(meta, indent=2, ensure_ascii=False))
 
+    wandb_run = None
+    mlflow_lib = None
+    if bool(wandb):
+        try:
+            import wandb as wandb_lib  # type: ignore[import-not-found]
+        except Exception as e:
+            raise RuntimeError(
+                "--wandb is enabled but 'wandb' is not installed. "
+                "Install it (e.g., add to your env) or disable --wandb."
+            ) from e
+
+        run_name = str(wandb_run_name).strip() if wandb_run_name is not None else ""
+        if not run_name:
+            run_name = out_dir.name
+        wandb_run = wandb_lib.init(
+            project=str(wandb_project).strip(),
+            entity=(str(wandb_entity).strip() if wandb_entity is not None else None),
+            name=run_name,
+            config=meta,
+            dir=str(out_dir),
+        )
+
+    if bool(mlflow):
+        try:
+            import mlflow as _mlflow  # type: ignore[import-not-found]
+        except Exception as e:
+            raise RuntimeError(
+                "--mlflow is enabled but 'mlflow' is not installed. "
+                "Install it (e.g., add to your env) or disable --mlflow."
+            ) from e
+
+        mlflow_lib = _mlflow
+        if mlflow_tracking_uri is not None and str(mlflow_tracking_uri).strip():
+            mlflow_lib.set_tracking_uri(str(mlflow_tracking_uri).strip())
+        mlflow_lib.set_experiment(str(mlflow_experiment).strip())
+        run_name = str(mlflow_run_name).strip() if mlflow_run_name is not None else ""
+        if not run_name:
+            run_name = out_dir.name
+        mlflow_lib.start_run(run_name=run_name)
+        # Keep params small/flat to avoid MLflow limitations.
+        mlflow_params = {
+            "arch": str(meta.get("arch")),
+            "pretrained": str(meta.get("pretrained")),
+            "stack_slices": str(meta.get("stack_slices")),
+            "image_size": str(meta.get("image_size")),
+            "windows": str(meta.get("windows")),
+            "preprocess": str(meta.get("preprocess")),
+            "split_by": str(meta.get("split_by")),
+            "val_frac": str(meta.get("val_frac")),
+            "seed": str(meta.get("seed")),
+            "limit_images": str(meta.get("limit_images")),
+            "enforce_any_max": str(meta.get("enforce_any_max")),
+            "out_dir": str(out_dir),
+            "subset_fingerprint_sha256": str(meta.get("subset_fingerprint_sha256")),
+        }
+        mlflow_lib.log_params({k: v for k, v in mlflow_params.items() if v is not None})
+
     best_val = float("inf")
     best_auc = float("-inf")
     best_wlogloss = float("inf")
@@ -1114,6 +1223,31 @@ def train(
             flush=True,
         )
 
+        if wandb_run is not None or mlflow_lib is not None:
+            flat: dict[str, float] = {}
+            flat.update(_flatten_metrics("train_loss", tr))
+            flat.update(_flatten_metrics("train_loss_plain", tr_plain))
+            flat.update(_flatten_metrics("val_loss", va))
+            flat.update(_flatten_metrics("val_loss_plain", va_plain))
+            flat.update(_flatten_metrics("val_auc_mean", val_auc_mean))
+            flat.update(_flatten_metrics("val_logloss_weighted", val_wlogloss))
+            flat.update(_flatten_metrics("val_logloss_weighted_raw", val_wlogloss_raw))
+            flat.update(_flatten_metrics("lr", lr_now))
+            flat.update(_flatten_metrics("val_auc", val_auc_per_class))
+            flat.update(_flatten_metrics("val_logloss_per_class", val_logloss_per_class))
+            flat.update(_flatten_metrics("val_logloss_per_class_raw", val_logloss_per_class_raw))
+
+            if wandb_run is not None:
+                try:
+                    wandb_run.log(flat, step=int(epoch))
+                except Exception:
+                    pass
+            if mlflow_lib is not None:
+                try:
+                    mlflow_lib.log_metrics(flat, step=int(epoch))
+                except Exception:
+                    pass
+
         torch.save(model.state_dict(), out_dir / "last.pt")
         _save_train_state(
             out_dir / "last_state.pt",
@@ -1139,6 +1273,22 @@ def train(
             metric = val_wlogloss if np.isfinite(val_wlogloss) else va
             if np.isfinite(metric):
                 sched.step(metric)
+
+    if mlflow_lib is not None:
+        try:
+            if np.isfinite(best_wlogloss):
+                mlflow_lib.log_metric("best_wlogloss", float(best_wlogloss))
+            mlflow_lib.end_run()
+        except Exception:
+            pass
+
+    if wandb_run is not None:
+        try:
+            if np.isfinite(best_wlogloss):
+                wandb_run.summary["best_wlogloss"] = float(best_wlogloss)
+            wandb_run.finish()
+        except Exception:
+            pass
 
 
 if __name__ == "__main__":

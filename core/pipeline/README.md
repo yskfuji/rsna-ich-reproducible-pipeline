@@ -45,6 +45,16 @@ TORCH_DEVICE=mps python train_rsna_cnn2d_classifier.py train --rsna-root ... --p
   → 出力: `meta.json`, `log.jsonl`, checkpoint は `results/repro_demo/` 配下（完全なコマンドは §2.2）。
   ※実パス例は §2.1「データ例」を参照（rsna_root / preprocessed_root）。
 
+- 実験管理（任意）: `train` は **デフォルトOFF**で Weights & Biases / MLflow にも同じ指標を送れます。
+
+```bash
+# W&B（要: WANDB_API_KEY）
+TORCH_DEVICE=mps python train_rsna_cnn2d_classifier.py train --rsna-root ... --preprocessed-root ... --out-dir results/repro_demo --limit-images 8000 --val-frac 0.05 --split-by study --seed 0 --epochs 1 --no-aug --no-scheduler --arch convnext_tiny --pretrained --wandb --wandb-project rsna-ich
+
+# MLflow（例: ローカル保存 or tracking server 指定）
+python train_rsna_cnn2d_classifier.py train --rsna-root ... --preprocessed-root ... --out-dir results/repro_demo --limit-images 8000 --val-frac 0.05 --split-by study --seed 0 --epochs 1 --no-aug --no-scheduler --arch convnext_tiny --pretrained --mlflow --mlflow-experiment rsna-ich
+```
+
 ---
 
 ## 1. 指標サマリ（今回の結果）
