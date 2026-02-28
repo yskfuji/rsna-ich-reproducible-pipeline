@@ -1,0 +1,14 @@
+rsna-ich-reproducible-pipeline
+Copyright 2026 yskfuji
+
+This repository is provided as a research/reproducibility and audit package
+for the RSNA Intracranial Hemorrhage Detection (Kaggle 2019) competition.
+
+It is NOT a medical device and is NOT intended for clinical decision making.
+
+No datasets, runs, results, or logs are included in this repository.
+Users must obtain the relevant datasets separately and comply with the
+applicable dataset terms (Kaggle competition rules / RSNA data use agreement).
+
+This NOTICE file is provided for informational purposes only and does not
+modify the License.
