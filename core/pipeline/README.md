@@ -1,6 +1,8 @@
-# RSNA Intracranial Hemorrhage (Kaggle 2019) — 再現性つき実験README（ポートフォリオ向け）
+# RSNA Intracranial Hemorrhage (Kaggle 2019) — 再現性のある実験 README（ポートフォリオ向け）
 
-## Stable Portfolio Version（固定スナップショット）
+**言語:** 日本語 | [英語版](README_en.md)
+
+## 固定スナップショット（ポートフォリオ用）
 
 採用選考でレビューされた「再現評価」は、次のタグに対応します：
 
@@ -8,38 +10,36 @@
 
 リポジトリは継続的に開発中です。
 
-英語版: [README_en.md](README_en.md)
-
 このフォルダ（pipeline/）は RSNA ICH の学習・評価・推論を「**再現できる形で**」回すための最小パイプラインです。
-読者が短時間で判断できるよう、**再現性 / 分割設計（リーク対策）/ 比較軸 / Ablation** を先頭にまとめています。
+読者が短時間で判断できるよう、**再現性 / 分割設計（リーク対策）/ 比較軸 / アブレーション** を先頭にまとめています。
 
 ---
 
-## TL;DR（このREADMEで分かること）
+## TL;DR（この README で分かること）
 
 - 再現性（この配布物内）: 記録済みの成果物（`meta.json` / `log.jsonl`、`split_stats` を含む）と固定CLIコマンドにより検証可能（例: `results/rsna_convnext25d_ft_repro_val05_short_20260210_101836_run1` と `_run2`）。
 - 参照コミット（上流・参照用）: `9bc2684fe0b564c792025b52694f9c4fe1a0d32d`（この配布物のコードスナップショットをエクスポートした時点の上流リポジトリのコミットID）。
 - 上流リポジトリURL: 配布物は git メタデータ非同梱のため、上流URL/履歴は配布物単体では追跡不能です（`.git` なし）。
 - 配布物の完全性（任意）: `python tools/make_manifest.py` でファイル一覧（path + sha256）のマニフェストを生成し（例: `--out MANIFEST.sha256`）、この配布物を指紋化できます。
 
-- **頑健性（偶然に依存していないかの確認）**: `split_by=study` の **GroupKFold(5)** で `val_logloss_weighted = 0.05346 ± 0.00624` を確認（`epochs=1` / `kept=6852` の fast CV）
+- **頑健性（偶然に依存していないかの確認）**: `split_by=study` の **GroupKFold(5)** で `val_logloss_weighted = 0.05346 ± 0.00624` を確認（`epochs=1` / `kept=6852` の短縮 CV）
 - **再現性**: 同一 seed・同一引数で 2回実行し、`split_stats` と `val_*` が再現可能（この環境では **完全一致（abs_diff=0）** を観測。一般には backend により `abs_diff <= 1e-6` 程度で検証推奨）
-- **評価設計（リーク対策）**: `split_by=study` の **Group split** を採用（同一 Study が train/val に跨がない）
-- **実務上の価値**: リークしやすい問題設定に対し、**group split の監査スクリプト**で「train/val の group 交差が 0」を機械的に検証できる
-- **リーク監査の現状（2026-02-14）**: 10 seed 監査で Study/Series 交差は 0、さらに **split前のテンソルhash de-dup（既定ON）後は train/val の exact duplicate 交差も 0** を確認
+- **評価設計（リーク対策）**: `split_by=study` の **グループ分割**を採用（同一 Study が train/val にまたがらない）
+- **実務上の価値**: リークしやすい問題設定に対し、**グループ分割の監査スクリプト**で「train/val のグループ交差が 0」を機械的に検証できる
+- **リーク監査の現状（2026-02-14）**: 10 seed 監査で Study/Series 交差は 0、さらに **分割前のテンソル hash de-dup（既定 ON）後は train/val の完全重複交差も 0** を確認
 - **指標の意味**: Kaggle本番の重み付き multi-label logloss（`val_logloss_weighted`）を主軸に、AUCは補助として扱う
-- **Uncertainty / Calibration（10 seeds, `split_by=study`, de-dup有効, retrained with dropout）**:
+- **不確実性 / 校正（10 seeds, `split_by=study`, de-dup 有効, dropout を入れて再学習）**:
   - Error-detection AUROC(any): **0.9424 ± 0.0190**
   - ECE(any): **0.0231 ± 0.0032**
   - Brier(any): **0.0209 ± 0.0054**
   - AURC(weighted logloss): **0.00837 ± 0.00214**
   - coverage=0.8 accuracy(any) gain: **+2.53 ± 0.89 pp**
-  - （同条件 baseline 比）ECE **-0.0091**, Brier **-0.0040**, AURC **-0.00139**, AUROC **+0.0046**
-- **温度スケーリングの評価境界（重要）**: 本READMEの uncertainty 数値は `--fit-temperature` を同一 holdout val で実行した値（fit集合=eval集合）であり、ECE/Brier は楽観側に寄る可能性があります。厳密評価では calib/eval 分割（または別holdout）で再計測してください。
-- **監査フック（subset 同一性）**: `split_stats` 一致に加え、採用 `image_id` のソート済み一覧 SHA256（`subset_fingerprint_sha256`）を **`meta.json` に記録（実装済み）**。また `tools/eval_rsna_uncertainty.py` の出力JSONにも `adopted_subset_fingerprint_sha256` / `val_subset_fingerprint_sha256` を出します。
-  - `subset_fingerprint_sha256` 定義: 採用 `image_id` を昇順ソートし、`\n` 区切りで連結した UTF-8 文字列の SHA256(hex)
-  - `adopted_subset_*` は limit_images 等で採用された全体 subset、`val_subset_*` はその subset のうち validation に入った `image_id` subset
-- すぐ再現（holdout, 1 epoch）:
+  - （同条件の比較対象に対して）ECE **-0.0091**, Brier **-0.0040**, AURC **-0.00139**, AUROC **+0.0046**
+- **温度スケーリングの評価境界（重要）**: 本 README の不確実性指標は `--fit-temperature` を同一の holdout validation に対して実行した値（fit 集合 = eval 集合）であり、ECE/Brier は楽観的に出る可能性があります。厳密評価では calib/eval 分割、または別の holdout を使って再計測してください。
+- **監査フック（対象集合の同一性）**: `split_stats` の一致に加え、採用 `image_id` の昇順一覧の SHA256（`subset_fingerprint_sha256`）を **`meta.json` に記録（実装済み）**しています。また `tools/eval_rsna_uncertainty.py` の出力 JSON にも `adopted_subset_fingerprint_sha256` / `val_subset_fingerprint_sha256` を出力します。
+  - `subset_fingerprint_sha256` の定義: 採用した `image_id` を昇順に並べ、`\n` 区切りで連結した UTF-8 文字列の SHA256（16進表記）
+  - `adopted_subset_*` は `limit_images` などで採用された全体の対象集合、`val_subset_*` はそのうち validation に入った `image_id` の集合
+- すぐ再現（holdout、1 epoch）:
 
 ```bash
 # すぐ再現（holdout, 1 epoch）
@@ -50,10 +50,10 @@ TORCH_DEVICE=mps python train_rsna_cnn2d_classifier.py train --rsna-root ... --p
 # - results/**/best*.pt のいずれかを指定
 ```
 
-  → 出力: `meta.json`, `log.jsonl`, checkpoint は `results/repro_demo/` 配下（完全なコマンドは §2.2）。
+  → 出力: `meta.json`, `log.jsonl`, checkpoint は `results/repro_demo/` 配下（完全なコマンドは §2.2 を参照）。
   ※実パス例は §2.1「データ例」を参照（rsna_root / preprocessed_root）。
 
-- 実験管理（任意）: `train` は **デフォルトOFF**で Weights & Biases / MLflow にも同じ指標を送れます。
+- 実験管理（任意）: `train` は **既定では OFF** ですが、Weights & Biases / MLflow に同じ指標を送れます。
 
 ```bash
 # W&B（要: WANDB_API_KEY）
@@ -247,9 +247,9 @@ TORCH_DEVICE=mps python train_rsna_cnn2d_classifier.py train \
 
 監査ポイント: `meta.json`（少なくとも `rsna_root`, `preprocessed_root`, `seed`, `split_stats` を含む）と、`log.jsonl` の最終行（最終 `val_*`）。
 
-### 2.3 実行コマンド（GroupKFold(5) fast CV / epochs=1）
+### 2.3 実行コマンド（5分割 GroupKFold の簡易CV / 1 epoch）
 
-GroupKFold(5) の再現（fast CV）は、`--cv-folds 5` と `--cv-fold-index <0..4>` を使って fold ごとに実行します。
+GroupKFold(5) の簡易CVを再現するには、`--cv-folds 5` と `--cv-fold-index <0..4>` を使って fold ごとに実行します。
 
 注: CLI 引数名は `python train_rsna_cnn2d_classifier.py train --help` の表示を正としてください（将来変更される可能性があるため）。
 
@@ -357,7 +357,7 @@ RSNA ICH は同一患者・同一検査（Study/Series）の画像が多数含�
 
 ### 4.1 リーク検証（証拠コード）
 
-結果（study split）: train/val の group 交差は 0（`n_group_intersection=0`）。
+結果（study split）: train/val のグループ交差は 0（`n_group_intersection=0`）。
 
 合格条件: n_group_intersection == 0 かつ n_imageid_intersection == 0。
 
@@ -491,7 +491,7 @@ $$
 - 事前確率ベースラインとの比較: 約 4.5x 改善（モデルとして機能していることの確認）
 - Kaggle LB との比較は **データ量（本 README は limit_images=8000≈全体の1.2%）、enforce_any_max の有無、val セット規模** が異なるため、直接対応しません。
 
-**単発holdoutの統計的不確かさ**:
+**単発 holdout の統計的不確かさ**:
 - val_frac=0.05 × limit_images=8000 ≈ **~400 サンプル**の val セット
 - logloss の個別値の SD を ~0.3 と仮定した 95% CI: ±0.029（= 1.96 × 0.3 / √400）
 - 単発 holdout スコアのみで「A が B より良い」を主張するには CI が広すぎます。GroupKFold CV（各 fold ~1370 サンプル: CI ±0.016）の方が信頼性が高い理由はここにあります。
@@ -525,7 +525,7 @@ $$
 
 ---
 
-## 7. Ablation（最小構成の3本）
+## 7. アブレーション（最小構成の3本）
 
 | ID | split_by | val_frac | preprocess | stack | aug | optimize_plain_loss | init_from | val_logloss_weighted | val_auc_mean | 備考 |
 |---:|:--|--:|:--|--:|:--|:--|:--|--:|--:|:--|
@@ -549,8 +549,8 @@ $$
 - scripts/make_rsna_submission_from_best.zsh
   - best checkpoint から submission を作る
 
-補足（uncertainty / calibration の出力）:
-- `predict_rsna_ich_submission.py` は MC-Dropout による uncertainty 出力にも対応しています。
+補足（不確実性 / 校正の出力）:
+- `predict_rsna_ich_submission.py` は MC-Dropout による不確実性の出力にも対応しています。
   - 例: `--mc-dropout-stage-p 0.2 --mc-dropout-head-p 0.2 --mc-samples 30 --out-uncertainty-csv submission_uncertainty.csv`
   - `submission_uncertainty.csv` は `ID` ごとの `ProbStd`（予測確率の標準偏差）を出力します（submission.csvとは別ファイル）。
 

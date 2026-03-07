@@ -1,17 +1,17 @@
 # RSNA Intracranial Hemorrhage (Kaggle 2019) — Auditable, Reproducible Experiment README (Portfolio)
 
+**Language:** English | [Japanese](README.md)
+
 ## Stable Portfolio Version
 
 The reproducible evaluation reviewed during recruitment corresponds to:
 
 ✅ rsna-ich-v1.0-interview
 
-Active development continues on the repository.
-
-Japanese version: [README.md](README.md)
+Active development continues in the repository.
 
 This folder (pipeline/) is a minimal pipeline to run RSNA ICH training/evaluation/inference in an **auditable, reproducible** way.
-To help a reviewer decide quickly, this README prioritizes **reproducibility / split design (leakage prevention) / comparison axes / ablation**.
+To help reviewers decide quickly, this README starts with **reproducibility, split design (leakage prevention), comparison axes, and ablation results**.
 
 ---
 
@@ -28,14 +28,14 @@ To help a reviewer decide quickly, this README prioritizes **reproducibility / s
 - **Practical value**: audit scripts mechanically verify that train/val group intersection is 0.
 - **Leakage audit status (2026-02-14)**: across 10 seeds, Study/Series intersections are 0, and with **pre-split tensor-hash dedup (default ON)**, exact-duplicate hash intersection between train/val is also 0.
 - **Primary metric**: Kaggle-style weighted multi-label logloss (`val_logloss_weighted`); AUC is auxiliary.
-- **Uncertainty / Calibration (10 seeds, `split_by=study`, dedup enabled, retrained with dropout)**:
+- **Uncertainty and calibration (10 seeds, `split_by=study`, dedup enabled, retrained with dropout)**:
   - Error-detection AUROC(any): **0.9424 ± 0.0190**
   - ECE(any): **0.0231 ± 0.0032**
   - Brier(any): **0.0209 ± 0.0054**
   - AURC(weighted logloss): **0.00837 ± 0.00214**
   - coverage=0.8 accuracy(any) gain: **+2.53 ± 0.89 pp**
   - vs. baseline (same protocol): ECE **-0.0091**, Brier **-0.0040**, AURC **-0.00139**, AUROC **+0.0046**
-- **Temperature-scaling boundary (important)**: the uncertainty numbers in this README come from `--fit-temperature` on the same holdout val split (fit set = eval set), so ECE/Brier can be optimistic. For strict reporting, use a calib/eval split (or a separate holdout for eval).
+- **Temperature-scaling boundary (important)**: the uncertainty numbers in this README come from running `--fit-temperature` on the same holdout validation split used for evaluation (fit set = eval set), so ECE/Brier may look optimistic. For strict reporting, use a calib/eval split or a separate evaluation holdout.
 - **Audit hook (subset identity)**: in addition to `split_stats` consistency, record sorted `image_id` SHA256 as `subset_fingerprint_sha256` in **`meta.json` (implemented)**. `tools/eval_rsna_uncertainty.py` also outputs `adopted_subset_fingerprint_sha256` / `val_subset_fingerprint_sha256` in its JSON.
   - `subset_fingerprint_sha256` definition: sort adopted `image_id` ascending, join with `\n`, take SHA256 of the UTF-8 string (hex)
   - `adopted_subset_*` is the full adopted subset after `limit_images` etc; `val_subset_*` is the `image_id` subset that ended up in validation

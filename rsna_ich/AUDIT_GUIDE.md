@@ -14,9 +14,9 @@
 - de-dup監査: `tools/audit_rsna_dedup_effect.py`
 - subset同一性: `subset_fingerprint_sha256`（`meta.json`）
 
-## 3) 最小監査観点
+## 3) 最低限の監査観点
 
-- `split_by=study` で group 交差が 0
+- `split_by=study` でグループ交差が 0
 - de-dup 後に exact duplicate 交差が 0
 - 再現runで `split_stats` と `val_*` が許容差内で一致
 - 必要に応じて `subset_fingerprint_sha256` が一致
