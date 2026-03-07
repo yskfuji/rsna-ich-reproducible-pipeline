@@ -1,6 +1,6 @@
 # rsna-ich-reproducible-pipeline
 
-**言語:** 日本語 | [English](README.md)
+**言語:** 日本語 | [英語版](README.md)
 
 RSNA ICH challenge 向けの、**再現可能な頭蓋内出血分類パイプライン**です。監査しやすいドキュメント、校正解析、リークを避けるグループ分割評価を含みます。
 
@@ -12,15 +12,15 @@ RSNA ICH challenge 向けの、**再現可能な頭蓋内出血分類パイプ�
 - リリースノート原稿: [docs/releases/v1.0-interview.md](docs/releases/v1.0-interview.md)
 - ロードマップ: [ROADMAP.md](ROADMAP.md)
 
-## このリポジトリで分かること
+## このリポジトリでできること
 
 - RSNA 頭蓋内出血分類の学習 / 評価ワークフロー
 - `split_by=study` によるグループ分割とリーク監査
 - `any` ラベルに対する校正評価と不確実性評価
 - 外部レビュー向けに整理したポートフォリオ導線
-- 実データなしで配線確認できる簡易動作確認
+- 実データなしで公開物の配線を確認できる簡易動作確認
 
-## 想定読者
+## 想定している読者
 
 - 医療AI実装を確認したい採用担当
 - 監査しやすい医用画像ベースラインを見たい ML エンジニア
@@ -45,7 +45,7 @@ RSNA ICH challenge 向けの、**再現可能な頭蓋内出血分類パイプ�
 
 > 数値は同梱レポートに基づきます。医療データ本体は公開物に含めていません。
 
-## 最短の試し方
+## 最短の確認方法
 
 ### 1. 実データなしで配線確認
 
@@ -63,9 +63,9 @@ python tools/make_manifest.py
 ### 3. 実データで学習 / 評価
 
 - 日本語詳細: [core/pipeline/README.md](core/pipeline/README.md)
-- 英語版の詳細: [core/pipeline/README_en.md](core/pipeline/README_en.md)
+- 英語版の詳細ガイド: [core/pipeline/README_en.md](core/pipeline/README_en.md)
 
-## 含まれるもの / 含まれないもの
+## 含まれるものと含まれないもの
 
 含まれるもの:
 - ソースコード
@@ -79,17 +79,17 @@ python tools/make_manifest.py
 - `results/`
 - `logs/`
 
-## Stable Portfolio Version（固定スナップショット）
+## 固定スナップショット（ポートフォリオ用）
 
 開発は継続中ですが、ポートフォリオ / 面接レビュー用の固定版は次のタグです。
 
 ✅ `rsna-ich-v1.0-interview`
 
-## 引用方法
+## 引用
 
 [CITATION.cff](CITATION.cff) を参照してください。
 
-## コミットメッセージ規約
+## コミットメッセージの規約
 
 今後の変更は Conventional Commits（`type: summary`）で揃えます。
 

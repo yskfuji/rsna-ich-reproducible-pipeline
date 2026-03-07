@@ -1,10 +1,12 @@
 # RSNA Intracranial Hemorrhage (Kaggle 2019)
 
+**Language:** English | [Japanese](README.md)
+
 This folder is the **public entry point** for the RSNA ICH classification pipeline. It is written for hiring review, external technical inspection, and fast project onboarding.
 
 ## What a reviewer can verify quickly
 
-- **What it does**: train / evaluate / infer / audit / calibrate RSNA ICH models
+- **What it does**: trains, evaluates, and audits RSNA ICH models
 - **Who it is for**: hiring managers, ML engineers, and researchers who care about reproducibility
 - **Fastest first run**: `python ../scripts/smoke_test.py --use_dummy_data`
 - **Detailed docs**:
@@ -20,10 +22,10 @@ This folder is the **public entry point** for the RSNA ICH classification pipeli
 
 ## Why this repository is useful
 
-- study-level `split_by=study` group split and audit scripts
-- pre-split tensor-hash de-dup to reduce leakage risk
-- reproducibility artifacts: `meta.json`, `log.jsonl`, `split_stats`
-- subset identity audit via `subset_fingerprint_sha256`
+- study-level `split_by=study` splits and audit scripts
+- pre-split tensor-hash de-duplication to reduce leakage risk
+- reproducibility artifacts such as `meta.json`, `log.jsonl`, and `split_stats`
+- subset identity checks via `subset_fingerprint_sha256`
 
 ## Quick links
 
@@ -38,6 +40,6 @@ The hiring-review snapshot corresponds to:
 
 ✅ `rsna-ich-v1.0-interview`
 
-Active development continues on the repository.
+Active development continues in the repository.
 
 This public package intentionally excludes `Datasets/`, `runs/`, and `results/`.

@@ -1,29 +1,29 @@
 # rsna-ich-reproducible-pipeline
 
-**Language:** English | [日本語](README_ja.md)
+**Language:** English | [Japanese](README_ja.md)
 
 Reproducible intracranial hemorrhage classification pipeline for the RSNA ICH challenge, with audit-ready documentation, calibration analysis, and leakage-safe group-split evaluation.
 
 **Quick links**
 - English entry: [rsna_ich/README_en.md](rsna_ich/README_en.md)
-- 日本語入口: [rsna_ich/README.md](rsna_ich/README.md)
-- Detailed experiment docs: [core/pipeline/README_en.md](core/pipeline/README_en.md)
+- Japanese entry: [rsna_ich/README.md](rsna_ich/README.md)
+- Detailed documentation: [core/pipeline/README_en.md](core/pipeline/README_en.md)
 - Citation: [CITATION.cff](CITATION.cff)
 - Release note source: [docs/releases/v1.0-interview.md](docs/releases/v1.0-interview.md)
 - Roadmap: [ROADMAP.md](ROADMAP.md)
 
 ## What this repository provides
 
-- Reproducible training / evaluation workflow for RSNA intracranial hemorrhage classification
-- Study-level group split and leakage audit hooks
-- Calibration and uncertainty evaluation for the `any` label
-- Portfolio-friendly documentation for external review
-- A no-data smoke test that verifies repository wiring in under a minute
+- A reproducible training and evaluation workflow for RSNA intracranial hemorrhage classification
+- Study-level group splits with leakage-audit hooks
+- Calibration and uncertainty analysis for the `any` label
+- Portfolio-ready documentation for external review
+- A no-data smoke test that checks the public bundle in under a minute
 
 ## Who this is for
 
 - Hiring managers reviewing medical AI implementation quality
-- ML engineers who want an auditable medical-imaging baseline
+- ML engineers looking for an auditable medical-imaging baseline
 - Researchers who need a reproducible CT classification project structure
 
 ## 3-minute overview
@@ -62,8 +62,8 @@ python tools/make_manifest.py
 
 ### 3. Run full training / evaluation with your own data
 
-- English full guide: [core/pipeline/README_en.md](core/pipeline/README_en.md)
-- 日本語詳細: [core/pipeline/README.md](core/pipeline/README.md)
+- Full guide in English: [core/pipeline/README_en.md](core/pipeline/README_en.md)
+- Full guide in Japanese: [core/pipeline/README.md](core/pipeline/README.md)
 
 ## What is included vs excluded
 
@@ -81,7 +81,7 @@ Not included:
 
 ## Stable portfolio version
 
-Active development continues on this repository. The stable review snapshot used for portfolio / interview review is:
+Active development continues in this repository. The stable snapshot used for portfolio and interview review is:
 
 ✅ `rsna-ich-v1.0-interview`
 
