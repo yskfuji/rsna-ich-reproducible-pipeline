@@ -1,15 +1,15 @@
-# RSNA Intracranial Hemorrhage (Kaggle 2019)
+# RSNA 頭蓋内出血分類（Kaggle 2019）
 
 このフォルダは、**RSNA ICH 分類パイプラインの公開入口**です。採用・監査・外部レビューの最初の接点として、何ができるか / どこを見るべきか / どう試すかを短時間で把握できるようにしています。
 
 ## まず分かること
 
-- **何ができるか**: 学習 / 評価 / 推論 / calibration / uncertainty / leakage audit
+- **何ができるか**: 学習 / 評価 / 推論 / 校正評価 / 不確実性評価 / リーク監査
 - **誰向けか**: 採用担当、医療AIエンジニア、再現性を重視する研究実装レビュー
 - **最短確認**: `python ../scripts/smoke_test.py --use_dummy_data`
 - **詳細ドキュメント**:
   - 日本語: `../core/pipeline/README.md`
-  - English: `../core/pipeline/README_en.md`
+  - 英語: `../core/pipeline/README_en.md`
 
 ## 成果の要点
 
@@ -20,10 +20,10 @@
 
 ## この公開物の強み
 
-- `split_by=study` の group split と監査スクリプト
-- split 前テンソル hash de-dup によるリーク対策
+- `split_by=study` のグループ分割と監査スクリプト
+- 分割前テンソル hash de-dup によるリーク対策
 - `meta.json` / `log.jsonl` / `split_stats` による再現性監査
-- `subset_fingerprint_sha256` による subset 同一性チェック
+- `subset_fingerprint_sha256` による対象集合の同一性チェック
 
 ## すぐ使うリンク
 
@@ -40,4 +40,4 @@
 
 リポジトリは継続的に開発中です。
 
-この公開フォルダでは `Datasets/`, `runs/`, `results/` は同梱しません。実データでの再現コマンドは上記詳細 README を参照してください。
+この公開フォルダには `Datasets/`, `runs/`, `results/` は同梱していません。実データでの再現コマンドは上記の詳細 README を参照してください。
