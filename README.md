@@ -1,5 +1,7 @@
 # rsna-ich-reproducible-pipeline
 
+**Language:** English | [日本語](README_ja.md)
+
 Reproducible intracranial hemorrhage classification pipeline for the RSNA ICH challenge, with audit-ready documentation, calibration analysis, and leakage-safe group-split evaluation.
 
 **Quick links**
@@ -82,16 +84,6 @@ Not included:
 Active development continues on this repository. The stable review snapshot used for portfolio / interview review is:
 
 ✅ `rsna-ich-v1.0-interview`
-
-## Japanese summary
-
-このリポジトリは、**RSNA ICH 分類**を第三者が理解しやすい形で再現できるよう整理した公開版です。
-
-- 何ができるか: 学習 / 評価 / 推論 / リーク監査 / 校正評価
-- 強み: `split_by=study`、監査しやすいログ、uncertainty / calibration の整理
-- 最短確認: `python scripts/smoke_test.py --use_dummy_data`
-- 日本語入口: [rsna_ich/README.md](rsna_ich/README.md)
-- 実験詳細: [core/pipeline/README.md](core/pipeline/README.md)
 
 ## How to cite
 
