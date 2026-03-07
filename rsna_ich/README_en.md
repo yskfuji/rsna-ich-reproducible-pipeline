@@ -1,19 +1,43 @@
 # RSNA Intracranial Hemorrhage (Kaggle 2019)
 
-This folder is the RSNA public-entry point for auditors and reviewers.
+This folder is the **public entry point** for the RSNA ICH classification pipeline. It is written for hiring review, external technical inspection, and fast project onboarding.
 
-- Main code: `../core/pipeline/`
-- Experiment READMEs (JP/EN):
-  - `../core/pipeline/README.md`
-  - `../core/pipeline/README_en.md`
-- Audit quick guide:
-  - `./AUDIT_GUIDE.md`
+## What a reviewer can verify quickly
 
-## Key checkpoints
+- **What it does**: train / evaluate / infer / audit / calibrate RSNA ICH models
+- **Who it is for**: hiring managers, ML engineers, and researchers who care about reproducibility
+- **Fastest first run**: `python ../scripts/smoke_test.py --use_dummy_data`
+- **Detailed docs**:
+  - Japanese: `../core/pipeline/README.md`
+  - English: `../core/pipeline/README_en.md`
 
-- `split_by=study` group split and audit scripts
-- pre-split tensor-hash de-dup (leakage mitigation)
+## Representative metrics
+
+- weighted multi-label logloss: **0.05346 ± 0.00624**
+- mean AUC: **0.98815 ± 0.00311**
+- error-detection AUROC (`any`): **0.9424 ± 0.0190**
+- ECE (`any`): **0.0231 ± 0.0032**
+
+## Why this repository is useful
+
+- study-level `split_by=study` group split and audit scripts
+- pre-split tensor-hash de-dup to reduce leakage risk
 - reproducibility artifacts: `meta.json`, `log.jsonl`, `split_stats`
-- subset identity audit: `subset_fingerprint_sha256`
+- subset identity audit via `subset_fingerprint_sha256`
+
+## Quick links
+
+- Audit quick guide: `./AUDIT_GUIDE.md`
+- Citation: `../CITATION.cff`
+- Release-note source: `../docs/releases/v1.0-interview.md`
+- Roadmap: `../ROADMAP.md`
+
+## Stable portfolio version
+
+The hiring-review snapshot corresponds to:
+
+✅ `rsna-ich-v1.0-interview`
+
+Active development continues on the repository.
 
 This public package intentionally excludes `Datasets/`, `runs/`, and `results/`.

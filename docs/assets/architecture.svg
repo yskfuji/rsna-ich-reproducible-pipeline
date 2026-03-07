@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="360" viewBox="0 0 1200 360" role="img" aria-labelledby="title desc">
+  <title id="title">RSNA pipeline architecture</title>
+  <desc id="desc">Flow from RSNA CT data to preprocessing, ConvNeXt classification, calibration, and audit artifacts.</desc>
+  <rect width="1200" height="360" fill="#0f172a"/>
+  <text x="60" y="52" fill="#f8fafc" font-family="Arial, Helvetica, sans-serif" font-size="30" font-weight="700">RSNA ICH pipeline overview</text>
+  <text x="60" y="86" fill="#cbd5e1" font-family="Arial, Helvetica, sans-serif" font-size="18">CT slices → preprocessed SQLite → ConvNeXt-based training/inference → calibration + audit outputs</text>
+  <g font-family="Arial, Helvetica, sans-serif">
+    <rect x="60" y="130" rx="18" ry="18" width="220" height="140" fill="#1d4ed8"/>
+    <text x="90" y="178" fill="#ffffff" font-size="24" font-weight="700">RSNA CT data</text>
+    <text x="90" y="212" fill="#dbeafe" font-size="18">DICOM or preprocessed</text>
+    <text x="90" y="238" fill="#dbeafe" font-size="18">slice stacks</text>
+
+    <rect x="330" y="130" rx="18" ry="18" width="220" height="140" fill="#0f766e"/>
+    <text x="358" y="178" fill="#ffffff" font-size="24" font-weight="700">Preprocess</text>
+    <text x="358" y="212" fill="#ccfbf1" font-size="18">SQLite bundle</text>
+    <text x="358" y="238" fill="#ccfbf1" font-size="18">group-split ready</text>
+
+    <rect x="600" y="130" rx="18" ry="18" width="220" height="140" fill="#7c3aed"/>
+    <text x="632" y="178" fill="#ffffff" font-size="24" font-weight="700">ConvNeXt 2.5D</text>
+    <text x="632" y="212" fill="#ede9fe" font-size="18">train / eval / infer</text>
+    <text x="632" y="238" fill="#ede9fe" font-size="18">weighted logloss focus</text>
+
+    <rect x="870" y="130" rx="18" ry="18" width="270" height="140" fill="#be123c"/>
+    <text x="900" y="178" fill="#ffffff" font-size="24" font-weight="700">Audit + calibration</text>
+    <text x="900" y="212" fill="#ffe4e6" font-size="18">ECE / Brier / error AUROC</text>
+    <text x="900" y="238" fill="#ffe4e6" font-size="18">meta.json / log.jsonl</text>
+  </g>
+  <g stroke="#94a3b8" stroke-width="6" fill="none" stroke-linecap="round">
+    <path d="M280 200 H320"/>
+    <path d="M550 200 H590"/>
+    <path d="M820 200 H860"/>
+  </g>
+</svg>

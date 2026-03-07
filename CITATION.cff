@@ -1,0 +1,23 @@
+cff-version: 1.2.0
+message: "If you use this repository, please cite it as follows."
+title: "RSNA ICH Reproducible Pipeline"
+type: software
+version: "rsna-ich-v1.0-interview"
+date-released: "2026-02-27"
+authors:
+  - family-names: "Fujinami"
+    given-names: "Yusuke"
+repository-code: "https://github.com/yskfuji/rsna-ich-reproducible-pipeline"
+url: "https://github.com/yskfuji/rsna-ich-reproducible-pipeline"
+abstract: >-
+  Reproducible intracranial hemorrhage classification pipeline for the RSNA ICH
+  challenge with audit-ready documentation, calibration analysis, uncertainty
+  evaluation, and group-split leakage checks.
+keywords:
+  - medical-imaging
+  - deep-learning
+  - pytorch
+  - ct
+  - intracranial-hemorrhage
+  - reproducibility
+license: "See LICENSE"

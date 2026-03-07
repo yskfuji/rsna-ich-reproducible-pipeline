@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="360" viewBox="0 0 1200 360" role="img" aria-labelledby="title desc">
+  <title id="title">RSNA repository map</title>
+  <desc id="desc">Key directories in the public RSNA repository.</desc>
+  <rect width="1200" height="360" fill="#111827"/>
+  <text x="60" y="54" fill="#f9fafb" font-family="Arial, Helvetica, sans-serif" font-size="30" font-weight="700">Repository map</text>
+  <text x="60" y="88" fill="#d1d5db" font-family="Arial, Helvetica, sans-serif" font-size="18">Designed so reviewers can find code, audit notes, and reproducibility hooks quickly.</text>
+  <g font-family="Arial, Helvetica, sans-serif">
+    <rect x="60" y="128" rx="16" ry="16" width="260" height="170" fill="#1f2937" stroke="#60a5fa" stroke-width="3"/>
+    <text x="86" y="168" fill="#eff6ff" font-size="24" font-weight="700">README.md</text>
+    <text x="86" y="204" fill="#bfdbfe" font-size="18">Landing page</text>
+    <text x="86" y="232" fill="#bfdbfe" font-size="18">quickstart</text>
+    <text x="86" y="260" fill="#bfdbfe" font-size="18">metrics snapshot</text>
+
+    <rect x="360" y="128" rx="16" ry="16" width="240" height="170" fill="#1e3a8a"/>
+    <text x="388" y="168" fill="#ffffff" font-size="24" font-weight="700">rsna_ich/</text>
+    <text x="388" y="204" fill="#dbeafe" font-size="18">JP / EN entry docs</text>
+    <text x="388" y="232" fill="#dbeafe" font-size="18">audit guide</text>
+
+    <rect x="640" y="128" rx="16" ry="16" width="260" height="170" fill="#065f46"/>
+    <text x="668" y="168" fill="#ffffff" font-size="24" font-weight="700">core/pipeline/</text>
+    <text x="668" y="204" fill="#d1fae5" font-size="18">training / eval / inference</text>
+    <text x="668" y="232" fill="#d1fae5" font-size="18">detailed READMEs</text>
+
+    <rect x="940" y="128" rx="16" ry="16" width="200" height="170" fill="#7c2d12"/>
+    <text x="968" y="168" fill="#ffffff" font-size="24" font-weight="700">docs/</text>
+    <text x="968" y="204" fill="#fed7aa" font-size="18">figures</text>
+    <text x="968" y="232" fill="#fed7aa" font-size="18">release notes</text>
+    <text x="968" y="260" fill="#fed7aa" font-size="18">citation</text>
+  </g>
+</svg>

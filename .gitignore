@@ -3,6 +3,7 @@ Datasets/
 runs/
 results/
 logs/
+artifacts/
 
 # common large files
 *.pt
