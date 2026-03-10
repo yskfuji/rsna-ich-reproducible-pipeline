@@ -10,6 +10,7 @@
 ## Phase 2 — Trust and reuse
 - [x] Add `CITATION.cff`
 - [x] Add release-note source files under `docs/releases/`
+- [x] Add a public FastAPI demo surface and documentation
 - [ ] Publish a benchmark summary table in the detailed READMEs
 - [ ] Add a reproducibility checklist page for external reviewers
 

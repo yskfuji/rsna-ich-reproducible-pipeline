@@ -8,6 +8,7 @@ RSNA ICH challenge 向けの、**再現可能な頭蓋内出血分類パイプ�
 - 英語入口: [rsna_ich/README_en.md](rsna_ich/README_en.md)
 - 日本語入口: [rsna_ich/README.md](rsna_ich/README.md)
 - 実験詳細: [core/pipeline/README.md](core/pipeline/README.md)
+- API デモ概要: [docs/api_demo_ja.md](docs/api_demo_ja.md)
 - 引用情報: [CITATION.cff](CITATION.cff)
 - リリースノート原稿: [docs/releases/v1.0-interview.md](docs/releases/v1.0-interview.md)
 - ロードマップ: [ROADMAP.md](ROADMAP.md)
@@ -17,6 +18,7 @@ RSNA ICH challenge 向けの、**再現可能な頭蓋内出血分類パイプ�
 - RSNA 頭蓋内出血分類の学習 / 評価ワークフロー
 - `split_by=study` によるグループ分割とリーク監査
 - `any` ラベルに対する校正評価と不確実性評価
+- FastAPI による公開向け API schema デモ
 - 外部レビュー向けに整理したポートフォリオ導線
 - 実データなしで公開物の配線を確認できる簡易動作確認
 
@@ -64,6 +66,15 @@ python tools/make_manifest.py
 
 - 日本語詳細: [core/pipeline/README.md](core/pipeline/README.md)
 - 英語版の詳細ガイド: [core/pipeline/README_en.md](core/pipeline/README_en.md)
+
+### 4. API デモ面を確認
+
+```bash
+cd core/pipeline
+python serve_rsna_ich_api.py
+```
+
+詳細: [docs/api_demo_ja.md](docs/api_demo_ja.md)
 
 ## 含まれるものと含まれないもの
 

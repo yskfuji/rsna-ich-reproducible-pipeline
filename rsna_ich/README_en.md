@@ -7,6 +7,7 @@ This folder is the **public entry point** for the RSNA ICH classification pipeli
 ## What a reviewer can verify quickly
 
 - **What it does**: trains, evaluates, and audits RSNA ICH models
+- **API demo**: exposes public-facing `health`, `model metadata`, and `ich inference` schemas via FastAPI
 - **Who it is for**: hiring managers, ML engineers, and researchers who care about reproducibility
 - **Fastest first run**: `python ../scripts/smoke_test.py --use_dummy_data`
 - **Detailed docs**:
@@ -30,6 +31,7 @@ This folder is the **public entry point** for the RSNA ICH classification pipeli
 ## Quick links
 
 - Audit quick guide: `./AUDIT_GUIDE.md`
+- API demo note: `../docs/api_demo.md`
 - Citation: `../CITATION.cff`
 - Release-note source: `../docs/releases/v1.0-interview.md`
 - Roadmap: `../ROADMAP.md`

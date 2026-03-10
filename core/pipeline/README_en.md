@@ -39,6 +39,7 @@ To help reviewers decide quickly, this README starts with **reproducibility, spl
 - **Audit hook (subset identity)**: in addition to `split_stats` consistency, record sorted `image_id` SHA256 as `subset_fingerprint_sha256` in **`meta.json` (implemented)**. `tools/eval_rsna_uncertainty.py` also outputs `adopted_subset_fingerprint_sha256` / `val_subset_fingerprint_sha256` in its JSON.
   - `subset_fingerprint_sha256` definition: sort adopted `image_id` ascending, join with `\n`, take SHA256 of the UTF-8 string (hex)
   - `adopted_subset_*` is the full adopted subset after `limit_images` etc; `val_subset_*` is the `image_id` subset that ended up in validation
+- **Public API demo**: `serve_rsna_ich_api.py` exposes a small FastAPI schema for portfolio review and future MLflow/API integration.
 
 - Quick reproduce (holdout, 1 epoch):
 
@@ -53,6 +54,15 @@ TORCH_DEVICE=mps python train_rsna_cnn2d_classifier.py train --rsna-root ... --p
 
   → outputs: `meta.json`, `log.jsonl`, checkpoints under `results/repro_demo/` (see §2.2 for the full command).
   For concrete paths, see §2.1 Data example (rsna_root / preprocessed_root).
+
+- API demo surface:
+
+```bash
+cd pipeline
+python serve_rsna_ich_api.py
+```
+
+  Open `http://127.0.0.1:8000/docs` to inspect `/health`, `/v1/models/{alias_or_version}`, and `/v1/infer/ich_classification`.
 
 ---
 

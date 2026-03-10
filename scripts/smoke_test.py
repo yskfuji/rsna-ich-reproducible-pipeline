@@ -20,10 +20,13 @@ REQUIRED_PATHS = [
     "core/pipeline/tools/make_manifest.py",
     "core/pipeline/train_rsna_cnn2d_classifier.py",
     "core/pipeline/predict_rsna_ich_submission.py",
+    "core/pipeline/serve_rsna_ich_api.py",
+    "core/pipeline/src/inference/serve_rsna_ich_api.py",
 ]
 ENTRYPOINTS = [
     "core/pipeline/train_rsna_cnn2d_classifier.py train",
     "core/pipeline/predict_rsna_ich_submission.py",
+    "core/pipeline/serve_rsna_ich_api.py",
     "core/pipeline/tools/make_manifest.py",
 ]
 

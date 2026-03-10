@@ -54,6 +54,7 @@ TORCH_DEVICE=mps python train_rsna_cnn2d_classifier.py train --rsna-root ... --p
   ※実パス例は §2.1「データ例」を参照（rsna_root / preprocessed_root）。
 
 - 実験管理（任意）: `train` は **既定では OFF** ですが、Weights & Biases / MLflow に同じ指標を送れます。
+- API デモ（公開向け schema 確認）: `serve_rsna_ich_api.py` で `health` / `model metadata` / `ich inference` を確認できます。
 
 ```bash
 # W&B（要: WANDB_API_KEY）
@@ -62,6 +63,15 @@ TORCH_DEVICE=mps python train_rsna_cnn2d_classifier.py train --rsna-root ... --p
 # MLflow（例: ローカル保存 or tracking server 指定）
 python train_rsna_cnn2d_classifier.py train --rsna-root ... --preprocessed-root ... --out-dir results/repro_demo --limit-images 8000 --val-frac 0.05 --split-by study --seed 0 --epochs 1 --no-aug --no-scheduler --arch convnext_tiny --pretrained --mlflow --mlflow-experiment rsna-ich
 ```
+
+公開向け API schema の確認例:
+
+```bash
+cd pipeline
+python serve_rsna_ich_api.py
+```
+
+起動後に `http://127.0.0.1:8000/docs` を開くと、`/health`, `/v1/models/{alias_or_version}`, `/v1/infer/ich_classification` を確認できます。
 
 ---
 

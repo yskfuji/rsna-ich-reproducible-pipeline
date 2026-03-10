@@ -14,8 +14,15 @@
 - de-dup 後の exact duplicate 交差 0
 - run間の `split_stats` / `val_*` の再現性
 - `subset_fingerprint_sha256` の一致確認
+- API デモが公開 schema として自己完結していること（`core/pipeline/serve_rsna_ich_api.py`）
 
-## 3. 除外物
+## 3. API デモの見る場所
+
+1. `./docs/api_demo_ja.md`
+2. `./core/pipeline/serve_rsna_ich_api.py`
+3. `./core/pipeline/src/inference/serve_rsna_ich_api.py`
+
+## 4. 除外物
 
 - `Datasets/`
 - `runs/`

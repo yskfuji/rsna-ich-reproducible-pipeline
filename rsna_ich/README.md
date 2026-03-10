@@ -7,6 +7,7 @@
 ## まず分かること
 
 - **何ができるか**: 学習 / 評価 / 推論 / 校正評価 / 不確実性評価 / リーク監査
+- **API デモ**: FastAPI で `health` / `model metadata` / `ich inference` の公開向け schema を確認可能
 - **誰向けか**: 採用担当、医療 AI エンジニア、再現性を重視する研究実装レビュー
 - **最短確認**: `python ../scripts/smoke_test.py --use_dummy_data`
 - **詳細ドキュメント**:
@@ -30,6 +31,7 @@
 ## すぐ使うリンク
 
 - 監査用ショートガイド: `./AUDIT_GUIDE.md`
+- API demo entry: `../core/pipeline/serve_rsna_ich_api.py`
 - 引用情報: `../CITATION.cff`
 - リリースノート原稿: `../docs/releases/v1.0-interview.md`
 - ロードマップ: `../ROADMAP.md`
