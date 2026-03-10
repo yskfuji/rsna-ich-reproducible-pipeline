@@ -9,6 +9,7 @@ RSNA ICH challenge 向けの、**再現可能な頭蓋内出血分類パイプ�
 - 日本語版: [rsna_ich/README.md](rsna_ich/README.md)
 - 実験詳細: [core/pipeline/README.md](core/pipeline/README.md)
 - API デモ概要: [docs/api_demo_ja.md](docs/api_demo_ja.md)
+- 再現性チェックリスト: [docs/reproducibility_checklist.md](docs/reproducibility_checklist.md)
 - 引用情報: [CITATION.cff](CITATION.cff)
 - リリースノート原稿: [docs/releases/v1.0-interview.md](docs/releases/v1.0-interview.md)
 - ロードマップ: [ROADMAP.md](ROADMAP.md)

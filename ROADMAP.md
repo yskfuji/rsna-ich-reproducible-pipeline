@@ -12,7 +12,7 @@
 - [x] Add release-note source files under `docs/releases/`
 - [x] Add a public FastAPI demo surface and documentation
 - [ ] Publish a benchmark summary table in the detailed READMEs
-- [ ] Add a reproducibility checklist page for external reviewers
+- [x] Add a reproducibility checklist page for external reviewers
 
 ## Phase 3 — Distribution
 - [ ] Post an English launch thread on LinkedIn or X
