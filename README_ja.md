@@ -74,6 +74,8 @@ cd core/pipeline
 python serve_rsna_ich_api.py
 ```
 
+ポート `8000` が使用中なら `API_PORT=8011 python serve_rsna_ich_api.py` のように変更できます。
+
 詳細: [docs/api_demo_ja.md](docs/api_demo_ja.md)
 
 ## 含まれるものと含まれないもの

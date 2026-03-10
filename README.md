@@ -73,6 +73,8 @@ cd core/pipeline
 python serve_rsna_ich_api.py
 ```
 
+If port `8000` is already in use, run `API_PORT=8011 python serve_rsna_ich_api.py` instead.
+
 Then open `/docs` locally to inspect the FastAPI schema.
 
 ## What is included vs excluded

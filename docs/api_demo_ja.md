@@ -8,7 +8,7 @@
 - 公開ポートフォリオ内で MLflow / API 方向の設計意図を見せる
 - 保護対象の医療データや本番 checkpoint を同梱せずに API 面を確認できるようにする
 
-## 起動入口
+## 起動ファイル
 
 - [core/pipeline/serve_rsna_ich_api.py](../core/pipeline/serve_rsna_ich_api.py)
 
@@ -38,6 +38,13 @@ python serve_rsna_ich_api.py
 ```
 
 起動後に `http://127.0.0.1:8000/docs` を開くと schema を確認できます。
+
+ポート `8000` が使用中なら、たとえば次のように別ポートで起動できます。
+
+```bash
+cd core/pipeline
+API_PORT=8011 python serve_rsna_ich_api.py
+```
 
 ## 次の拡張候補
 

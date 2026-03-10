@@ -62,6 +62,8 @@ cd pipeline
 python serve_rsna_ich_api.py
 ```
 
+  If port `8000` is already in use, run `API_PORT=8011 python serve_rsna_ich_api.py` instead.
+
   Open `http://127.0.0.1:8000/docs` to inspect `/health`, `/v1/models/{alias_or_version}`, and `/v1/infer/ich_classification`.
 
 ---

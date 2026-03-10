@@ -71,6 +71,8 @@ cd pipeline
 python serve_rsna_ich_api.py
 ```
 
+ポート `8000` が使用中なら `API_PORT=8011 python serve_rsna_ich_api.py` のように切り替えられます。
+
 起動後に `http://127.0.0.1:8000/docs` を開くと、`/health`, `/v1/models/{alias_or_version}`, `/v1/infer/ich_classification` を確認できます。
 
 ---

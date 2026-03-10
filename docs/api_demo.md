@@ -37,6 +37,8 @@ cd core/pipeline
 python serve_rsna_ich_api.py
 ```
 
+If port `8000` is already in use, run `API_PORT=8011 python serve_rsna_ich_api.py` instead.
+
 Open `http://127.0.0.1:8000/docs` to inspect the schema.
 
 ## Intended next step
