@@ -204,7 +204,7 @@ run:
 
 ### 2.2 実行コマンド（fine-tune short / val_frac=0.05）
 
-実行入口（ファイル）:
+実行ファイル:
 - `train_rsna_cnn2d_classifier.py`（このフォルダ直下の薄い wrapper）
   - 実装本体は `src/training/train_rsna_cnn2d_classifier.py`（Typer app）
 
@@ -461,7 +461,7 @@ python tools/audit_rsna_slice_leakage.py \
 - `--loss-any-weight` は **学習時の損失**にだけ効くパラメータです（この README のコマンドでは `--loss-any-weight 1.0` で学習損失の any を重くしない設定）
 - 本実装は **クラス別 logloss を計算し、重み付き平均**します（Kaggleの評価説明と同形）。
   - 実装: `src/training/train_rsna_cnn2d_classifier.py` の `_weighted_multilabel_logloss()`
-  - 実行入口: `train_rsna_cnn2d_classifier.py`（wrapper。中で上記モジュールを呼びます）
+  - 実行ファイル: `train_rsna_cnn2d_classifier.py`（wrapper。中で上記モジュールを呼びます）
 - $p$ は sigmoid 後の確率で、数値安定化のため $\varepsilon$ で clip します（本repoの既定は $\varepsilon=10^{-7}$）。
 - 注: logloss の計算前に `p = clip(sigmoid(logit), eps, 1-eps)` として確率を clip します。
 - 比較実験（相対比較）は本repo内の同一定義で一貫して行います。
