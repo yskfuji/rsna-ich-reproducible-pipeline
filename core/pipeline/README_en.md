@@ -2,7 +2,7 @@
 
 **Language:** English | [Japanese](README.md)
 
-## Stable Portfolio Version
+## Current Portfolio Snapshot
 
 The current portfolio snapshot corresponds to:
 

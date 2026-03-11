@@ -3,7 +3,7 @@
 Use the following values in the repository About panel.
 
 ## Description
-Reproducible intracranial hemorrhage classification pipeline for the RSNA ICH challenge with audit-ready docs, calibration, group-split evaluation, and a FastAPI demo surface.
+Reproducible intracranial hemorrhage classification pipeline for the RSNA ICH challenge with audit-ready docs, calibration analysis, group-split evaluation, and a FastAPI demo.
 
 ## Pinned repo blurb
 RSNA intracranial hemorrhage classification pipeline with reproducible training and evaluation, calibration analysis, audit artifacts, and a public FastAPI demo schema.

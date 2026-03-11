@@ -36,7 +36,7 @@ This folder is the **public entry point** for the RSNA ICH classification pipeli
 - Release-note source: `../docs/releases/v0.5.0-rsna.md`
 - Roadmap: `../ROADMAP.md`
 
-## Stable portfolio version
+## Current portfolio snapshot
 
 The current portfolio snapshot corresponds to:
 
