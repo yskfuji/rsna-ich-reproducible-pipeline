@@ -10,11 +10,11 @@
 
 ## 2. 主な監査ポイント
 
-- `split_by=study` の group 交差 0
-- de-dup 後の exact duplicate 交差 0
+- `split_by=study` のグループ交差 0
+- 重複除去後の完全重複交差 0
 - run間の `split_stats` / `val_*` の再現性
 - `subset_fingerprint_sha256` の一致確認
-- API デモが公開 schema として自己完結していること（`core/pipeline/serve_rsna_ich_api.py`）
+- API デモが公開スキーマとして自己完結していること（`core/pipeline/serve_rsna_ich_api.py`）
 
 ## 3. API デモの見る場所
 

@@ -17,13 +17,13 @@
 
 ## TL;DR（この README で分かること）
 
-- 再現性（この配布物内）: 記録済みの成果物（`meta.json` / `log.jsonl`、`split_stats` を含む）と固定CLIコマンドにより検証可能（例: `results/rsna_convnext25d_ft_repro_val05_short_20260210_101836_run1` と `_run2`）。
+- 再現性（この配布物内）: 記録済みの成果物（`meta.json` / `log.jsonl`、`split_stats` を含む）と固定 CLI コマンドにより検証可能です（例: `results/rsna_convnext25d_ft_repro_val05_short_20260210_101836_run1` と `_run2`）。
 - 参照コミット（上流・参照用）: `9bc2684fe0b564c792025b52694f9c4fe1a0d32d`（この配布物のコードスナップショットをエクスポートした時点の上流リポジトリのコミットID）。
 - 上流リポジトリURL: 配布物は git メタデータ非同梱のため、上流URL/履歴は配布物単体では追跡不能です（`.git` なし）。
 - 配布物の完全性（任意）: `python tools/make_manifest.py` でファイル一覧（path + sha256）のマニフェストを生成し（例: `--out MANIFEST.sha256`）、この配布物を指紋化できます。
 
 - **頑健性（偶然に依存していないかの確認）**: `split_by=study` の **GroupKFold(5)** で `val_logloss_weighted = 0.05346 ± 0.00624` を確認（`epochs=1` / `kept=6852` の短縮 CV）
-- **再現性**: 同一 seed・同一引数で 2回実行し、`split_stats` と `val_*` が再現可能（この環境では **完全一致（abs_diff=0）** を観測。一般には backend により `abs_diff <= 1e-6` 程度で検証推奨）
+- **再現性**: 同一 seed・同一引数で 2 回実行し、`split_stats` と `val_*` が再現可能です（この環境では **完全一致（abs_diff=0）** を観測。一般には実行 backend により `abs_diff <= 1e-6` 程度での検証を推奨します）
 - **評価設計（リーク対策）**: `split_by=study` の **グループ分割**を採用（同一 Study が train/val にまたがらない）
 - **実務上の価値**: リークしやすい問題設定に対し、**グループ分割の監査スクリプト**で「train/val のグループ交差が 0」を機械的に検証できる
 - **リーク監査の現状（2026-02-14）**: 10 seed 監査で Study/Series 交差は 0、さらに **分割前のテンソル hash de-dup（既定 ON）後は train/val の完全重複交差も 0** を確認
@@ -35,7 +35,7 @@
   - AURC(weighted logloss): **0.00837 ± 0.00214**
   - coverage=0.8 accuracy(any) gain: **+2.53 ± 0.89 pp**
   - （同条件の比較対象に対して）ECE **-0.0091**, Brier **-0.0040**, AURC **-0.00139**, AUROC **+0.0046**
-- **温度スケーリングの評価境界（重要）**: 本 README の不確実性指標は `--fit-temperature` を同一の holdout validation に対して実行した値（fit 集合 = eval 集合）であり、ECE/Brier は楽観的に出る可能性があります。厳密評価では calib/eval 分割、または別の holdout を使って再計測してください。
+- **温度スケーリングの評価境界（重要）**: 本 README の不確実性指標は `--fit-temperature` を同一の holdout validation に対して実行した値（fit 集合 = eval 集合）であり、ECE/Brier は楽観的に出る可能性があります。厳密評価では calibration 用と評価用を分けるか、別の holdout を使って再計測してください。
 - **監査フック（対象集合の同一性）**: `split_stats` の一致に加え、採用 `image_id` の昇順一覧の SHA256（`subset_fingerprint_sha256`）を **`meta.json` に記録（実装済み）**しています。また `tools/eval_rsna_uncertainty.py` の出力 JSON にも `adopted_subset_fingerprint_sha256` / `val_subset_fingerprint_sha256` を出力します。
   - `subset_fingerprint_sha256` の定義: 採用した `image_id` を昇順に並べ、`\n` 区切りで連結した UTF-8 文字列の SHA256（16進表記）
   - `adopted_subset_*` は `limit_images` などで採用された全体の対象集合、`val_subset_*` はそのうち validation に入った `image_id` の集合
@@ -54,7 +54,7 @@ TORCH_DEVICE=mps python train_rsna_cnn2d_classifier.py train --rsna-root ... --p
   ※実パス例は §2.1「データ例」を参照（rsna_root / preprocessed_root）。
 
 - 実験管理（任意）: `train` は **既定では OFF** ですが、Weights & Biases / MLflow に同じ指標を送れます。
-- API デモ（公開向け schema 確認）: `serve_rsna_ich_api.py` で `health` / `model metadata` / `ich inference` を確認できます。
+- API デモ（公開向けスキーマ確認）: `serve_rsna_ich_api.py` で `health` / `model metadata` / `ich inference` を確認できます。
 
 ```bash
 # W&B（要: WANDB_API_KEY）
@@ -64,7 +64,7 @@ TORCH_DEVICE=mps python train_rsna_cnn2d_classifier.py train --rsna-root ... --p
 python train_rsna_cnn2d_classifier.py train --rsna-root ... --preprocessed-root ... --out-dir results/repro_demo --limit-images 8000 --val-frac 0.05 --split-by study --seed 0 --epochs 1 --no-aug --no-scheduler --arch convnext_tiny --pretrained --mlflow --mlflow-experiment rsna-ich
 ```
 
-公開向け API schema の確認例:
+公開向け API スキーマの確認例:
 
 ```bash
 cd pipeline

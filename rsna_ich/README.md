@@ -7,7 +7,7 @@
 ## まず分かること
 
 - **何ができるか**: 学習 / 評価 / 推論 / 校正評価 / 不確実性評価 / リーク監査
-- **API デモ**: FastAPI で `health` / `model metadata` / `ich inference` の公開向け schema を確認可能
+- **API デモ**: FastAPI で `health` / `model metadata` / `ich inference` の公開向けスキーマを確認可能
 - **誰向けか**: 採用担当、医療 AI エンジニア、再現性を重視する研究実装レビュー
 - **最短確認**: `python ../scripts/smoke_test.py --use_dummy_data`
 - **詳細ドキュメント**:
@@ -24,14 +24,14 @@
 ## この公開物の強み
 
 - `split_by=study` のグループ分割と監査スクリプト
-- 分割前テンソル hash de-dup によるリーク対策
+- 分割前テンソルのハッシュによる重複除去でリークを抑制
 - `meta.json` / `log.jsonl` / `split_stats` による再現性監査
 - `subset_fingerprint_sha256` による対象集合の同一性チェック
 
 ## すぐ使うリンク
 
 - 監査用ショートガイド: `./AUDIT_GUIDE.md`
-- API demo entry: `../core/pipeline/serve_rsna_ich_api.py`
+- API デモの実行ファイル: `../core/pipeline/serve_rsna_ich_api.py`
 - 引用情報: `../CITATION.cff`
 - リリースノート原稿: `../docs/releases/v1.0-interview.md`
 - ロードマップ: `../ROADMAP.md`
