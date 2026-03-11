@@ -1,6 +1,6 @@
 # RSNA API デモ
 
-この公開リポジトリには、RSNA 用の軽量な FastAPI デモ導線を追加しています。
+この公開リポジトリには、RSNA 用の軽量な FastAPI デモを追加しています。
 
 ## 目的
 
@@ -20,9 +20,9 @@
 
 ## このデモでできること
 
-- RSNA task / model family の metadata を型付きで返す
+- RSNA のタスク名やモデル種別の情報を型付きで返す
 - `ich_classification` の構造化レスポンスを返す
-- `any` 確率を subtype 最大値以上になるよう正規化する
+- `any` の確率を各 subtype の最大値以上になるよう正規化する
 
 ## このデモでまだやっていないこと
 

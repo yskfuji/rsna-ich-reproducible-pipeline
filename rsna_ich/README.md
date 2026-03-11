@@ -7,7 +7,7 @@
 ## まず分かること
 
 - **何ができるか**: 学習 / 評価 / 推論 / 校正評価 / 不確実性評価 / リーク監査
-- **API デモ**: FastAPI で `health` / `model metadata` / `ich inference` の公開向けスキーマを確認可能
+- **API デモ**: FastAPI で `health` / `model metadata` / `ich inference` の公開向けスキーマを確認できます
 - **誰向けか**: 採用担当、医療 AI エンジニア、再現性を重視する研究実装レビュー
 - **最短確認**: `python ../scripts/smoke_test.py --use_dummy_data`
 - **詳細ドキュメント**:
