@@ -41,6 +41,14 @@ To help reviewers decide quickly, this README starts with **reproducibility, spl
   - `adopted_subset_*` is the full adopted subset after `limit_images` etc; `val_subset_*` is the `image_id` subset that ended up in validation
 - **Public API demo**: `serve_rsna_ich_api.py` exposes a small FastAPI schema for portfolio review and future MLflow/API integration.
 
+## 0. Reviewer benchmark table
+
+| Evaluation slice | Protocol | Primary result | Secondary result | Why it matters |
+|---|---|---|---|---|
+| Robustness | GroupKFold(5), `split_by=study`, `epochs=1`, `kept=6852` | weighted logloss `0.05346 ± 0.00624` | mean AUC `0.98815 ± 0.00311` | Shows the signal survives fold changes rather than a single lucky holdout |
+| Reproducibility | holdout `val_frac=0.05`, same seed/args run twice | weighted logloss `0.0555525` | mean AUC `0.9915841`, `abs_diff=0` for recorded `val_*` metrics in this environment | Demonstrates the exported recipe can be rerun deterministically |
+| Uncertainty / calibration | 10 seeds, `split_by=study`, de-dup enabled, dropout retrain | error-detection AUROC(any) `0.9424 ± 0.0190` | ECE(any) `0.0231 ± 0.0032`, Brier(any) `0.0209 ± 0.0054`, coverage=0.8 accuracy gain `+2.53 ± 0.89 pp` | Shows the probabilities are useful beyond raw classification accuracy |
+
 - Quick reproduce (holdout, 1 epoch):
 
 ```bash

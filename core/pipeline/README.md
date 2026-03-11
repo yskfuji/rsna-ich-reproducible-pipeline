@@ -39,6 +39,14 @@
 - **監査フック（対象集合の同一性）**: `split_stats` の一致に加え、採用 `image_id` の昇順一覧の SHA256（`subset_fingerprint_sha256`）を **`meta.json` に記録（実装済み）**しています。また `tools/eval_rsna_uncertainty.py` の出力 JSON にも `adopted_subset_fingerprint_sha256` / `val_subset_fingerprint_sha256` を出力します。
   - `subset_fingerprint_sha256` の定義: 採用した `image_id` を昇順に並べ、`\n` 区切りで連結した UTF-8 文字列の SHA256（16進表記）
   - `adopted_subset_*` は `limit_images` などで採用された全体の対象集合、`val_subset_*` はそのうち validation に入った `image_id` の集合
+### レビュワー向けベンチマーク表
+
+| 評価観点 | 条件 | 主結果 | 補助結果 | 見るべき意味 |
+|---|---|---|---|---|
+| 頑健性 | GroupKFold(5), `split_by=study`, `epochs=1`, `kept=6852` | weighted logloss `0.05346 ± 0.00624` | mean AUC `0.98815 ± 0.00311` | 単一 holdout の偶然ではなく、fold を跨いでも指標が保たれることを確認 |
+| 再現性 | holdout `val_frac=0.05` を同一 seed / 同一引数で 2 回実行 | weighted logloss `0.0555525` | mean AUC `0.9915841`, この環境では記録済み `val_*` が `abs_diff=0` | 公開レシピをそのまま再実行して同じ結果に戻せることを確認 |
+| 不確実性 / 校正 | 10 seeds, `split_by=study`, de-dup 有効, dropout 再学習 | error-detection AUROC(any) `0.9424 ± 0.0190` | ECE(any) `0.0231 ± 0.0032`, Brier(any) `0.0209 ± 0.0054`, coverage=0.8 accuracy gain `+2.53 ± 0.89 pp` | 生の分類精度だけでなく、確率出力も意思決定に使えることを示す |
+
 - すぐ再現（holdout、1 epoch）:
 
 ```bash

@@ -11,7 +11,7 @@
 - [x] Add `CITATION.cff`
 - [x] Add release-note source files under `docs/releases/`
 - [x] Add a public FastAPI demo surface and documentation
-- [ ] Publish a benchmark summary table in the detailed READMEs
+- [x] Publish a benchmark summary table in the detailed READMEs
 - [x] Add a reproducibility checklist page for external reviewers
 
 ## Phase 3 — Distribution
