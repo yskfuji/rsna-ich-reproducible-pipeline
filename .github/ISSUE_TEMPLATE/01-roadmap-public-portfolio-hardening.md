@@ -10,7 +10,7 @@ Improve the findability, clarity, and first-run experience of the public RSNA re
 
 ## Candidate tasks
 - [ ] finalize GitHub About metadata
-- [ ] publish GitHub Release notes for the interview snapshot
+- [ ] publish GitHub Release notes for the portfolio snapshot
 - [ ] add benchmark summary tables to detailed docs
 - [ ] add external links after first public post
 

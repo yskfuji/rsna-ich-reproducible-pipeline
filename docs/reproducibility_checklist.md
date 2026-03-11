@@ -12,7 +12,7 @@ Use this page as a fast external-review checklist for the public RSNA ICH reposi
 
 - Read the landing page: `README.md` or `README_ja.md`.
 - Read the task-facing guide: `rsna_ich/README_en.md` or `rsna_ich/README.md`.
-- Read the release note source under `docs/releases/v1.0-interview.md`.
+- Read the release note source under `docs/releases/v0.5.0-rsna.md`.
 - Confirm the reported logloss, AUC, uncertainty, and calibration claims are consistent across those files.
 
 ## 3. Code-path sanity

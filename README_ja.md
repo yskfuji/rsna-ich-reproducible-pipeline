@@ -10,9 +10,9 @@ RSNA ICH challenge 向けの、**再現可能な頭蓋内出血分類パイプ�
 - 実験詳細: [core/pipeline/README.md](core/pipeline/README.md)
 - API デモ概要: [docs/api_demo_ja.md](docs/api_demo_ja.md)
 - 再現性チェックリスト: [docs/reproducibility_checklist.md](docs/reproducibility_checklist.md)
-- GitHub About 設定原稿: [英語版](docs/github_about.md) | [日本語版](docs/github_about_ja.md)
+- GitHub About 欄の説明文: [英語版](docs/github_about.md) | [日本語版](docs/github_about_ja.md)
 - 引用情報: [CITATION.cff](CITATION.cff)
-- リリースノート原稿: [英語版](docs/releases/v1.0-interview.md) | [日本語版](docs/releases/v1.0-interview_ja.md)
+- リリースノート原稿: [英語版](docs/releases/v0.5.0-rsna.md) | [日本語版](docs/releases/v0.5.0-rsna_ja.md)
 - ロードマップ: [ROADMAP.md](ROADMAP.md)
 
 ## このリポジトリでできること
@@ -20,8 +20,8 @@ RSNA ICH challenge 向けの、**再現可能な頭蓋内出血分類パイプ�
 - RSNA 頭蓋内出血分類の学習 / 評価ワークフロー
 - `split_by=study` による study 単位のグループ分割とリーク監査
 - `any` ラベルに対する校正評価と不確実性評価
-- FastAPI による公開向け API スキーマの確認用デモ
-- 外部レビュー向けに整理したポートフォリオ向けの案内
+- FastAPI による公開用 API スキーマ確認デモ
+- 外部レビュー向けに整理したポートフォリオ用ドキュメント
 - 実データなしで公開物が正しく動くかを確かめる簡易動作確認
 
 ## 想定している読者
@@ -96,9 +96,9 @@ python serve_rsna_ich_api.py
 
 ## 固定スナップショット（ポートフォリオ用）
 
-開発は継続中ですが、ポートフォリオ / 面接レビュー用の固定スナップショットは次のタグです。
+開発は継続中ですが、現行のポートフォリオ用固定スナップショットは次のタグです。
 
-✅ `rsna-ich-v1.0-interview`
+✅ `v0.5.0-rsna`
 
 ## 引用
 

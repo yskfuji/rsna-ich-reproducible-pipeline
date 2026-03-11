@@ -4,9 +4,9 @@
 
 ## Stable Portfolio Version
 
-The reproducible evaluation reviewed during recruitment corresponds to:
+The current portfolio snapshot corresponds to:
 
-✅ rsna-ich-v1.0-interview
+✅ v0.5.0-rsna
 
 Active development continues in the repository.
 

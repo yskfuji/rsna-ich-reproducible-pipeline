@@ -12,7 +12,7 @@ Reproducible intracranial hemorrhage classification pipeline for the RSNA ICH ch
 - Reproducibility checklist: [docs/reproducibility_checklist.md](docs/reproducibility_checklist.md)
 - GitHub About settings: [EN](docs/github_about.md) | [JA](docs/github_about_ja.md)
 - Citation: [CITATION.cff](CITATION.cff)
-- Release note source: [EN](docs/releases/v1.0-interview.md) | [JA](docs/releases/v1.0-interview_ja.md)
+- Release note source: [EN](docs/releases/v0.5.0-rsna.md) | [JA](docs/releases/v0.5.0-rsna_ja.md)
 - Roadmap: [ROADMAP.md](ROADMAP.md)
 
 ## What this repository provides
@@ -95,9 +95,9 @@ Not included:
 
 ## Stable portfolio version
 
-Active development continues in this repository. The stable snapshot used for portfolio and interview review is:
+Active development continues in this repository. The current portfolio snapshot is:
 
-✅ `rsna-ich-v1.0-interview`
+✅ `v0.5.0-rsna`
 
 ## How to cite
 

@@ -4,9 +4,9 @@
 
 ## 固定スナップショット（ポートフォリオ用）
 
-採用選考でレビューされた「再現評価」は、次のタグに対応します：
+現行のポートフォリオ用スナップショットは、次のタグに対応します：
 
-✅ rsna-ich-v1.0-interview
+✅ v0.5.0-rsna
 
 リポジトリは継続的に開発中です。
 
@@ -41,7 +41,7 @@
   - `adopted_subset_*` は `limit_images` などで採用された全体の対象集合、`val_subset_*` はそのうち validation に入った `image_id` の集合
 ### レビュワー向けベンチマーク表
 
-| 評価観点 | 条件 | 主結果 | 補助結果 | 見るべき意味 |
+| 評価観点 | 条件 | 主結果 | 補助結果 | 着目点 |
 |---|---|---|---|---|
 | 頑健性 | GroupKFold(5), `split_by=study`, `epochs=1`, `kept=6852` | weighted logloss `0.05346 ± 0.00624` | mean AUC `0.98815 ± 0.00311` | 単一 holdout の偶然ではなく、fold を跨いでも指標が保たれることを確認 |
 | 再現性 | holdout `val_frac=0.05` を同一 seed / 同一引数で 2 回実行 | weighted logloss `0.0555525` | mean AUC `0.9915841`, この環境では記録済み `val_*` が `abs_diff=0` | 公開レシピをそのまま再実行して同じ結果に戻せることを確認 |
@@ -62,7 +62,7 @@ TORCH_DEVICE=mps python train_rsna_cnn2d_classifier.py train --rsna-root ... --p
   ※実パス例は §2.1「データ例」を参照（rsna_root / preprocessed_root）。
 
 - 実験管理（任意）: `train` は **既定では OFF** ですが、Weights & Biases / MLflow に同じ指標を送れます。
-- API デモ（公開向けスキーマ確認）: `serve_rsna_ich_api.py` で `health` / `model metadata` / `ich inference` を確認できます。
+- API デモ（公開用スキーマ確認）: `serve_rsna_ich_api.py` で `health` / `model metadata` / `ich inference` を確認できます。
 
 ```bash
 # W&B（要: WANDB_API_KEY）
@@ -72,7 +72,7 @@ TORCH_DEVICE=mps python train_rsna_cnn2d_classifier.py train --rsna-root ... --p
 python train_rsna_cnn2d_classifier.py train --rsna-root ... --preprocessed-root ... --out-dir results/repro_demo --limit-images 8000 --val-frac 0.05 --split-by study --seed 0 --epochs 1 --no-aug --no-scheduler --arch convnext_tiny --pretrained --mlflow --mlflow-experiment rsna-ich
 ```
 
-公開向け API スキーマの確認例:
+公開用 API スキーマの確認例:
 
 ```bash
 cd pipeline

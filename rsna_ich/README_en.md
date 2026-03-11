@@ -33,14 +33,14 @@ This folder is the **public entry point** for the RSNA ICH classification pipeli
 - Audit quick guide: `./AUDIT_GUIDE.md`
 - API demo note: `../docs/api_demo.md`
 - Citation: `../CITATION.cff`
-- Release-note source: `../docs/releases/v1.0-interview.md`
+- Release-note source: `../docs/releases/v0.5.0-rsna.md`
 - Roadmap: `../ROADMAP.md`
 
 ## Stable portfolio version
 
-The hiring-review snapshot corresponds to:
+The current portfolio snapshot corresponds to:
 
-✅ `rsna-ich-v1.0-interview`
+✅ `v0.5.0-rsna`
 
 Active development continues in the repository.
 
