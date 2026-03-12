@@ -113,7 +113,7 @@ python tools/register_model.py \
   --reject-alias needs-review
 ```
 
-promotion rule は `log.jsonl` の最終行にある最新指標に対して評価されます。条件を満たした場合に、作成した MLflow model version へ指定 alias を付けます。
+昇格条件は `log.jsonl` の最終行にある最新指標に対して評価されます。条件を満たした場合に、作成した MLflow model version へ指定 alias を付けます。
 
 検証手順を 1 コマンドにまとめたい場合は、`verify_registration.py` を使います。
 
@@ -127,7 +127,7 @@ python tools/verify_registration.py \
   --registered-model-name rsna-convnext25d-verify
 ```
 
-この verify script は `artifacts/verification/` 配下にローカル SQLite の MLflow Registry と bundle を作り、`registration.json` と期待 alias の両方を確認した要約 JSON を標準出力へ出します。
+この検証スクリプトは `artifacts/verification/` 配下にローカル SQLite の MLflow Registry とバンドルを作り、`registration.json` と期待する alias の両方を確認した要約 JSON を標準出力へ出します。
 
 ---
 
@@ -227,7 +227,7 @@ run:
 - macOS / `mps` を想定（CPU/CUDAでも動く設計）
 - 例では **preprocessed SQLite** を使います（DICOM の有無に依らず速い）
 
-決定性（再現性）を高めるための前提（推奨）:
+再現性を高めるための前提（推奨）:
 - `--num-workers 0`, `--no-aug`
 - `--seed` を固定し、入力（CSV/SQLite）を同一にする
 - 期待する再現性チェック: meta.json.split_stats が一致 AND val_* の abs_diff <= 1e-6（厳密一致は backend/kernels に依存し得る）

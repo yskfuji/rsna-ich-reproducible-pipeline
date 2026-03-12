@@ -104,9 +104,9 @@ python tools/register_model.py \
   --reject-alias needs-review
 ```
 
-Promotion rules are evaluated against the latest metrics in `log.jsonl`. If the rule passes, the configured promotion alias is updated on the created MLflow model version.
+Promotion criteria are evaluated against the latest metrics in `log.jsonl`. If the condition passes, the configured alias is updated on the created MLflow model version.
 
-If you want the verification flow in a single command, use `verify_registration.py`.
+To verify the full handoff in one command, use `verify_registration.py`.
 
 ```bash
 python tools/verify_registration.py \
@@ -118,7 +118,7 @@ python tools/verify_registration.py \
   --registered-model-name rsna-convnext25d-verify
 ```
 
-This wrapper creates a local SQLite-backed MLflow Registry under `artifacts/verification/`, runs `register_model.py`, and prints a compact JSON summary that confirms both `registration.json` and the expected alias.
+This verification wrapper creates a local SQLite-backed MLflow Registry under `artifacts/verification/`, runs `register_model.py`, and prints a compact JSON summary covering both `registration.json` and the expected alias.
 
 ---
 
@@ -216,10 +216,10 @@ Notes:
 - Assumes macOS + `mps` (designed to also run on CPU/CUDA)
 - Examples use a **preprocessed SQLite** (fast; does not depend on having DICOMs)
 
-Required for determinism (recommended):
+Recommended settings for stronger reproducibility:
 - `--num-workers 0`, `--no-aug`
-- fixed `--seed`, identical inputs (CSV/SQLite)
-- Expected reproducibility check: meta.json.split_stats matches AND abs_diff <= 1e-6 for val_* (exact match may depend on backend/kernels).
+- fix `--seed` and keep the inputs (CSV/SQLite) identical
+- expected reproducibility check: meta.json.split_stats matches AND abs_diff <= 1e-6 for val_* (exact equality may still depend on backend/kernels)
 
 Pass criteria (reproducibility, recommended):
 1. meta.json.split_stats matches

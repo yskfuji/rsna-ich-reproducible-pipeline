@@ -12,4 +12,4 @@ RSNA 頭蓋内出血分類の公開実装です。再現しやすい学習・評
 medical-imaging, deep-learning, pytorch, ct, intracranial-hemorrhage, radiology, reproducibility, kaggle, calibration, healthcare-ai, fastapi, mlops, mlflow
 
 ## ウェブサイト
-https://github.com/yskfuji/rsna-ich-reproducible-pipeline/blob/main/docs/reproducibility_checklist.md
+https://github.com/yskfuji/rsna-ich-reproducible-pipeline/blob/main/docs/reproducibility_checklist_ja.md
