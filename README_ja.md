@@ -12,7 +12,7 @@ RSNA ICH challenge 向けの、**再現可能な頭蓋内出血分類パイプ�
 - 再現性チェックリスト: [docs/reproducibility_checklist.md](docs/reproducibility_checklist.md)
 - GitHub About 欄の説明文: [英語版](docs/github_about.md) | [日本語版](docs/github_about_ja.md)
 - 引用情報: [CITATION.cff](CITATION.cff)
-- リリースノート原稿: [英語版](docs/releases/v0.5.0-rsna.md) | [日本語版](docs/releases/v0.5.0-rsna_ja.md)
+- リリースノート原稿: [英語版](docs/releases/v0.6.0-rsna.md) | [日本語版](docs/releases/v0.6.0-rsna_ja.md)
 - ロードマップ: [ROADMAP.md](ROADMAP.md)
 
 ## このリポジトリでできること
@@ -98,7 +98,7 @@ python serve_rsna_ich_api.py
 
 開発は継続中ですが、現行のポートフォリオ用固定スナップショットは次のタグです。
 
-✅ `v0.5.0-rsna`
+✅ `v0.6.0-rsna`
 
 ## 引用
 

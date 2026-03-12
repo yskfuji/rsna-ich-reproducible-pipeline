@@ -6,7 +6,7 @@
 
 現行のポートフォリオ用スナップショットは、次のタグに対応します：
 
-✅ v0.5.0-rsna
+✅ v0.6.0-rsna
 
 リポジトリは継続的に開発中です。
 
@@ -91,7 +91,8 @@ python tools/register_model.py \
   --model-name rsna-convnext25d \
   --version-label candidate-logloss \
   --checkpoint best_wlogloss.pt \
-  --selection-reason "validation weighted logloss が最良"
+  --selection-reason "validation weighted logloss が最良" \
+  --promotion-rule "val_logloss_weighted<=0.055"
 ```
 
   このコマンドで `artifacts/registered_models/<model-name>/<version-label>/` を作り、`registration.json`, `run_metadata/`, `training_trace/`, `checkpoints/` をまとめます。
@@ -104,11 +105,15 @@ python tools/register_model.py \
   --model-name rsna-convnext25d \
   --version-label candidate-logloss \
   --checkpoint best_wlogloss.pt \
+  --promotion-rule "val_logloss_weighted<=0.055" \
   --mlflow-register \
   --mlflow-experiment rsna-model-registration \
   --registered-model-name rsna-convnext25d \
-  --registered-model-alias candidate
+  --promote-alias candidate \
+  --reject-alias needs-review
 ```
+
+promotion rule は `log.jsonl` の最終行にある最新指標に対して評価されます。条件を満たした場合に、作成した MLflow model version へ指定 alias を付けます。
 
 ---
 

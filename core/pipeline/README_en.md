@@ -6,7 +6,7 @@
 
 The current portfolio snapshot corresponds to:
 
-✅ v0.5.0-rsna
+✅ v0.6.0-rsna
 
 Active development continues in the repository.
 
@@ -82,7 +82,8 @@ python tools/register_model.py \
   --model-name rsna-convnext25d \
   --version-label candidate-logloss \
   --checkpoint best_wlogloss.pt \
-  --selection-reason "lowest validation weighted logloss"
+  --selection-reason "lowest validation weighted logloss" \
+  --promotion-rule "val_logloss_weighted<=0.055"
 ```
 
   This creates `artifacts/registered_models/<model-name>/<version-label>/` with `registration.json`, `run_metadata/`, `training_trace/`, and `checkpoints/`.
@@ -95,11 +96,15 @@ python tools/register_model.py \
   --model-name rsna-convnext25d \
   --version-label candidate-logloss \
   --checkpoint best_wlogloss.pt \
+  --promotion-rule "val_logloss_weighted<=0.055" \
   --mlflow-register \
   --mlflow-experiment rsna-model-registration \
   --registered-model-name rsna-convnext25d \
-  --registered-model-alias candidate
+  --promote-alias candidate \
+  --reject-alias needs-review
 ```
+
+Promotion rules are evaluated against the latest metrics in `log.jsonl`. If the rule passes, the configured promotion alias is updated on the created MLflow model version.
 
 ---
 

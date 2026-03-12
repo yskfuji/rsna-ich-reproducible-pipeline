@@ -33,7 +33,7 @@ This folder is the **public entry point** for the RSNA ICH classification pipeli
 - Audit quick guide: `./AUDIT_GUIDE.md`
 - API demo note: `../docs/api_demo.md`
 - Citation: `../CITATION.cff`
-- Release-note source: `../docs/releases/v0.5.0-rsna.md`
+- Release-note source: `../docs/releases/v0.6.0-rsna.md`
 - Roadmap: `../ROADMAP.md`
 
 ## MLflow tracking schema
@@ -51,7 +51,7 @@ When `--mlflow` is enabled, this repository follows the same public tracking sch
 
 The current portfolio snapshot corresponds to:
 
-✅ `v0.5.0-rsna`
+✅ `v0.6.0-rsna`
 
 Active development continues in the repository.
 

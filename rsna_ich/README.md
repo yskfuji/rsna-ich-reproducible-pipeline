@@ -33,7 +33,7 @@
 - 監査用ショートガイド: `./AUDIT_GUIDE.md`
 - API デモの実行ファイル: `../core/pipeline/serve_rsna_ich_api.py`
 - 引用情報: `../CITATION.cff`
-- リリースノート原稿: `../docs/releases/v0.5.0-rsna.md`
+- リリースノート原稿: `../docs/releases/v0.6.0-rsna.md`
 - ロードマップ: `../ROADMAP.md`
 
 ## MLflow 追跡スキーマ
@@ -51,7 +51,7 @@
 
 現行のポートフォリオ用スナップショットは、次のタグに対応します：
 
-✅ `v0.5.0-rsna`
+✅ `v0.6.0-rsna`
 
 リポジトリは継続的に開発中です。
 

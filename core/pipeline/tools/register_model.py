@@ -16,6 +16,13 @@ TRACKING_SCHEMA = "public_portfolio_v1"
 DEFAULT_CHECKPOINT_CANDIDATES = ["best_wlogloss.pt", "best.pt", "best_auc.pt", "last.pt", "last_state.pt"]
 DEFAULT_METADATA_FILES = ["meta.json"]
 DEFAULT_TRACE_FILES = ["log.jsonl"]
+COMPARISON_OPERATORS = {
+    ">=": lambda actual, threshold: actual >= threshold,
+    "<=": lambda actual, threshold: actual <= threshold,
+    ">": lambda actual, threshold: actual > threshold,
+    "<": lambda actual, threshold: actual < threshold,
+    "==": lambda actual, threshold: actual == threshold,
+}
 
 
 def _read_json(path: Path) -> dict[str, Any] | None:
@@ -54,6 +61,67 @@ def _copy_if_exists(src: Path, dst: Path, bundle_root: Path) -> dict[str, Any] |
     }
 
 
+def _coerce_metric_value(value: Any) -> float | None:
+    if isinstance(value, bool):
+        return None
+    if isinstance(value, (int, float)):
+        return float(value)
+    if isinstance(value, str):
+        try:
+            return float(value)
+        except ValueError:
+            return None
+    return None
+
+
+def _parse_promotion_rule(rule_text: str) -> tuple[str, str, float]:
+    for operator in (">=", "<=", "==", ">", "<"):
+        if operator in rule_text:
+            metric_name, threshold_text = rule_text.split(operator, 1)
+            metric_name = metric_name.strip()
+            threshold_text = threshold_text.strip()
+            if not metric_name or not threshold_text:
+                break
+            return metric_name, operator, float(threshold_text)
+    raise ValueError(f"invalid promotion rule: {rule_text}")
+
+
+def _evaluate_promotion_rules(latest_metrics: dict[str, Any], rule_texts: list[str]) -> dict[str, Any]:
+    if not rule_texts:
+        return {"status": "not_requested", "passed": None, "rules": []}
+
+    evaluations: list[dict[str, Any]] = []
+    passed = True
+    for rule_text in rule_texts:
+        metric_name, operator, threshold = _parse_promotion_rule(rule_text)
+        raw_value = latest_metrics.get(metric_name)
+        actual_value = _coerce_metric_value(raw_value)
+        if actual_value is None:
+            rule_passed = False
+            reason = "metric missing or non-numeric"
+        else:
+            rule_passed = COMPARISON_OPERATORS[operator](actual_value, threshold)
+            reason = None
+        evaluations.append(
+            {
+                "rule": rule_text,
+                "metric_name": metric_name,
+                "operator": operator,
+                "threshold": threshold,
+                "actual_value": actual_value,
+                "passed": rule_passed,
+                "reason": reason,
+            }
+        )
+        passed = passed and rule_passed
+
+    return {
+        "status": "passed" if passed else "failed",
+        "passed": passed,
+        "rules": evaluations,
+    }
+
+
 def _safe_mlflow_register(
     bundle_dir: Path,
     registration_path: Path,
@@ -63,6 +131,8 @@ def _safe_mlflow_register(
     experiment_name: str,
     registered_model_name: str | None,
     registered_model_alias: str | None,
+    promote_alias: str | None,
+    reject_alias: str | None,
     strict: bool,
 ) -> dict[str, Any] | None:
     try:
@@ -71,7 +141,10 @@ def _safe_mlflow_register(
     except Exception as exc:
         if strict:
             raise
-        return {"status": "skipped", "warning": f"mlflow import failed: {exc}"}
+        result = {"status": "skipped", "warning": f"mlflow import failed: {exc}"}
+        registration["mlflow_registration"] = result
+        registration_path.write_text(json.dumps(registration, indent=2, ensure_ascii=False), encoding="utf-8")
+        return result
 
     if tracking_uri:
         mlflow.set_tracking_uri(tracking_uri)
@@ -80,7 +153,9 @@ def _safe_mlflow_register(
     result: dict[str, Any] = {"status": "logged"}
     with mlflow.start_run(run_name=f"register-{registration['model_name']}-{registration['version_label']}") as run:
         run_id = run.info.run_id
+        promotion_status = registration["promotion_evaluation"]["status"]
         result["registration_run_id"] = run_id
+        result["promotion_status"] = promotion_status
         mlflow.set_tags(
             {
                 "repo_name": REPO_NAME,
@@ -88,6 +163,7 @@ def _safe_mlflow_register(
                 "model_family": MODEL_FAMILY,
                 "tracking_schema": TRACKING_SCHEMA,
                 "promotion_stage": "registration_bundle",
+                "promotion_status": promotion_status,
                 "model_name": registration["model_name"],
                 "version_label": registration["version_label"],
             }
@@ -97,6 +173,7 @@ def _safe_mlflow_register(
                 "source_run_dir": registration["source_run_dir"],
                 "primary_checkpoint": registration["primary_checkpoint"],
                 "bundle_dir": str(bundle_dir),
+                "promotion_rule_count": len(registration["promotion_evaluation"].get("rules", [])),
             }
         )
         mlflow.log_artifacts(str(bundle_dir), artifact_path="bundle")
@@ -118,9 +195,14 @@ def _safe_mlflow_register(
                     description=f"Registration bundle for {registration['model_name']}:{registration['version_label']}",
                 )
                 result["registered_model_version"] = str(model_version.version)
-                if registered_model_alias:
-                    client.set_registered_model_alias(registered_model_name, registered_model_alias, model_version.version)
-                    result["registered_model_alias"] = registered_model_alias
+                alias_to_apply = registered_model_alias
+                if registration["promotion_evaluation"]["passed"] is True and promote_alias:
+                    alias_to_apply = promote_alias
+                elif registration["promotion_evaluation"]["passed"] is False and reject_alias:
+                    alias_to_apply = reject_alias
+                if alias_to_apply:
+                    client.set_registered_model_alias(registered_model_name, alias_to_apply, model_version.version)
+                    result["registered_model_alias"] = alias_to_apply
             except Exception as exc:
                 if strict:
                     raise
@@ -148,6 +230,9 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--mlflow-experiment", default="model-registration", help="MLflow experiment name for registration runs")
     parser.add_argument("--registered-model-name", default="", help="Optional MLflow registered model name")
     parser.add_argument("--registered-model-alias", default="", help="Optional MLflow registered model alias")
+    parser.add_argument("--promotion-rule", action="append", default=[], help="Promotion rule such as val_dice>=0.75 or val_logloss_weighted<=0.055")
+    parser.add_argument("--promote-alias", default="", help="Alias to assign when all promotion rules pass")
+    parser.add_argument("--reject-alias", default="", help="Alias to assign when promotion rules fail")
     parser.add_argument("--strict-mlflow", action="store_true", help="Fail if MLflow registration steps fail")
     return parser
 
@@ -196,6 +281,8 @@ def main() -> int:
     if not primary_bundle_checkpoint.exists():
         raise FileNotFoundError(f"primary checkpoint missing from bundle: {primary_bundle_checkpoint}")
 
+    promotion_evaluation = _evaluate_promotion_rules(last_log, list(args.promotion_rule))
+
     registration = {
         "schema_version": "model_registration_bundle.v1",
         "created_at_utc": datetime.now(timezone.utc).isoformat(),
@@ -211,6 +298,7 @@ def main() -> int:
         "bundle_note": args.bundle_note.strip() or None,
         "source_meta": meta,
         "latest_metrics": last_log,
+        "promotion_evaluation": promotion_evaluation,
         "artifact_inventory": inventory,
     }
     registration_path = bundle_dir / "registration.json"
@@ -225,10 +313,21 @@ def main() -> int:
             experiment_name=args.mlflow_experiment.strip(),
             registered_model_name=args.registered_model_name.strip() or None,
             registered_model_alias=args.registered_model_alias.strip() or None,
+            promote_alias=args.promote_alias.strip() or None,
+            reject_alias=args.reject_alias.strip() or None,
             strict=bool(args.strict_mlflow),
         )
 
-    print(json.dumps({"bundle_dir": str(bundle_dir), "registration_path": str(registration_path)}, indent=2))
+    print(
+        json.dumps(
+            {
+                "bundle_dir": str(bundle_dir),
+                "registration_path": str(registration_path),
+                "promotion_status": promotion_evaluation["status"],
+            },
+            indent=2,
+        )
+    )
     return 0
 
 
