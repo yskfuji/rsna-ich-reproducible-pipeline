@@ -33,6 +33,14 @@ from ..models.mc_dropout import inject_stage_and_head_dropout
 app = typer.Typer(add_completion=False)
 
 
+def _safe_mlflow_log_artifact(mlflow_lib: Any, path: Path, *, artifact_path: str | None = None) -> None:
+    try:
+        if path.exists():
+            mlflow_lib.log_artifact(str(path), artifact_path=artifact_path)
+    except Exception:
+        pass
+
+
 class InputNormalizeMode(str, Enum):
     auto = "auto"
     imagenet = "imagenet"
@@ -1050,8 +1058,17 @@ def train(
         if not run_name:
             run_name = out_dir.name
         mlflow_lib.start_run(run_name=run_name)
+        mlflow_lib.set_tags(
+            {
+                "repo_name": "github_public_rsna",
+                "task_type": "medical_image_classification",
+                "model_family": "cnn2d_classifier",
+                "tracking_schema": "public_portfolio_v1",
+            }
+        )
         # Keep params small/flat to avoid MLflow limitations.
         mlflow_params = {
+            "experiment_name": str(mlflow_experiment),
             "arch": str(meta.get("arch")),
             "pretrained": str(meta.get("pretrained")),
             "stack_slices": str(meta.get("stack_slices")),
@@ -1063,10 +1080,18 @@ def train(
             "seed": str(meta.get("seed")),
             "limit_images": str(meta.get("limit_images")),
             "enforce_any_max": str(meta.get("enforce_any_max")),
+            "batch_size": str(meta.get("batch_size")),
+            "epochs": str(meta.get("epochs")),
+            "lr": str(meta.get("lr")),
+            "weight_decay": str(meta.get("weight_decay")),
+            "input_normalize": str(meta.get("input_normalize")),
+            "n_train": str(meta.get("n_train")),
+            "n_val": str(meta.get("n_val")),
             "out_dir": str(out_dir),
             "subset_fingerprint_sha256": str(meta.get("subset_fingerprint_sha256")),
         }
         mlflow_lib.log_params({k: v for k, v in mlflow_params.items() if v is not None})
+        _safe_mlflow_log_artifact(mlflow_lib, out_dir / "meta.json", artifact_path="run_metadata")
 
     best_val = float("inf")
     best_auc = float("-inf")
@@ -1278,6 +1303,13 @@ def train(
         try:
             if np.isfinite(best_wlogloss):
                 mlflow_lib.log_metric("best_wlogloss", float(best_wlogloss))
+            _safe_mlflow_log_artifact(mlflow_lib, out_dir / "meta.json", artifact_path="run_metadata")
+            _safe_mlflow_log_artifact(mlflow_lib, out_dir / "log.jsonl", artifact_path="training_trace")
+            _safe_mlflow_log_artifact(mlflow_lib, out_dir / "last.pt", artifact_path="checkpoints")
+            _safe_mlflow_log_artifact(mlflow_lib, out_dir / "last_state.pt", artifact_path="checkpoints")
+            _safe_mlflow_log_artifact(mlflow_lib, out_dir / "best.pt", artifact_path="checkpoints")
+            _safe_mlflow_log_artifact(mlflow_lib, out_dir / "best_auc.pt", artifact_path="checkpoints")
+            _safe_mlflow_log_artifact(mlflow_lib, out_dir / "best_wlogloss.pt", artifact_path="checkpoints")
             mlflow_lib.end_run()
         except Exception:
             pass
