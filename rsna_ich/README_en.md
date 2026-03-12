@@ -36,6 +36,17 @@ This folder is the **public entry point** for the RSNA ICH classification pipeli
 - Release-note source: `../docs/releases/v0.5.0-rsna.md`
 - Roadmap: `../ROADMAP.md`
 
+## MLflow tracking schema
+
+When `--mlflow` is enabled, this repository follows the same public tracking schema used across the three portfolio repositories.
+
+- Common run tags: `repo_name`, `task_type`, `model_family`, `tracking_schema=public_portfolio_v1`
+- Common artifact groups:
+  - `run_metadata/`: `meta.json` and, when available, a config snapshot or task-specific JSON
+  - `training_trace/`: `log.jsonl`
+  - `checkpoints/`: `last.pt`, `best.pt`, and any task-specific best-checkpoint variants
+- Goal: make run review easier across segmentation and classification repos without claiming a production MLOps platform
+
 ## Current portfolio snapshot
 
 The current portfolio snapshot corresponds to:

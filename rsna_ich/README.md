@@ -36,6 +36,17 @@
 - リリースノート原稿: `../docs/releases/v0.5.0-rsna.md`
 - ロードマップ: `../ROADMAP.md`
 
+## MLflow 追跡スキーマ
+
+`--mlflow` を有効にした場合、この公開リポジトリでは 3 本のポートフォリオ用リポジトリで共通の追跡スキーマを使います。
+
+- 共通の run tag: `repo_name`, `task_type`, `model_family`, `tracking_schema=public_portfolio_v1`
+- 共通の artifact グループ:
+  - `run_metadata/`: `meta.json` と、存在する場合は設定スナップショットやタスク固有の JSON
+  - `training_trace/`: `log.jsonl`
+  - `checkpoints/`: `last.pt`, `best.pt`, およびタスク固有の best 系チェックポイント
+- 目的: セグメンテーション系と分類系の run を同じ見方で追えるようにしつつ、本格的な本番用 MLOps 基盤を主張しないこと
+
 ## 現行のポートフォリオ用スナップショット
 
 現行のポートフォリオ用スナップショットは、次のタグに対応します：
