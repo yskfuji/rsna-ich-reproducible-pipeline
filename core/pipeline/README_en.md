@@ -74,6 +74,33 @@ python serve_rsna_ich_api.py
 
   Open `http://127.0.0.1:8000/docs` to inspect `/health`, `/v1/models/{alias_or_version}`, and `/v1/infer/ich_classification`.
 
+- Model registration stage:
+
+```bash
+python tools/register_model.py \
+  --run-dir results/<YOUR_RUN_DIR> \
+  --model-name rsna-convnext25d \
+  --version-label candidate-logloss \
+  --checkpoint best_wlogloss.pt \
+  --selection-reason "lowest validation weighted logloss"
+```
+
+  This creates `artifacts/registered_models/<model-name>/<version-label>/` with `registration.json`, `run_metadata/`, `training_trace/`, and `checkpoints/`.
+
+  Optional MLflow handoff:
+
+```bash
+python tools/register_model.py \
+  --run-dir results/<YOUR_RUN_DIR> \
+  --model-name rsna-convnext25d \
+  --version-label candidate-logloss \
+  --checkpoint best_wlogloss.pt \
+  --mlflow-register \
+  --mlflow-experiment rsna-model-registration \
+  --registered-model-name rsna-convnext25d \
+  --registered-model-alias candidate
+```
+
 ---
 
 ## 1. Metric Summary (this report)

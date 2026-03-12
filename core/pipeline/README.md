@@ -83,6 +83,33 @@ python serve_rsna_ich_api.py
 
 起動後に `http://127.0.0.1:8000/docs` を開くと、`/health`, `/v1/models/{alias_or_version}`, `/v1/infer/ich_classification` を確認できます。
 
+- モデル登録ステージ:
+
+```bash
+python tools/register_model.py \
+  --run-dir results/<YOUR_RUN_DIR> \
+  --model-name rsna-convnext25d \
+  --version-label candidate-logloss \
+  --checkpoint best_wlogloss.pt \
+  --selection-reason "validation weighted logloss が最良"
+```
+
+  このコマンドで `artifacts/registered_models/<model-name>/<version-label>/` を作り、`registration.json`, `run_metadata/`, `training_trace/`, `checkpoints/` をまとめます。
+
+  MLflow へ引き渡す場合の例:
+
+```bash
+python tools/register_model.py \
+  --run-dir results/<YOUR_RUN_DIR> \
+  --model-name rsna-convnext25d \
+  --version-label candidate-logloss \
+  --checkpoint best_wlogloss.pt \
+  --mlflow-register \
+  --mlflow-experiment rsna-model-registration \
+  --registered-model-name rsna-convnext25d \
+  --registered-model-alias candidate
+```
+
 ---
 
 ## 1. 指標サマリ（今回の結果）
