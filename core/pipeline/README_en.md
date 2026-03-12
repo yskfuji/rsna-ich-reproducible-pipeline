@@ -106,6 +106,20 @@ python tools/register_model.py \
 
 Promotion rules are evaluated against the latest metrics in `log.jsonl`. If the rule passes, the configured promotion alias is updated on the created MLflow model version.
 
+If you want the verification flow in a single command, use `verify_registration.py`.
+
+```bash
+python tools/verify_registration.py \
+  --run-dir results/<YOUR_RUN_DIR> \
+  --model-name rsna-convnext25d \
+  --version-label verify-candidate-logloss \
+  --checkpoint best_wlogloss.pt \
+  --promotion-rule "val_logloss_weighted<=0.055" \
+  --registered-model-name rsna-convnext25d-verify
+```
+
+This wrapper creates a local SQLite-backed MLflow Registry under `artifacts/verification/`, runs `register_model.py`, and prints a compact JSON summary that confirms both `registration.json` and the expected alias.
+
 ---
 
 ## 1. Metric Summary (this report)

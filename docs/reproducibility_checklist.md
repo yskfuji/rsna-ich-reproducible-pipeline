@@ -35,13 +35,19 @@ Use this page as a fast external-review checklist for the public RSNA ICH reposi
 - Confirm uncertainty and calibration metrics are surfaced, not just classification scores.
 - Confirm the FastAPI demo is documented as a schema-level public demo, not a production deployment claim.
 
-## 6. Reviewer pass criteria
+## 6. Registration verification
+
+- Run `python core/pipeline/tools/verify_registration.py --run-dir <REPRESENTATIVE_RUN_DIR> --model-name rsna-convnext25d --checkpoint best_wlogloss.pt --promotion-rule "val_logloss_weighted<=0.055" --registered-model-name rsna-convnext25d-verify` from the repository root or `python tools/verify_registration.py ...` from `core/pipeline`.
+- Confirm the command creates `artifacts/verification/registered_models/.../registration.json`.
+- Confirm the printed JSON summary reports the expected `promotion_status` and alias outcome.
+
+## 7. Reviewer pass criteria
 
 - A reviewer can identify the main metric, leakage controls, and first commands to run in under 3 minutes.
 - A reviewer can trace train -> evaluate -> audit -> API demo without needing hidden scripts.
 - A reviewer can validate repository wiring without access to protected data.
 
-## 7. Known limits
+## 8. Known limits
 
 - This checklist validates public reproducibility scaffolding, not Kaggle leaderboard reproduction.
 - Full metric reproduction still requires separately prepared RSNA data and the corresponding training environment.
