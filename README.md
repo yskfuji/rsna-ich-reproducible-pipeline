@@ -10,6 +10,7 @@ Reproducible intracranial hemorrhage classification pipeline for the RSNA ICH ch
 - Detailed documentation: [core/pipeline/README_en.md](core/pipeline/README_en.md)
 - API demo notes: [docs/api_demo.md](docs/api_demo.md)
 - Reproducibility checklist: [docs/reproducibility_checklist.md](docs/reproducibility_checklist.md)
+- Suggested review order: [EN snapshot guide](docs/releases/v0.6.0-rsna.md) | [JA snapshot guide](docs/releases/v0.6.0-rsna_ja.md)
 - GitHub About settings: [EN](docs/github_about.md) | [JA](docs/github_about_ja.md)
 - Citation: [CITATION.cff](CITATION.cff)
 - Release note source: [EN](docs/releases/v0.6.0-rsna.md) | [JA](docs/releases/v0.6.0-rsna_ja.md)
