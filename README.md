@@ -79,7 +79,7 @@ Mean ± sample standard deviation (ddof=1). The per-fold and per-seed values are
 ### 1. Verify the repository without medical data
 
 ```bash
-pip install --index-url https://download.pytorch.org/whl/cpu torch==2.6.0 torchvision==0.21.0
+pip install --index-url https://download.pytorch.org/whl/cpu torch==2.14.1 torchvision==0.29.1
 pip install -r core/pipeline/requirements.txt
 python scripts/smoke_test.py --use_dummy_data
 python scripts/check_imports.py
