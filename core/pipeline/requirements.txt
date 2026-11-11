@@ -1,0 +1,28 @@
+# Verified on 2026-11-11 with Python 3.11 (macOS arm64 and Ubuntu CPU in CI).
+# torch 2.6.0 matches the version recorded in the published run metadata.
+# For a CPU-only install:
+#   pip install --index-url https://download.pytorch.org/whl/cpu torch==2.6.0 torchvision==0.21.0
+#   pip install -r requirements.txt
+torch==2.6.0
+torchvision==0.21.0
+numpy==2.2.6
+pandas==3.1.1
+pydicom==3.0.2
+typer==0.29.0
+click==8.5.1
+fastapi==0.162.4
+starlette==1.10.0
+pydantic==2.14.3
+uvicorn==0.54.0
+python-multipart==0.0.20
+matplotlib==3.11.2
+pyyaml==6.0.3
+nibabel==5.5.0
+scipy==1.17.1
+
+# test-only
+pytest==9.2.0
+httpx==0.28.1
+
+# Optional experiment tracking (imported lazily by the trainer when enabled):
+#   mlflow, wandb

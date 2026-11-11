@@ -22,7 +22,11 @@ REQUIRED_PATHS = [
     "core/pipeline/predict_rsna_ich_submission.py",
     "core/pipeline/serve_rsna_ich_api.py",
     "core/pipeline/src/inference/serve_rsna_ich_api.py",
+    "core/pipeline/src/datasets/rsna_ich_dataset.py",
+    "core/pipeline/requirements.txt",
+    "core/pipeline/reports/rsna_cv_summary.json",
 ]
+SOURCE_DIRS = ["core/pipeline/src", "core/pipeline/tools", "scripts"]
 ENTRYPOINTS = [
     "core/pipeline/train_rsna_cnn2d_classifier.py train",
     "core/pipeline/predict_rsna_ich_submission.py",
@@ -41,6 +45,26 @@ def _check_paths(root: Path) -> list[str]:
         if not (root / rel).exists():
             missing.append(rel)
     return missing
+
+
+def _unpublished_sources(root: Path) -> list[str] | None:
+    """Return .py files present on disk but not tracked by Git (None if not a Git checkout)."""
+    proc = subprocess.run(
+        ["git", "ls-files", "--", *SOURCE_DIRS],
+        cwd=root,
+        capture_output=True,
+        text=True,
+    )
+    if proc.returncode != 0:
+        return None
+    tracked = set(proc.stdout.splitlines())
+    on_disk = {
+        p.relative_to(root).as_posix()
+        for d in SOURCE_DIRS
+        for p in (root / d).rglob("*.py")
+        if "__pycache__" not in p.parts
+    }
+    return sorted(on_disk - tracked)
 
 
 def _load_manifest(root: Path) -> dict[str, Any]:
@@ -74,6 +98,11 @@ def main() -> int:
         print("Missing required files:", *missing, sep="\n- ")
         return 1
 
+    unpublished = _unpublished_sources(root)
+    if unpublished:
+        print("Source files exist locally but are not tracked by Git (check .gitignore):", *unpublished, sep="\n- ")
+        return 1
+
     out_dir = root / "artifacts" / "smoke_dummy"
     out_dir.mkdir(parents=True, exist_ok=True)
 
@@ -86,6 +115,7 @@ def main() -> int:
         "timestamp_utc": datetime.now(UTC).isoformat(),
         "used_dummy_data": bool(args.use_dummy_data),
         "checked_paths": REQUIRED_PATHS,
+        "git_tracking_checked": unpublished is not None,
         "entrypoints": ENTRYPOINTS,
         "sample_cases": manifest.get("sample_cases", []),
         "generated_files": [
