@@ -23,7 +23,7 @@
 | ID | 問題 | 原因 | 対処 |
 |---|---|---|---|
 | F-1 | `main` にISLESの内容が表示される | 別リポジトリの履歴が `main` に強制pushされた | ISLES版を `archive/isles-misplaced-20260615` に退避し、`main` をRSNAの正しい履歴に戻す |
-| F-2 | `src/datasets/rsna_ich_dataset.py` が公開されていない | `.gitignore` の `Datasets/` は位置を固定していないため、大文字小文字を区別しない環境（`core.ignorecase=true`）では `src/datasets/` にも一致した | `/Datasets/` と `/datasets/` に固定し、`!/src/datasets/` を明示する |
+| F-2 | `src/datasets/rsna_ich_dataset.py` が公開されていない | `.gitignore` の `Datasets/` は位置を固定していないため、大文字小文字を区別しない環境（`core.ignorecase=true`）では `src/datasets/` にも一致した | `Datasets/` と `datasets/` はどの階層でも除外したまま、ソースのパッケージだけを `!core/pipeline/src/datasets/`（`core/pipeline` 側では `!/src/datasets/`）で例外にする。判定は `--no-index` で行い、CIで検査する |
 | F-3 | `reports/latest_eval_report.*` がISLESのDice評価になっている | ISLESの評価レポートが混入した | 削除し、指標の出典を `reports/rsna_cv_summary.json` に一本化する |
 | F-4 | 見出しの指標4値に、機械可読な出典がない | foldごとの値が公開物に含まれていない | 出典JSONを追加し、READMEとの一致をCIで検査する |
 | F-5 | 依存のバージョンが固定されておらず、CIもない。smoke testが欠落を見逃す | `configs/env.yml` はあるが、バージョンを指定していない。smoke testは作業ツリーのファイル存在だけを確認していた | バージョンを固定した `requirements.txt`、CI、Gitの管理下にあるファイルだけで行うimport検査を追加する |
