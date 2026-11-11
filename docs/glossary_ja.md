@@ -1,32 +1,24 @@
 # 用語集
 
-図だけで全体を見たいときは [visual_index_ja.md](visual_index_ja.md) を先に開いてください。
+図による概観は [visual_index_ja.md](visual_index_ja.md) を先に参照する。
 
-このリポジトリの日本語文書で使う用語と、対応する英語表記です。文書ごとに言い方が揺れないよう、新しく書く文章はこの表に合わせます。
+本リポジトリの日本語文書で用いる用語と、対応する英語表記を示す。新規に書く文章は本表に合わせ、表記の揺れを避ける。
 
 | 用語 | 英語表記・コード上の名前 | 意味 |
 |---|---|---|
-| 頭蓋内出血 | intracranial hemorrhage (ICH) | 頭蓋骨の内側で起きる出血。このリポジトリでは5つのサブタイプと `any` を分類します。 |
-| サブタイプ | subtype | 硬膜外（`epidural`）、脳実質内（`intraparenchymal`）、脳室内（`intraventricular`）、くも膜下（`subarachnoid`）、硬膜下（`subdural`）の5種類です。 |
-| `any` | `any` | いずれかのサブタイプの出血があることを示すラベルです。 |
-| 検査 | study（`StudyInstanceUID`） | 1回のCT撮影でまとまる画像群です。分割の単位に使います。 |
-| シリーズ | series（`SeriesInstanceUID`） | 1つの検査の中で、同じ条件で再構成された一連の画像です。 |
-| スライス | slice | CTの1枚の断面画像です。RSNAのラベルはスライスごとに付いています。 |
-| 交差検証 | cross-validation（GroupKFold） | データを複数の組（fold）に分け、1組を検証、残りを学習に使う操作を、組を入れ替えながら繰り返す評価方法です。 |
-| fold | fold | 交差検証で分けた1区画、またはその区画を検証に使った1回の学習です。 |
-| ホールドアウト | holdout | 学習に使わずに残しておく検証用データです。 |
-| リーク | leakage | 検証データの情報が学習側に混ざり、成績が実力より良く見える現象です。 |
-| 重複除去 | de-duplication | 前処理後の画像テンソルのハッシュが一致する画像を、分割の前に1枚にまとめる処理です。 |
-| 初期重み | initial checkpoint（`init_from`） | 追加学習を始めるときに読み込むモデルの重みです。 |
-| 追加学習 | fine-tuning | 学習済みの重みから学習を続けることです。 |
-| 加重マルチラベル対数損失 | weighted multi-label logloss（`val_logloss_weighted`） | Kaggle RSNA ICHの評価指標です。定義は [評価ノート](evaluation_notes_ja.md) を参照してください。 |
-| 校正 | calibration | 予測確率が、実際に陽性となる割合と一致するように確率を調整することです。「較正」とは書きません。 |
-| 温度スケーリング | temperature scaling | ロジットを1つの温度で割って確率を校正する方法です。 |
-| ECE | expected calibration error | 予測確率を等幅の区間に分け、区間ごとに平均予測確率と陽性の割合の差を求め、区間の件数で重み付けして平均した値です。 |
-| Brierスコア | Brier score | 予測確率と正解（0または1）の差の二乗平均です。 |
-| 誤り検出AUROC | error-detection AUROC | 不確実性スコアで予測の誤りをどれだけ見分けられるかを表すAUROCです。 |
-| 被覆率 | coverage | 確信度の高い順に予測を採用したとき、採用した割合です。 |
-| AURC | area under the risk-coverage curve | 被覆率ごとのリスクを、全被覆率にわたって平均した値です。 |
-| MC Dropout | Monte Carlo dropout | 推論時にもDropoutを有効にして複数回予測し、ばらつきを不確実性とみなす方法です。 |
-| 標本標準偏差 | sample standard deviation（ddof=1） | n−1で割って求める標準偏差です。このリポジトリの「±」はすべてこれです。 |
-| 医療機器 | medical device | 診断や治療を目的とする機器やソフトウェアです。このリポジトリは研究用の実装で、医療機器として作ったものではありません。 |
+| 頭蓋内出血 | intracranial hemorrhage (ICH) | 頭蓋骨の内側で起きる出血。本リポジトリでは5つのサブタイプと `any` を分類する。 |
+| サブタイプ | subtype | 硬膜外（`epidural`）、脳実質内（`intraparenchymal`）、脳室内（`intraventricular`）、くも膜下（`subarachnoid`）、硬膜下（`subdural`）の5種類である。 |
+| any | `any` | 上記サブタイプのいずれかの出血があることを示すラベルである。 |
+| 検査 | study | DICOMの `StudyInstanceUID` で識別される検査単位である。 |
+| グループ分割 | group split / `split_by=study` | 同一検査が学習と検証にまたがらないよう、検査単位で分割する方法である。 |
+| 情報リーク | leakage | 検証側の情報が学習側に混入し、成績を過大評価する事態をいう。 |
+| 加重マルチラベル対数損失 | weighted multi-label logloss | Kaggle課題の主指標である。`any` を重く扱う。 |
+| AUC | area under the ROC curve | 順位付け性能の指標である。高いほど良い。 |
+| ECE | expected calibration error | 予測確率と実際の頻度のずれを測る校正誤差である。低いほど良い。 |
+| 温度スケーリング | temperature scaling | ロジットを温度パラメータで割り、確率の校正を改善する手法である。 |
+| MC Dropout | Monte Carlo Dropout | 推論時にもDropoutを有効にし、複数回予測して不確実性を推定する手法である。 |
+| AURC | area under the risk–coverage curve | 確信度の高い予測に限定したときのリスク推移を要約する指標である。 |
+| 初期重み | initial checkpoint | 追加学習の出発点となる学習済みパラメータである。 |
+| 医療機器 | medical device | 本リポジトリの実装は医療機器ではない。診断用途には用いない。 |
+
+参照：[evaluation_notes_ja.md](evaluation_notes_ja.md)
