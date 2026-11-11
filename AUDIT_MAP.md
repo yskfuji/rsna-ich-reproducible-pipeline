@@ -28,3 +28,9 @@
 - `runs/`
 - `results/`
 - `logs/`
+
+## 5. 公開整備の手順（横展開用）
+
+- 手順正本: `./docs/audit/PUBLIC_REPO_POLISH_PLAYBOOK.md`
+- チェック表テンプレート: `./docs/audit/PUBLIC_REPO_POLISH_CHECKLIST.md`
+- AC 判定表: `./docs/audit/acceptance_2026-11.md`
