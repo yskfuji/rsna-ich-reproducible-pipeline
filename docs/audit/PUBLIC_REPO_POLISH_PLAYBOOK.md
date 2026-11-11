@@ -121,10 +121,10 @@ npx --yes -p textlint -p textlint-rule-preset-ja-technical-writing \
 
 | リポジトリ | 日付 | 先端コミット | 判定要約 | チェック表 |
 |---|---|---|---|---|
-| isles2022-3d-reproducible-pipeline | （未） | | | `docs/audit/polish-isles2022-3d.md`（各 repo 側） |
-| isles2022-2p5d-reproducible-pipeline | （未） | | | |
-| isles2022-2d3d-blend-reproducible-pipeline | （未） | | | |
-| yskfuji（profile） | （未） | | | |
+| isles2022-3d-reproducible-pipeline | 2026-11-11 | `7d4d528` | PNG/`*_ja`・である調・caveat・raw一致 | 各 repo: `docs/audit/polish-isles2022-3d.md` |
+| isles2022-2p5d-reproducible-pipeline | 2026-11-11 | `97d1b0b` | 同上（main に統合、コンフリクト解消含む） | `docs/audit/polish-isles2022-2p5d.md` |
+| isles2022-2d3d-blend-reproducible-pipeline | 2026-11-11 | `7c46ac6` | 空 assets を埋め、JA/PNG/caveat・raw一致 | `docs/audit/polish-isles2022-2d3d-blend.md` |
+| yskfuji（profile） | 2026-11-11 | （profile push 後） | blend 追加・医療機器ではない旨・である調維持 | プロフィールは README のみ |
 
 ## 7. 第1波の範囲
 
