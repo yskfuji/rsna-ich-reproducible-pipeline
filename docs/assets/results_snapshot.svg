@@ -3,7 +3,7 @@
   <desc id="desc">Static chart summarizing weighted logloss, mean AUC, error-detection AUROC, and ECE.</desc>
   <rect width="1200" height="420" fill="#020617"/>
   <text x="60" y="54" fill="#f8fafc" font-family="Arial, Helvetica, sans-serif" font-size="30" font-weight="700">3-minute metrics snapshot</text>
-  <text x="60" y="88" fill="#cbd5e1" font-family="Arial, Helvetica, sans-serif" font-size="18">Values from detailed reproducibility reports in the public bundle.</text>
+  <text x="60" y="88" fill="#cbd5e1" font-family="Arial, Helvetica, sans-serif" font-size="18">Mean ± sample SD (ddof=1). Source: core/pipeline/reports/rsna_cv_summary.json</text>
   <g font-family="Arial, Helvetica, sans-serif" font-size="20" fill="#e2e8f0">
     <text x="60" y="156">Weighted logloss ↓</text>
     <rect x="280" y="132" width="860" height="34" rx="10" fill="#1e293b"/>
@@ -18,11 +18,12 @@
     <text x="60" y="296">Error-detection AUROC ↑</text>
     <rect x="280" y="272" width="860" height="34" rx="10" fill="#1e293b"/>
     <rect x="280" y="272" width="810" height="34" rx="10" fill="#a78bfa"/>
-    <text x="390" y="297">0.9424 ± 0.0190</text>
+    <text x="390" y="297">0.9424 ± 0.0200</text>
 
     <text x="60" y="366">ECE(any) ↓</text>
     <rect x="280" y="342" width="860" height="34" rx="10" fill="#1e293b"/>
     <rect x="280" y="342" width="40" height="34" rx="10" fill="#fb7185"/>
-    <text x="390" y="367">0.0231 ± 0.0032</text>
+    <text x="390" y="367">0.0231 ± 0.0034</text>
   </g>
+  <text x="60" y="406" fill="#94a3b8" font-family="Arial, Helvetica, sans-serif" font-size="15">1-epoch fine-tuning from a shared initial checkpoint; calibration fitted on the evaluation holdout. See docs/evaluation_notes.md.</text>
 </svg>

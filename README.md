@@ -2,7 +2,22 @@
 
 **Language:** English | [Japanese](README_ja.md)
 
+[![ci](https://github.com/yskfuji/rsna-ich-reproducible-pipeline/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/yskfuji/rsna-ich-reproducible-pipeline/actions/workflows/ci.yml)
+
 Reproducible intracranial hemorrhage classification pipeline for the RSNA ICH challenge, with audit-ready documentation, calibration analysis, and leakage-safe group-split evaluation.
+
+## Review in 5 minutes
+
+| What to check | Where |
+|---|---|
+| DICOM loading, HU windowing, de-duplication | [core/pipeline/src/datasets/rsna_ich_dataset.py](core/pipeline/src/datasets/rsna_ich_dataset.py) |
+| Training loop, weighted loss, study-level GroupKFold | [core/pipeline/src/training/train_rsna_cnn2d_classifier.py](core/pipeline/src/training/train_rsna_cnn2d_classifier.py) |
+| 3D U-Net encoder classifier | [core/pipeline/src/models/unet3d_encoder_classifier.py](core/pipeline/src/models/unet3d_encoder_classifier.py) |
+| Submission inference | [core/pipeline/src/inference/predict_rsna_ich_submission.py](core/pipeline/src/inference/predict_rsna_ich_submission.py) |
+| Train/validation leakage audit | [core/pipeline/tools/audit_rsna_split.py](core/pipeline/tools/audit_rsna_split.py) |
+| MC Dropout, ECE, temperature scaling, AURC | [core/pipeline/tools/eval_rsna_uncertainty.py](core/pipeline/tools/eval_rsna_uncertainty.py) |
+| Per-fold and per-seed numbers behind the table below | [core/pipeline/reports/rsna_cv_summary.json](core/pipeline/reports/rsna_cv_summary.json) |
+| Evaluation conditions, limitations and references | [docs/evaluation_notes.md](docs/evaluation_notes.md) |
 
 **Quick links**
 - English entry: [rsna_ich/README_en.md](rsna_ich/README_en.md)
@@ -15,6 +30,7 @@ Reproducible intracranial hemorrhage classification pipeline for the RSNA ICH ch
 - Citation: [CITATION.cff](CITATION.cff)
 - Release note source: [EN](docs/releases/v0.6.0-rsna.md) | [JA](docs/releases/v0.6.0-rsna_ja.md)
 - Roadmap: [ROADMAP.md](ROADMAP.md)
+- Repository integrity audit (2026-11): [docs/audit/2026-11-repo-integrity.md](docs/audit/2026-11-repo-integrity.md)
 
 ## What this repository provides
 
@@ -40,21 +56,34 @@ Reproducible intracranial hemorrhage classification pipeline for the RSNA ICH ch
 
 ### Representative results
 
-| Metric | Value | Why it matters |
-|---|---:|---|
-| Weighted multi-label logloss | 0.05346 ± 0.00624 | Primary Kaggle-style optimization target |
-| Mean AUC | 0.98815 ± 0.00311 | Ranking quality across classes |
-| Error-detection AUROC (`any`) | 0.9424 ± 0.0190 | Uncertainty usefulness for error triage |
-| ECE (`any`) | 0.0231 ± 0.0032 | Probability calibration quality |
+Mean ± sample standard deviation (ddof=1). The per-fold and per-seed values are in [core/pipeline/reports/rsna_cv_summary.json](core/pipeline/reports/rsna_cv_summary.json), and CI recomputes every number in this table from that file.
 
-> Notes: values are from the bundled reproducibility reports. Protected medical data is intentionally not included.
+| Metric | Value | n | Why it matters |
+|---|---:|---:|---|
+| Weighted multi-label logloss ↓ | 0.05346 ± 0.00624 | 5 folds | Kaggle competition metric |
+| Mean AUC ↑ | 0.98815 ± 0.00311 | 5 folds | Ranking quality across the 6 labels |
+| Error-detection AUROC (`any`) ↑ | 0.9424 ± 0.0200 | 10 seeds | How well uncertainty flags wrong predictions |
+| ECE (`any`) ↓ | 0.0231 ± 0.0034 | 10 seeds | Probability calibration |
+
+> **Read these numbers together with their evaluation conditions.**
+> - Each fold or seed fine-tunes for **1 epoch** on an 8,000-image subsample.
+> - Every run starts from the same **initial checkpoint**, which was trained on 98% of the studies in the same training pool. Most validation images were therefore probably seen before fine-tuning. Read the values as fine-tuning stability, not as performance on unseen studies.
+> - Temperature scaling is fitted on the **same holdout** that is used to report ECE, so calibration metrics are optimistic.
+> - Splits group by study, not by patient.
+> - This is a research and portfolio implementation, **not a medical device**.
+>
+> Details and references: [docs/evaluation_notes.md](docs/evaluation_notes.md). Medical images are not included.
 
 ## Quickstart
 
 ### 1. Verify the repository without medical data
 
 ```bash
+pip install --index-url https://download.pytorch.org/whl/cpu torch==2.6.0 torchvision==0.21.0
+pip install -r core/pipeline/requirements.txt
 python scripts/smoke_test.py --use_dummy_data
+python scripts/check_imports.py
+python scripts/check_metric_claims.py
 ```
 
 ### 2. Generate a bundle manifest
@@ -89,10 +118,12 @@ Included:
 - static summary figures and release-note sources
 
 Not included:
+- RSNA images and labels (download them from Kaggle under the competition's non-commercial terms)
 - `Datasets/`
 - `runs/`
 - `results/`
 - `logs/`
+- trained weights (`*.pt`)
 
 ## Current portfolio snapshot
 

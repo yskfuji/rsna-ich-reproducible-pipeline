@@ -16,10 +16,20 @@ This folder is the **public entry point** for the RSNA ICH classification pipeli
 
 ## Representative metrics
 
-- weighted multi-label logloss: **0.05346 ± 0.00624**
-- mean AUC: **0.98815 ± 0.00311**
-- error-detection AUROC (`any`): **0.9424 ± 0.0190**
-- ECE (`any`): **0.0231 ± 0.0032**
+Mean ± sample standard deviation (ddof=1). The underlying values are in [`../core/pipeline/reports/rsna_cv_summary.json`](../core/pipeline/reports/rsna_cv_summary.json).
+
+- weighted multi-label logloss: **0.05346 ± 0.00624** (5 folds)
+- mean AUC: **0.98815 ± 0.00311** (5 folds)
+- error-detection AUROC (`any`): **0.9424 ± 0.0200** (10 seeds)
+- ECE (`any`): **0.0231 ± 0.0034** (10 seeds)
+
+Evaluation conditions:
+- Each fold or seed fine-tunes for 1 epoch on an 8,000-image subsample.
+- The initial checkpoint was trained on 98% of the studies in the same training pool. Read the values as fine-tuning stability, not as performance on unseen studies.
+- Temperature scaling is fitted on the same holdout used to report ECE, so calibration metrics are optimistic.
+- This is a research and portfolio implementation, not a medical device.
+
+See the [evaluation notes](../docs/evaluation_notes.md) for details.
 
 ## Why this repository is useful
 

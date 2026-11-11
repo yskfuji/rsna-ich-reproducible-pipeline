@@ -17,9 +17,18 @@
 
 ## TL;DR（この README で分かること）
 
+> **評価の前提（最初に読んでください）**：代表指標はすべて「平均 ± 標本標準偏差（ddof=1）」で、CIが [`reports/rsna_cv_summary.json`](reports/rsna_cv_summary.json) から計算し直して照合しています。
+> - 交差検証の各foldと、不確実性評価の各シードは、8,000画像の抽出データで**1エポック**だけ追加学習しています。
+> - すべての実行は同じ**初期重み**（`rsna_convnext25d_final2_full_mps_nosamp_nopw_20260202_222608/best.pt`）から始めています。この初期重みは `stage_2_train` の98%の検査で6エポック学習したものです。そのため、各foldの検証画像のおよそ98%は初期重みの学習に使われていたと推定されます（期待値による推定で、実測はしていません）。数値は追加学習の安定性を示すもので、未知の検査に対する性能ではありません。
+> - 温度スケーリングは、ECE、Brierスコア、AURCの評価と**同じ検証データ**で推定しています。
+> - 分割は検査単位です。患者単位の分割は実装していません。
+> - 研究とポートフォリオのための実装で、**医療機器ではありません**。
+>
+> 制約の一覧と参考文献: [../../docs/evaluation_notes_ja.md](../../docs/evaluation_notes_ja.md)
+
 - 再現性（この配布物内）: 記録済みの成果物（`meta.json` / `log.jsonl`、`split_stats` を含む）と固定 CLI コマンドにより検証可能です（例: `results/rsna_convnext25d_ft_repro_val05_short_20260210_101836_run1` と `_run2`）。
 - 参照コミット（上流・参照用）: `9bc2684fe0b564c792025b52694f9c4fe1a0d32d`（この配布物のコードスナップショットをエクスポートした時点の上流リポジトリのコミットID）。
-- 上流リポジトリURL: 配布物は git メタデータ非同梱のため、上流URL/履歴は配布物単体では追跡不能です（`.git` なし）。
+- 上流リポジトリURL: 上流の研究用リポジトリは非公開です。エクスポート後の変更は、この公開リポジトリのGit履歴で追跡できます。
 - 配布物の完全性（任意）: `python tools/make_manifest.py` でファイル一覧（path + sha256）のマニフェストを生成し（例: `--out MANIFEST.sha256`）、この配布物を指紋化できます。
 
 - **頑健性（偶然に依存していないかの確認）**: `split_by=study` の **GroupKFold(5)** で `val_logloss_weighted = 0.05346 ± 0.00624` を確認（`epochs=1` / `kept=6852` の短縮 CV）
@@ -29,11 +38,11 @@
 - **リーク監査の現状（2026-02-14）**: 10 seed 監査で Study/Series 交差は 0、さらに **分割前のテンソル hash de-dup（既定 ON）後は train/val の完全重複交差も 0** を確認
 - **指標の意味**: Kaggle本番の重み付き multi-label logloss（`val_logloss_weighted`）を主軸に、AUCは補助として扱う
 - **不確実性 / 校正（10 seeds, `split_by=study`, de-dup 有効, dropout を入れて再学習）**:
-  - Error-detection AUROC(any): **0.9424 ± 0.0190**
-  - ECE(any): **0.0231 ± 0.0032**
-  - Brier(any): **0.0209 ± 0.0054**
-  - AURC(weighted logloss): **0.00837 ± 0.00214**
-  - coverage=0.8 accuracy(any) gain: **+2.53 ± 0.89 pp**
+  - Error-detection AUROC(any): **0.9424 ± 0.0200**
+  - ECE(any): **0.0231 ± 0.0034**
+  - Brier(any): **0.0209 ± 0.0057**
+  - AURC(weighted logloss): **0.00837 ± 0.00225**
+  - coverage=0.8 accuracy(any) gain: **+2.53 ± 0.94 pp**（同じ条件の比較対象では +2.98 pp）
   - （同条件の比較対象に対して）ECE **-0.0091**, Brier **-0.0040**, AURC **-0.00139**, AUROC **+0.0046**
 - **温度スケーリングの評価境界（重要）**: 本 README の不確実性指標は `--fit-temperature` を同一の holdout validation に対して実行した値（fit 集合 = eval 集合）であり、ECE/Brier は楽観的に出る可能性があります。厳密評価では calibration 用と評価用を分けるか、別の holdout を使って再計測してください。
 - **監査フック（対象集合の同一性）**: `split_stats` の一致に加え、採用 `image_id` の昇順一覧の SHA256（`subset_fingerprint_sha256`）を **`meta.json` に記録（実装済み）**しています。また `tools/eval_rsna_uncertainty.py` の出力 JSON にも `adopted_subset_fingerprint_sha256` / `val_subset_fingerprint_sha256` を出力します。
@@ -45,7 +54,7 @@
 |---|---|---|---|---|
 | 頑健性 | GroupKFold(5), `split_by=study`, `epochs=1`, `kept=6852` | weighted logloss `0.05346 ± 0.00624` | mean AUC `0.98815 ± 0.00311` | 単一 holdout の偶然ではなく、fold を跨いでも指標が保たれることを確認 |
 | 再現性 | holdout `val_frac=0.05` を同一 seed / 同一引数で 2 回実行 | weighted logloss `0.0555525` | mean AUC `0.9915841`, この環境では記録済み `val_*` が `abs_diff=0` | 公開レシピをそのまま再実行して同じ結果に戻せることを確認 |
-| 不確実性 / 校正 | 10 seeds, `split_by=study`, de-dup 有効, dropout 再学習 | error-detection AUROC(any) `0.9424 ± 0.0190` | ECE(any) `0.0231 ± 0.0032`, Brier(any) `0.0209 ± 0.0054`, coverage=0.8 accuracy gain `+2.53 ± 0.89 pp` | 生の分類精度だけでなく、確率出力も意思決定に使えることを示す |
+| 不確実性 / 校正 | 10 seeds, `split_by=study`, de-dup 有効, dropout 再学習 | error-detection AUROC(any) `0.9424 ± 0.0200` | ECE(any) `0.0231 ± 0.0034`, Brier(any) `0.0209 ± 0.0057`, coverage=0.8 accuracy gain `+2.53 ± 0.94 pp` | 生の分類精度だけでなく、確率出力も意思決定に使えることを示す |
 
 - すぐ再現（holdout、1 epoch）:
 
@@ -155,7 +164,7 @@ CV結果（val）:
 ※ 上記スコアはいずれも `enforce_any_max=True`（既定）適用後の確率に対する指標です（詳細は「5.1」参照）。
 
 集計方法（再現可能な定義）:
-- 各 fold の `log.jsonl` **最終行**から `val_logloss_weighted` / `val_auc_mean` を抽出し、fold 間で mean±std（および min/max）を計算
+- 各 fold の `log.jsonl` **最終行**から `val_logloss_weighted` / `val_auc_mean` を抽出し、fold 間で mean±std（および min/max）を計算（この README の std はすべて標本標準偏差で、ddof=1、`statistics.stdev` です）
 - まとめ出力は `tools/summarize_cv.py` で自動集計できます（下記 2.3 参照）
 
 補足（ばらつきの解釈）:
@@ -301,7 +310,8 @@ TORCH_DEVICE=mps python train_rsna_cnn2d_classifier.py train \
 `init_from` の由来:
 - `results/rsna_convnext25d_final2_full_mps_nosamp_nopw_20260202_222608/best.pt`
   - 別 run の holdout validation（`split_by=study`, `val_frac=0.02`）で **`val_loss` 最小**として保存された checkpoint
-  - 上記 run は今回の評価 split（`val_frac=0.05`）とは独立で、`init_from` の選択に今回の評価結果は使っていません
+  - `init_from` の選択に、今回の評価結果は使っていません
+  - **ただし、この初期重みの学習データは、今回の検証foldと独立していません。** 初期重みは632,808スライス（`stage_2_train` の98%の検査）で学習しており、交差検証とホールドアウトの抽出データも同じデータから取っています。そのため、検証画像の多くはこの初期重みの学習に使われていたと考えられます。汎化性能を厳密に見積もるには、ImageNetの重みから始める交差検証か、すべての検証検査を学習から除いた初期重みが必要です
   - ハイパラ探索のための run ではなく、fine-tune を安定に始めるための初期値として参照（この README では参照 run を固定しており、CV の結果を見て恣意的に差し替えていません）
   - 今回の CV / holdout の val を見て `init_from` を選び直す（val最適化）ことはしていません
   - 重み付き logloss 最小の checkpoint を使いたい場合は、同フォルダの `best_wlogloss.pt` を選べます
