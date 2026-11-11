@@ -1,5 +1,8 @@
 # datasets / generated artifacts (do not publish)
-Datasets/
+# Anchored so that core/pipeline/src/datasets/ (source code) is not ignored
+# on case-insensitive filesystems.
+/Datasets/
+/datasets/
 runs/
 results/
 logs/
