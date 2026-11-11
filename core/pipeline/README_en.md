@@ -661,6 +661,54 @@ Key JSON fields:
 - `curve_png`: saved coverage–risk plot path
 - `reliability_png`: saved reliability diagram path
 
+### 8.1 SHAP explanations (for ConvNeXt 2.5D checkpoints)
+
+`tools/explain_rsna_shap.py` uses SHAP to show which input pixels and channels drove one class output of a trained checkpoint.
+
+> **How to read the output**
+> - SHAP's `GradientExplainer` approximates expected gradients. The values are not exact Shapley values, and they get noisier as `--shap-nsamples` decreases.
+> - The maps indicate where the model looked. They do not localize lesions and have not been validated clinically. Some saliency methods give nearly the same maps after the model weights or the labels are randomized (Adebayo et al., 2018).
+> - The outputs contain arrays and images derived from CT scans, image IDs and local absolute paths. Keep them under `results/` (ignored by Git) and do not publish them.
+
+Run from `core/pipeline/`. `requirements-xai.txt` adds SHAP on top of the pins in `requirements.txt`.
+
+```bash
+cd core/pipeline
+python -m pip install -r requirements-xai.txt
+```
+
+Main outputs:
+
+- `manifest.json`: run configuration, checkpoint, background set and sample list
+- `<target>/<image_id>/arrays.npz`: input, SHAP values, logits and probabilities
+- `<target>/<image_id>/*.png`: input channels, per-channel |SHAP|, overlays, and slice and window contributions
+- `<target>/<image_id>/summary.json`: per-sample summary
+
+Example: explain all 6 classes in one run.
+
+```bash
+cd core/pipeline
+
+python tools/explain_rsna_shap.py \
+  --ckpt results/rsna_convnext25d_final2_full_mps_20260202_062959/best_auc.pt \
+  --device mps \
+  --max-samples 4 \
+  --candidate-pool 1024 \
+  --background-size 4 \
+  --shap-nsamples 32 \
+  --all-targets \
+  --out-dir results/rsna_shap/final2_all
+```
+
+- `--all-targets` explains all 6 classes: `epidural`, `intraparenchymal`, `intraventricular`, `subarachnoid`, `subdural` and `any`.
+- To explain one class, pass `--target any`; repeat `--target` for several classes.
+- For a quick check, reduce to about `--max-samples 2 --shap-nsamples 8 --device cpu`.
+- By default, samples are drawn from `any`-positive images (`--select-class any --select-positive-only`).
+- If the checkpoint keys do not match the model, the tool stops: it would otherwise explain a partly random model.
+- `tests/test_explain_rsna_shap.py` runs the tool end to end on synthetic data (skipped when SHAP is not installed).
+
+References: Lundberg and Lee, 2017 ([arXiv:1705.07874](https://arxiv.org/abs/1705.07874)); Erion et al., 2021, expected gradients ([arXiv:1906.10670](https://arxiv.org/abs/1906.10670)); Adebayo et al., 2018 ([arXiv:1810.03292](https://arxiv.org/abs/1810.03292))
+
 ---
 
 ## 9. Limitations and next steps (honest = stronger)
