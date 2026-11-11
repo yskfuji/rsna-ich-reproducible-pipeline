@@ -13,6 +13,7 @@
 | `refs/tags/v0.0.0.0` | `d1febddf639ec5b2e26dc6f379bccdd25f3b7462` | ISLESのタグ（混入） |
 | `refs/tags/v0.0.0.1` | `7b8699e3e845d02dedbc60e94aa35f343fb04a68` | ISLESのタグ（混入） |
 
+- タグの行は、注釈付きタグが指すコミットを示しています。
 - 正しいRSNAの `main` は、作者の手元のクローンに `297b5e30ec60837492ca900f4bd234c42701573e` として残っていました。`v0.6.0-rsna` と `rsna-ich-v1.0-interview` は、この履歴に含まれています。
 - `7b8699e` は、[isles2022-2d3d-blend-reproducible-pipeline](https://github.com/yskfuji/isles2022-2d3d-blend-reproducible-pipeline) の履歴にも含まれています。上書きによってISLES側の成果は失われていません。
 - 修復前の全参照は、作者の手元に `git bundle` で退避しました（SHA-256 `342bd2c3f94b2159…`、`git bundle verify` で検証済み）。

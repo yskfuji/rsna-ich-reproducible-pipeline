@@ -164,7 +164,7 @@ CV結果（val）:
 ※ 上記スコアはいずれも `enforce_any_max=True`（既定）適用後の確率に対する指標です（詳細は「5.1」参照）。
 
 集計方法（再現可能な定義）:
-- 各 fold の `log.jsonl` **最終行**から `val_logloss_weighted` / `val_auc_mean` を抽出し、fold 間で mean±std（および min/max）を計算（この README の std はすべて標本標準偏差で、ddof=1、`statistics.stdev` です）
+- 各 fold の `log.jsonl` の**最終行**から、`val_logloss_weighted` と `val_auc_mean` を取り出します。そのうえで、fold 間の mean±std と min/max を計算します。この README の std はすべて標本標準偏差（ddof=1、`statistics.stdev`）です。
 - まとめ出力は `tools/summarize_cv.py` で自動集計できます（下記 2.3 参照）
 
 補足（ばらつきの解釈）:
@@ -311,7 +311,7 @@ TORCH_DEVICE=mps python train_rsna_cnn2d_classifier.py train \
 - `results/rsna_convnext25d_final2_full_mps_nosamp_nopw_20260202_222608/best.pt`
   - 別 run の holdout validation（`split_by=study`, `val_frac=0.02`）で **`val_loss` 最小**として保存された checkpoint
   - `init_from` の選択に、今回の評価結果は使っていません
-  - **ただし、この初期重みの学習データは、今回の検証foldと独立していません。** 初期重みは632,808スライス（`stage_2_train` の98%の検査）で学習しており、交差検証とホールドアウトの抽出データも同じデータから取っています。そのため、検証画像の多くはこの初期重みの学習に使われていたと考えられます。汎化性能を厳密に見積もるには、ImageNetの重みから始める交差検証か、すべての検証検査を学習から除いた初期重みが必要です
+  - **ただし、この初期重みの学習データは、今回の検証foldと独立していません。** 初期重みは632,808スライス（`stage_2_train` の98%の検査）で学習しています。交差検証とホールドアウトの抽出データも、同じデータから取っています。そのため、検証画像の多くはこの初期重みの学習に使われていたと考えられます。汎化性能を厳密に見積もるには、次のどちらかが必要です。ImageNetの重みから始める交差検証、または、すべての検証検査を学習から除いた初期重みです。
   - ハイパラ探索のための run ではなく、fine-tune を安定に始めるための初期値として参照（この README では参照 run を固定しており、CV の結果を見て恣意的に差し替えていません）
   - 今回の CV / holdout の val を見て `init_from` を選び直す（val最適化）ことはしていません
   - 重み付き logloss 最小の checkpoint を使いたい場合は、同フォルダの `best_wlogloss.pt` を選べます

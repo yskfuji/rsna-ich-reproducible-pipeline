@@ -38,7 +38,7 @@ Values are mean ± sample standard deviation (ddof=1).
 | Error-detection AUROC | AUROC for separating wrong from correct `any` predictions (threshold 0.5) by the MC Dropout standard deviation of p(`any`) | `tools/eval_rsna_uncertainty.py` | Gal and Ghahramani, 2016 |
 | ECE | Expected calibration error for `any` over 15 equal-width bins | `_ece_binary` in `tools/eval_rsna_uncertainty.py` | Naeini et al., 2015; Guo et al., 2017 |
 | Temperature scaling | One temperature shared by all 6 labels, fitted by LBFGS to minimise the weighted BCE and clamped to [0.5, 10] | `_fit_temperature` in `tools/eval_rsna_uncertainty.py` | Guo et al., 2017 |
-| AURC | Mean risk over all coverages, ordered from most to least confident. Risk is the weighted logloss, not the 0/1 error used in the original definition | `_aurc` in `tools/eval_rsna_uncertainty.py` | Geifman et al., 2019 |
+| AURC | Mean selective risk over all n coverages, ordered from most to least confident. The original definition allows any loss and its experiments use the 0/1 error; here the risk is the weighted logloss | `_aurc` in `tools/eval_rsna_uncertainty.py` | Geifman et al., 2019 |
 
 ## 4. Evidence chain
 

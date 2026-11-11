@@ -27,6 +27,26 @@ def test_metric_claims_match_summary() -> None:
     assert proc.returncode == 0, proc.stdout
 
 
+def test_caveat_must_share_section_with_headline_numbers(tmp_path: Path) -> None:
+    sys.path.insert(0, str(REPO / "scripts"))
+    try:
+        import check_metric_claims as cmc
+    finally:
+        sys.path.pop(0)
+
+    for rel in [cmc.SUMMARY.relative_to(cmc.ROOT), *cmc.HEADLINE_DOCS, *cmc.DETAIL_DOCS]:
+        (tmp_path / rel).parent.mkdir(parents=True, exist_ok=True)
+        shutil.copy(REPO / rel, tmp_path / rel)
+    assert cmc.run_checks(tmp_path) == []
+
+    readme = tmp_path / "README.md"
+    text = readme.read_text(encoding="utf-8").replace("not a medical device", "research code")
+    readme.write_text(text + "\n## Disclaimer\n\nThis is not a medical device.\n", encoding="utf-8")
+
+    errors = cmc.run_checks(tmp_path)
+    assert any("lacks caveat marker 'not a medical device'" in e for e in errors), errors
+
+
 def test_public_hygiene() -> None:
     proc = _run("scripts/check_public_hygiene.py")
     assert proc.returncode == 0, proc.stdout

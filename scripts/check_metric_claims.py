@@ -84,6 +84,38 @@ def _unc(key: str) -> Callable[[dict[str, Any]], list[float]]:
     return lambda s: [float(r["retrained_with_dropout"][key]) for r in s["uncertainty"]["seeds"]]
 
 
+def _section_bounds(text: str, pos: int) -> tuple[int, int]:
+    """Return the [start, end) span of the Markdown section that contains pos.
+
+    A section runs from its heading to the next heading of the same or a higher
+    level. Lines inside fenced code blocks are never treated as headings.
+    """
+    headings: list[tuple[int, int]] = []
+    offset = 0
+    in_fence = False
+    for line in text.splitlines(keepends=True):
+        stripped = line.lstrip()
+        if stripped.startswith(("```", "~~~")):
+            in_fence = not in_fence
+        elif not in_fence and stripped.startswith("#"):
+            level = len(stripped) - len(stripped.lstrip("#"))
+            if level <= 6 and stripped[level : level + 1] in (" ", "\t"):
+                headings.append((offset, level))
+        offset += len(line)
+
+    start, level = 0, 0
+    for h_off, h_level in headings:
+        if h_off > pos:
+            break
+        start, level = h_off, h_level
+    end = len(text)
+    for h_off, h_level in headings:
+        if h_off > pos and (level == 0 or h_level <= level):
+            end = h_off
+            break
+    return start, end
+
+
 CLAIMS = (
     Claim("weighted logloss (CV)", _cv("val_logloss_weighted"), 5, True),
     Claim("mean AUC (CV)", _cv("val_auc_mean"), 5, True),
@@ -127,6 +159,25 @@ def run_checks(root: Path = ROOT) -> list[str]:
         for marker in CAVEAT_MARKERS[lang]:
             if marker not in text:
                 errors.append(f"{rel}: missing caveat marker '{marker}'")
+
+    # In headline Markdown docs the caveats must sit in the same section as the numbers.
+    for rel, lang in HEADLINE_DOCS.items():
+        text = texts.get(rel)
+        if text is None or lang == "svg":
+            continue
+        spans = set()
+        for claim in CLAIMS:
+            if not claim.headline:
+                continue
+            pos = text.find(claim.expected(summary))
+            if pos >= 0:
+                spans.add(_section_bounds(text, pos))
+        for start, end in sorted(spans):
+            section = text[start:end]
+            title = section.splitlines()[0] if start else "(top of file)"
+            for marker in CAVEAT_MARKERS[lang]:
+                if marker not in section:
+                    errors.append(f"{rel}: section '{title}' lacks caveat marker '{marker}'")
 
     for path in sorted([*root.glob("**/*.md"), *root.glob("**/*.svg")]):
         if ".git" in path.parts or "audit" in path.parts:

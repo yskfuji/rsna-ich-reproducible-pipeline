@@ -38,7 +38,7 @@
 | 誤り検出AUROC | 閾値0.5で判定した `any` の予測の正誤を、p(`any`) のMC Dropout標準偏差でどれだけ見分けられるかを表すAUROC | `tools/eval_rsna_uncertainty.py` | Gal and Ghahramani, 2016 |
 | ECE | `any` の期待校正誤差。確率を等幅15区間に分けて計算 | `tools/eval_rsna_uncertainty.py` の `_ece_binary` | Naeini et al., 2015; Guo et al., 2017 |
 | 温度スケーリング | 6ラベル共通の温度1つを、加重BCEが最小になるようにLBFGSで推定（範囲は0.5〜10） | `tools/eval_rsna_uncertainty.py` の `_fit_temperature` | Guo et al., 2017 |
-| AURC | 確信度の高い順に並べたときの、全被覆率にわたるリスクの平均。原論文はリスクに0/1誤りを使いますが、このリポジトリでは加重対数損失を使います | `tools/eval_rsna_uncertainty.py` の `_aurc` | Geifman et al., 2019 |
+| AURC | 確信度の高い順に並べたときの、n通りの被覆率にわたる選択的リスクの平均です。原論文の定義は任意の損失を認めており、実験では0/1誤りを使っています。このリポジトリでは加重対数損失を使います | `tools/eval_rsna_uncertainty.py` の `_aurc` | Geifman et al., 2019 |
 
 ## 4. 根拠のつながり
 
