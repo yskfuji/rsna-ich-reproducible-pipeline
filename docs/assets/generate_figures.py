@@ -124,40 +124,44 @@ def write(name: str, content: str) -> None:
 
 
 def architecture() -> None:
-    # Two-row layout avoids five-across overflow on narrow GitHub columns.
-    # Top row 1–3; bottom row 4–5 aligned under panels 2 and 3 for short elbows.
+    # True top-down (TD) stack: one column, centered arrows, no elbows.
+    cx = 480
+    card_w, card_h, gap = 880, 78, 36
+    x0 = cx - card_w // 2
     stages = [
-        (40, 110, TEAL, T("1. CT input", "1. CT入力"), T("DICOM / SQLite", "DICOM / SQLite"), T("HU window + stacks", "HU窓処理とスライス積上げ")),
-        (340, 110, SKY, T("2. Split", "2. 分割"), T("study GroupKFold", "検査単位のGroupKFold"), T("leakage audit", "情報リークの監査")),
-        (640, 110, AMBER, T("3. Model", "3. モデル"), T("ConvNeXt 2.5D", "ConvNeXt 2.5D"), T("weighted logloss", "加重対数損失")),
-        (340, 300, LIME, T("4. Calibrate", "4. 校正"), T("temperature + ECE", "温度スケーリングとECE"), T("MC Dropout", "MC Dropout")),
-        (640, 300, ROSE, T("5. Publish", "5. 公開"), T("reports + checks", "報告書と検査"), T("no patient images", "患者画像なし")),
+        (TEAL, T("1. CT input", "1. CT入力"), T("DICOM / SQLite", "DICOM / SQLite"), T("HU window + stacks", "HU窓処理とスライス積上げ")),
+        (SKY, T("2. Split", "2. 分割"), T("study GroupKFold", "検査単位のGroupKFold"), T("leakage audit", "情報リークの監査")),
+        (AMBER, T("3. Model", "3. モデル"), T("ConvNeXt 2.5D", "ConvNeXt 2.5D"), T("weighted logloss", "加重対数損失")),
+        (LIME, T("4. Calibrate", "4. 校正"), T("temperature + ECE", "温度スケーリングとECE"), T("MC Dropout", "MC Dropout")),
+        (ROSE, T("5. Publish", "5. 公開"), T("reports + checks", "報告書と検査"), T("no patient images", "患者画像なし")),
     ]
+    y0 = 100
     boxes = []
-    for x, y, color, title, a, b in stages:
+    ys = []
+    for i, (color, title, a, b) in enumerate(stages):
+        y = y0 + i * (card_h + gap)
+        ys.append(y)
         boxes.append(
-            f"""    <rect x="{x}" y="{y}" rx="16" ry="16" width="260" height="140" fill="{CARD}" stroke="{color}" stroke-width="3"/>
-    <circle cx="{x + 28}" cy="{y + 32}" r="12" fill="{color}"/>
-    <text x="{x + 50}" y="{y + 38}" fill="{TEXT}" font-size="20" font-weight="700">{title}</text>
-    <text x="{x + 20}" y="{y + 78}" fill="{MUTED}" font-size="15">{a}</text>
-    <text x="{x + 20}" y="{y + 104}" fill="{MUTED}" font-size="15">{b}</text>"""
+            f"""    <rect x="{x0}" y="{y}" rx="14" ry="14" width="{card_w}" height="{card_h}" fill="{CARD}" stroke="{color}" stroke-width="3"/>
+    <circle cx="{x0 + 28}" cy="{y + 39}" r="11" fill="{color}"/>
+    <text x="{x0 + 52}" y="{y + 46}" fill="{TEXT}" font-size="20" font-weight="700">{title}</text>
+    <text x="{x0 + 280}" y="{y + 46}" fill="{MUTED}" font-size="15">{a}</text>
+    <text x="{x0 + 560}" y="{y + 46}" fill="{MUTED}" font-size="15">{b}</text>"""
         )
-    # Connectors: panel size 260×140. Flow 1→2→3→4→5.
-    # 4 under 2, 5 under 3. Elbow 3→4 lands on panel-4 top center (470,300).
     links = "\n".join(
-        [
-            _arrow(300, 180, 340, 180),
-            _arrow(600, 180, 640, 180),
-            _elbow([(770, 250), (770, 275), (470, 275), (470, 300)]),
-            _arrow(600, 370, 640, 370),
-        ]
+        _arrow(cx, y + card_h, cx, y + card_h + gap) for y in ys[:-1]
     )
+    footer_y = ys[-1] + card_h + 36
+    height = footer_y + 24
     body = f"""    <text x="40" y="42" fill="{TEXT}" font-size="28" font-weight="700">{T("What happens in this pipeline", "本パイプラインの処理流れ")}</text>
     <text x="40" y="74" fill="{MUTED}" font-size="16">{T("CT slices to audited metrics. Medical images stay off the public repository.", "CTスライスから監査可能な指標まで。患者画像は公開物に含めない。")}</text>
 {chr(10).join(boxes)}
 {links}
-    <text x="40" y="480" fill="{MUTED}" font-size="14">{T("Public bundle = code + configs + summary JSON. Datasets/, results/, *.pt excluded.", "公開物はコード・設定・要約JSONである。Datasets/、results/、*.pt は含めない。")}</text>"""
-    write("architecture.svg", _svg(960, 510, T("RSNA pipeline architecture", "RSNAパイプラインの構成"), T("Five-stage pipeline overview.", "五段階の処理概要。"), body))
+    <text x="40" y="{footer_y}" fill="{MUTED}" font-size="14">{T("Public bundle = code + configs + summary JSON. Datasets/, results/, *.pt excluded.", "公開物はコード・設定・要約JSONである。Datasets/、results/、*.pt は含めない。")}</text>"""
+    write(
+        "architecture.svg",
+        _svg(960, height, T("RSNA pipeline architecture", "RSNAパイプラインの構成"), T("Five-stage pipeline overview.", "五段階の処理概要。"), body),
+    )
 
 
 def labels_taxonomy() -> None:
