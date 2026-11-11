@@ -1,6 +1,6 @@
 # 公開リポジトリ整備プレイブック
 
-本稿は、yskfuji 配下の公開リポジトリを、証拠に基づくポートフォリオ品質へ揃えるための手順である。正本適用例は本リポジトリ（`rsna-ich-reproducible-pipeline`）である。横展開時は [PUBLIC_REPO_POLISH_CHECKLIST.md](PUBLIC_REPO_POLISH_CHECKLIST.md) をリポジトリごとに複製して記入する。
+本稿は、公開リポジトリを証拠に基づくポートフォリオ品質へ揃えるための手順である。正本の適用例は本リポジトリ（`rsna-ich-reproducible-pipeline`）である。他リポジトリへ適用するときは、[PUBLIC_REPO_POLISH_CHECKLIST.md](PUBLIC_REPO_POLISH_CHECKLIST.md) を複製し、当該リポジトリの `docs/audit/` に記録する。
 
 関連する合格判定の詳細は [acceptance_2026-11.md](acceptance_2026-11.md) を参照する。
 
@@ -82,21 +82,19 @@ flowchart TD
 
 記録:
 
-- 本プレイブックの「適用ログ」へ、リポジトリ名・日付・コミット・判定を追記する。
-- リポジトリ固有の行はチェック表ファイルに残す。
+- 当該リポジトリの公開整備チェック表（`docs/audit/polish-*.md`）を更新する。
+- 本リポジトリの手順を変えた場合は、下記「本リポジトリでの適用例」を更新する。
 
-## 6. 適用ログ
+## 6. 本リポジトリでの適用例
 
-### 6.1 rsna-ich-reproducible-pipeline（正本）
+本リポジトリでは、上記手順に沿って次を実施した。
 
-| 日付 | コミット | 内容 |
-|---|---|---|
-| 2026-11-11 | `1b54171` | 制約図を `eval_constraints*` へ改名しキャッシュ切断 |
-| 2026-11-11 | `a8d5e31` | 文言切れ防止・2×2制約図・縦TD中心揃え |
-| 2026-11-11 | `992c83c` | アーキテクチャを縦一列 TD に再描画 |
-| 2026-11-11 | `ee30ddb` | 接続線修正、Mermaid TD を静的 `smoke_flow` に置換 |
-| 2026-11-11 | `a675123` | 日本語をである調へ統一し `*_ja.png` 参照 |
-| 2026-11-11 | `3b9a82a` / `03e6a08` | 応答的 PNG 埋め込み |
+- 指標主張の照合（`scripts/check_metric_claims.py`）と公開衛生検査（`scripts/check_public_hygiene.py`）
+- 図の一括生成と GitHub 向け PNG 埋め込み（`width="100%"`）、日本語図 `*_ja.png`
+- 日本語入口のである調統一と必須 caveat の併記
+- 表示キャッシュ問題への対応として、制約図アセットの改名（`eval_protocol*` → `eval_constraints*`）
+
+代表コミット（2026-11-11 前後）: `3b9a82a` / `03e6a08`（応答的 PNG）、`a675123`（日本語と `*_ja` 図）、`ee30ddb` / `992c83c` / `a8d5e31`（静的図とレイアウト）、`1b54171`（キャッシュ切断のための改名）。合格判定の詳細は [acceptance_2026-11.md](acceptance_2026-11.md) を参照する。
 
 検査コマンド（リポジトリルート）:
 
@@ -117,22 +115,11 @@ npx --yes -p textlint -p textlint-rule-preset-ja-technical-writing \
 - 図索引: `docs/visual_index_ja.md`
 - AC 判定: `docs/audit/acceptance_2026-11.md`
 
-### 6.2 横展開（記入欄）
+## 7. 本手順を適用した関連公開リポジトリ
 
-| リポジトリ | 日付 | 先端コミット | 判定要約 | チェック表 |
-|---|---|---|---|---|
-| isles2022-3d-reproducible-pipeline | 2026-11-11 | `7d4d528` | PNG/`*_ja`・である調・caveat・raw一致 | 各 repo: `docs/audit/polish-isles2022-3d.md` |
-| isles2022-2p5d-reproducible-pipeline | 2026-11-11 | `97d1b0b` | 同上（main に統合、コンフリクト解消含む） | `docs/audit/polish-isles2022-2p5d.md` |
-| isles2022-2d3d-blend-reproducible-pipeline | 2026-11-11 | `7c46ac6` | 空 assets を埋め、JA/PNG/caveat・raw一致 | `docs/audit/polish-isles2022-2d3d-blend.md` |
-| yskfuji（profile） | 2026-11-11 | `99826c0` | blend 追加・医療機器ではない旨・である調維持 | プロフィールは README のみ |
+同系統の公開パイプラインおよびプロフィールでも、本手順に沿った整備を行っている。詳細な判定記録は各リポジトリ側の文書を参照する。
 
-## 7. 第1波の範囲
-
-対象:
-
-- `isles2022-3d-reproducible-pipeline`
-- `isles2022-2p5d-reproducible-pipeline`
-- `isles2022-2d3d-blend-reproducible-pipeline`
-- `yskfuji`（プロフィール）
-
-当面除外: private、および製品・別系統（PharmShiftMaker、FamilyHub、ATAS、OCR eval 等）。
+- [isles2022-3d-reproducible-pipeline](https://github.com/yskfuji/isles2022-3d-reproducible-pipeline)
+- [isles2022-2p5d-reproducible-pipeline](https://github.com/yskfuji/isles2022-2p5d-reproducible-pipeline)
+- [isles2022-2d3d-blend-reproducible-pipeline](https://github.com/yskfuji/isles2022-2d3d-blend-reproducible-pipeline)
+- [yskfuji（GitHub プロフィール）](https://github.com/yskfuji/yskfuji)
