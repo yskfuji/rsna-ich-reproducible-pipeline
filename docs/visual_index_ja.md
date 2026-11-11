@@ -1,8 +1,8 @@
-# 図だけ見る索引
+# 図索引
 
 **言語:** 日本語 | [英語版](visual_index.md)
 
-このページは文章をほぼ書きません。上から順に見てください。数値の意味は [evaluation_notes_ja.md](evaluation_notes_ja.md)、用語は [glossary_ja.md](glossary_ja.md) です。
+本稿は文章を最小限にとどめ、図の閲覧順を示す。数値の解釈は [evaluation_notes_ja.md](evaluation_notes_ja.md)、用語は [glossary_ja.md](glossary_ja.md) を参照する。
 
 ## 全体の流れ
 
@@ -24,7 +24,7 @@
 
 ![uncertainty](assets/uncertainty_seeds.svg)
 
-## 数値の読み方
+## 数値の解釈
 
 ![protocol](assets/eval_protocol.svg)
 
@@ -44,4 +44,4 @@
 python docs/assets/generate_figures.py
 ```
 
-指標カードは `core/pipeline/reports/rsna_cv_summary.json` から埋めます。患者画像は使いません。
+指標カードは `core/pipeline/reports/rsna_cv_summary.json` から埋め込む。患者画像は用いない。
