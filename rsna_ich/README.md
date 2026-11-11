@@ -2,17 +2,21 @@
 
 **言語:** 日本語 | [英語版](README_en.md)
 
-このフォルダは、**RSNA ICH 分類パイプライン公開版の概要ページ**です。採用・監査・外部レビューの最初の接点として、何ができるか / どこを見るべきか / どう試すかを短時間で把握できるようにしています。
+このフォルダは、**RSNA ICH 分類パイプライン公開版の概要ページ**です。字面より先に図を見てください。
 
-## まず分かること
+## まず絵
 
-- **何ができるか**: 学習 / 評価 / 推論 / 校正評価 / 不確実性評価 / リーク監査
-- **API デモ**: FastAPI で `health` / `model metadata` / `ich inference` の公開用スキーマを確認できます
-- **誰向けか**: 採用担当、医療AIエンジニア、再現性を重視する研究実装レビュー
-- **最短確認**: `python ../scripts/smoke_test.py --use_dummy_data`
-- **詳細ドキュメント**:
-  - 日本語: `../core/pipeline/README.md`
-  - 英語: `../core/pipeline/README_en.md`
+![流れ](../docs/assets/architecture.svg)
+
+![6ラベル](../docs/assets/labels_taxonomy.svg)
+
+![読み方](../docs/assets/reader_path.svg)
+
+![指標](../docs/assets/results_snapshot.svg)
+
+![制約](../docs/assets/eval_protocol.svg)
+
+ルートの絵中心README: [../README_ja.md](../README_ja.md)
 
 ## 成果の要点
 
@@ -39,13 +43,22 @@
 - `meta.json` / `log.jsonl` / `split_stats` による再現性監査
 - `subset_fingerprint_sha256` による対象集合の同一性チェック
 
+![分割の考え方](../docs/assets/split_study.svg)
+
 ## すぐ使うリンク
 
-- 監査用ショートガイド: `./AUDIT_GUIDE.md`
-- API デモの実行ファイル: `../core/pipeline/serve_rsna_ich_api.py`
-- 引用情報: `../CITATION.cff`
-- リリースノート原稿: `../docs/releases/v0.6.0-rsna.md`
-- ロードマップ: `../ROADMAP.md`
+| 用途 | 場所 |
+|---|---|
+| 最短の動作確認 | `python ../scripts/smoke_test.py --use_dummy_data` |
+| 詳細（日本語） | [../core/pipeline/README.md](../core/pipeline/README.md) |
+| 詳細（英語） | [../core/pipeline/README_en.md](../core/pipeline/README_en.md) |
+| 監査ショートガイド | [./AUDIT_GUIDE.md](./AUDIT_GUIDE.md) |
+| APIデモ | [../docs/api_demo_ja.md](../docs/api_demo_ja.md) |
+| 引用 | [../CITATION.cff](../CITATION.cff) |
+| リリースノート | [../docs/releases/v0.6.0-rsna_ja.md](../docs/releases/v0.6.0-rsna_ja.md) |
+| ロードマップ | [../ROADMAP.md](../ROADMAP.md) |
+
+![公開範囲](../docs/assets/included_excluded.svg)
 
 ## MLflow 追跡スキーマ
 

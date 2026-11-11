@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="370" viewBox="0 0 1200 370" role="img" aria-labelledby="title desc">
+  <title id="title">Evaluation protocol caveats</title>
+  <desc id="desc">Four constraint cards for interpreting metrics.</desc>
+  <rect width="1200" height="370" fill="#0B1220"/>
+  <g font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Helvetica, Arial, sans-serif">
+    <text x="40" y="48" fill="#F1F5F9" font-size="32" font-weight="700">Read the numbers with these constraints</text>
+    <text x="40" y="82" fill="#94A3B8" font-size="18">The headline metrics measure fine-tuning stability, not unseen-study performance.</text>
+    <rect x="40" y="120" rx="18" ry="18" width="250" height="180" fill="#152033" stroke="#F43F5E" stroke-width="3"/>
+    <rect x="40" y="120" width="250" height="10" fill="#F43F5E"/>
+    <text x="60" y="175" fill="#F1F5F9" font-size="22" font-weight="700">1 epoch only</text>
+    <text x="60" y="215" fill="#94A3B8" font-size="15">Each fold/seed fine-tunes once</text>
+    <text x="60" y="242" fill="#94A3B8" font-size="15">on a 6,852-image subsample</text>
+    <rect x="320" y="120" rx="18" ry="18" width="250" height="180" fill="#152033" stroke="#F59E0B" stroke-width="3"/>
+    <rect x="320" y="120" width="250" height="10" fill="#F59E0B"/>
+    <text x="340" y="175" fill="#F1F5F9" font-size="22" font-weight="700">Shared init</text>
+    <text x="340" y="215" fill="#94A3B8" font-size="15">Same checkpoint for every run</text>
+    <text x="340" y="242" fill="#94A3B8" font-size="15">trained on ~98% of studies</text>
+    <rect x="600" y="120" rx="18" ry="18" width="250" height="180" fill="#152033" stroke="#38BDF8" stroke-width="3"/>
+    <rect x="600" y="120" width="250" height="10" fill="#38BDF8"/>
+    <text x="620" y="175" fill="#F1F5F9" font-size="22" font-weight="700">Same holdout</text>
+    <text x="620" y="215" fill="#94A3B8" font-size="15">Temperature fit = ECE set</text>
+    <text x="620" y="242" fill="#94A3B8" font-size="15">calibration looks optimistic</text>
+    <rect x="880" y="120" rx="18" ry="18" width="250" height="180" fill="#152033" stroke="#14B8A6" stroke-width="3"/>
+    <rect x="880" y="120" width="250" height="10" fill="#14B8A6"/>
+    <text x="900" y="175" fill="#F1F5F9" font-size="22" font-weight="700">Not a device</text>
+    <text x="900" y="215" fill="#94A3B8" font-size="15">Research / portfolio only</text>
+    <text x="900" y="242" fill="#94A3B8" font-size="15">no clinical validation</text>
+    <text x="40" y="340" fill="#94A3B8" font-size="15">Details: docs/evaluation_notes.md · Source scalars: core/pipeline/reports/rsna_cv_summary.json</text>
+  </g>
+</svg>

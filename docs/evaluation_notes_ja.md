@@ -4,6 +4,36 @@
 
 このページでは、READMEに載せている代表指標について、測った内容と測っていない内容、および値の出典を説明します。以下の数値の出典は [`core/pipeline/reports/rsna_cv_summary.json`](../core/pipeline/reports/rsna_cv_summary.json) です。CIでは [`scripts/check_metric_claims.py`](../scripts/check_metric_claims.py) がこのJSONから数値を計算し直し、文書の記載と照合します。
 
+## 0. まず図でつかむ
+
+![評価の制約](assets/eval_protocol.svg)
+
+*1エポックだけの追加学習・共通の初期重み・校正と評価が同じ検証データ・医療機器ではない、の4点です。*
+
+![検査単位の分割](assets/split_study.svg)
+
+![6つのラベル](assets/labels_taxonomy.svg)
+
+*図は模式図です。実患者の画像ではありません。*
+
+![根拠のつながり](assets/evidence_chain.svg)
+
+![foldごとの指標](assets/cv_folds.svg)
+
+![シードごとの不確実性](assets/uncertainty_seeds.svg)
+
+```mermaid
+flowchart TB
+  subgraph cite [引用するときは必ず添える]
+    C1[1エポックの追加学習]
+    C2[共通の初期重み]
+    C3[温度推定と評価が同じ検証データ]
+    C4[医療機器ではない]
+  end
+  H[代表指標] --> cite
+  cite --> N[evaluation_notes_ja.md]
+```
+
 ## 1. 代表指標
 
 表記は「平均 ± 標本標準偏差（ddof=1）」です。

@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="460" viewBox="0 0 1200 460" role="img" aria-labelledby="title desc">
+  <title id="title">RSNA ICH label taxonomy</title>
+  <desc id="desc">Schematic brain with six hemorrhage labels.</desc>
+  <rect width="1200" height="460" fill="#0B1220"/>
+  <g font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Helvetica, Arial, sans-serif">
+    <text x="40" y="48" fill="#F1F5F9" font-size="32" font-weight="700">Six labels the model predicts</text>
+    <text x="40" y="82" fill="#94A3B8" font-size="18">Schematic head — not a patient image. Classes follow Flanders et al., 2020.</text>
+    <ellipse cx="300" cy="230" rx="170" ry="150" fill="#111827" stroke="#38BDF8" stroke-width="8"/>
+    <ellipse cx="300" cy="230" rx="120" ry="105" fill="#1E293B" stroke="#14B8A6" stroke-width="4"/>
+    <ellipse cx="300" cy="230" rx="42" ry="55" fill="#0EA5E9" opacity="0.35"/>
+    <path d="M180 160 Q300 90 420 160" fill="none" stroke="#F43F5E" stroke-width="6" stroke-linecap="round"/>
+    <path d="M190 280 Q300 340 410 280" fill="none" stroke="#F59E0B" stroke-width="6" stroke-linecap="round"/>
+    <path d="M220 210 Q300 250 380 210" fill="none" stroke="#38BDF8" stroke-width="5" stroke-dasharray="8 6"/>
+    <circle cx="300" cy="210" r="18" fill="#14B8A6" opacity="0.7"/>
+    <circle cx="300" cy="245" r="14" fill="#84CC16" opacity="0.8"/>
+    <text x="250" y="390" fill="#94A3B8" font-size="15">axial schematic</text>
+    <rect x="780" y="110" rx="14" ry="14" width="190" height="58" fill="#152033" stroke="#F43F5E" stroke-width="2"/>
+    <text x="796" y="136" fill="#F43F5E" font-size="18" font-weight="700">epidural</text>
+    <text x="796" y="156" fill="#94A3B8" font-size="14">outside dura</text>
+    <rect x="980" y="170" rx="14" ry="14" width="190" height="58" fill="#152033" stroke="#F59E0B" stroke-width="2"/>
+    <text x="996" y="196" fill="#F59E0B" font-size="18" font-weight="700">subdural</text>
+    <text x="996" y="216" fill="#94A3B8" font-size="14">under dura</text>
+    <rect x="980" y="250" rx="14" ry="14" width="190" height="58" fill="#152033" stroke="#38BDF8" stroke-width="2"/>
+    <text x="996" y="276" fill="#38BDF8" font-size="18" font-weight="700">subarachnoid</text>
+    <text x="996" y="296" fill="#94A3B8" font-size="14">CSF spaces</text>
+    <rect x="780" y="320" rx="14" ry="14" width="190" height="58" fill="#152033" stroke="#14B8A6" stroke-width="2"/>
+    <text x="796" y="346" fill="#14B8A6" font-size="18" font-weight="700">intraparenchymal</text>
+    <text x="796" y="366" fill="#94A3B8" font-size="14">inside brain</text>
+    <rect x="560" y="320" rx="14" ry="14" width="190" height="58" fill="#152033" stroke="#84CC16" stroke-width="2"/>
+    <text x="576" y="346" fill="#84CC16" font-size="18" font-weight="700">intraventricular</text>
+    <text x="576" y="366" fill="#94A3B8" font-size="14">inside ventricles</text>
+    <rect x="560" y="110" rx="14" ry="14" width="190" height="58" fill="#152033" stroke="#E879F9" stroke-width="2"/>
+    <text x="576" y="136" fill="#E879F9" font-size="18" font-weight="700">any</text>
+    <text x="576" y="156" fill="#94A3B8" font-size="14">union of subtypes</text>
+    <text x="40" y="430" fill="#94A3B8" font-size="15">Loss weights subtypes at 1 and any at 2 (community convention; Kaggle only says any is heavier).</text>
+  </g>
+</svg>
