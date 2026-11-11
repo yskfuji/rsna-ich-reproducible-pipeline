@@ -4,8 +4,8 @@ set -euo pipefail
 # Wait k-fold training -> saveprobs+sweep per fold -> prob-average ensemble -> sweep.
 # Designed for unstable terminals: this script writes a single timestamped log directory.
 
-REPO_DIR="${REPO_DIR:-/Users/yusukefujinami/ToReBrain/ToReBrain-pipeline}"
-PY="${PY:-/opt/anaconda3/envs/medseg_unet/bin/python}"
+REPO_DIR="${REPO_DIR:-$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)}"
+PY="${PY:-python}"
 
 CSV_PATH="${CSV_PATH:-$REPO_DIR/data/splits/my_dataset_train_val_test.csv}"
 DATA_ROOT="${DATA_ROOT:-$REPO_DIR/data/processed/my_dataset_ts222}"

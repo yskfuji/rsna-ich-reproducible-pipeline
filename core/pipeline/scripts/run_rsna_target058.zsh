@@ -14,7 +14,7 @@ Args:
   DEVICE   : TORCH_DEVICE (default: mps)
 
 Example:
-  export RSNA_ROOT="/Volumes/YSKFUJI's WDB 4TB/Datasets/rsna-intracranial-hemorrhage-detection"
+  export RSNA_ROOT="/path/to/rsna-intracranial-hemorrhage-detection"
   ./scripts/run_rsna_target058.zsh "$RSNA_ROOT" mps
 USAGE
   exit 2
@@ -27,7 +27,7 @@ if [[ -z "$RSNA_ROOT" ]]; then
 fi
 DEVICE="${2:-${TORCH_DEVICE:-mps}}"
 
-ROOT_DIR="/Users/yusukefujinami/ToReBrain/ToReBrain-pipeline"
+ROOT_DIR="${ROOT_DIR:-${0:A:h:h}}"
 cd "$ROOT_DIR"
 
 export TORCH_DEVICE="$DEVICE"
