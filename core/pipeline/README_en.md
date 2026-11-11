@@ -21,7 +21,7 @@ To help reviewers decide quickly, this README starts with **reproducibility, spl
 
 <p align="center"><img src="../../docs/assets/results_snapshot.png" alt="Metrics" width="100%" /></p>
 
-<p align="center"><img src="../../docs/assets/eval_protocol.png" alt="Constraints" width="100%" /></p>
+<p align="center"><img src="../../docs/assets/eval_constraints.png" alt="Constraints" width="100%" /></p>
 
 <p align="center"><img src="../../docs/assets/cv_folds.png" alt="Per-fold" width="100%" /></p>
 

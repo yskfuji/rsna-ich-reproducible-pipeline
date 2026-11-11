@@ -21,7 +21,7 @@
 
 <p align="center"><img src="../../docs/assets/results_snapshot.png" alt="指標" width="100%" /></p>
 
-<p align="center"><img src="../../docs/assets/eval_protocol.png" alt="制約" width="100%" /></p>
+<p align="center"><img src="../../docs/assets/eval_constraints.png" alt="制約" width="100%" /></p>
 
 <p align="center"><img src="../../docs/assets/cv_folds.png" alt="fold別" width="100%" /></p>
 

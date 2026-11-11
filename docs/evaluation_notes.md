@@ -6,7 +6,7 @@ This page explains what the headline metrics in the READMEs measure, what they d
 
 ## 0. Picture first
 
-<p align="center"><img src="assets/eval_protocol.png" alt="Evaluation constraints" width="100%" /></p>
+<p align="center"><img src="assets/eval_constraints.png" alt="Evaluation constraints" width="100%" /></p>
 
 <p align="center"><img src="assets/split_study.png" alt="Study-level split" width="100%" /></p>
 

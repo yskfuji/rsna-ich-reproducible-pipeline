@@ -14,7 +14,7 @@ This folder is the **public entry point** for the RSNA ICH classification pipeli
 
 <p align="center"><img src="../docs/assets/results_snapshot.png" alt="Metrics" width="100%" /></p>
 
-<p align="center"><img src="../docs/assets/eval_protocol.png" alt="Constraints" width="100%" /></p>
+<p align="center"><img src="../docs/assets/eval_constraints.png" alt="Constraints" width="100%" /></p>
 
 Picture-first root README: [../README.md](../README.md)
 

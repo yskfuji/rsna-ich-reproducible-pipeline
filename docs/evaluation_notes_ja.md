@@ -6,7 +6,7 @@
 
 ## 0. 図による整理
 
-<p align="center"><img src="assets/eval_protocol_ja.png" alt="評価の制約" width="100%" /></p>
+<p align="center"><img src="assets/eval_constraints_ja.png" alt="評価の制約" width="100%" /></p>
 
 *要点は次の四点である。追加学習は1エポックに限る。初期重みは共通である。校正と評価は同じ検証データを用いる。医療機器ではない。*
 

@@ -37,7 +37,7 @@ Mean ± sample standard deviation (ddof=1). The per-fold and per-seed values are
 | Error-detection AUROC (`any`) ↑ | 0.9424 ± 0.0200 | 10 seeds | How well uncertainty flags wrong predictions |
 | ECE (`any`) ↓ | 0.0231 ± 0.0034 | 10 seeds | Probability calibration |
 
-<p align="center"><img src="docs/assets/eval_protocol.png" alt="Read these numbers with constraints" width="100%" /></p>
+<p align="center"><img src="docs/assets/eval_constraints.png" alt="Read these numbers with constraints" width="100%" /></p>
 
 > **Read these numbers together with their evaluation conditions.**
 > - Each fold or seed fine-tunes for **1 epoch** on a subsample drawn with `limit_images=8000` (6,852 images remained in the CV run after dropping images missing from the preprocessed store).

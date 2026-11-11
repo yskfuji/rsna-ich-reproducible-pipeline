@@ -26,7 +26,7 @@ Almost no prose. Scroll the figures. For what the numbers mean, open [evaluation
 
 ## How to read the numbers
 
-<p align="center"><img src="assets/eval_protocol.png" alt="protocol" width="100%" /></p>
+<p align="center"><img src="assets/eval_constraints.png" alt="protocol" width="100%" /></p>
 
 <p align="center"><img src="assets/evidence_chain.png" alt="evidence" width="100%" /></p>
 

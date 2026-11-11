@@ -45,7 +45,7 @@
 | 誤り検出AUROC（`any`、高いほど良い） | 0.9424 ± 0.0200 | 10シード | 不確実性で誤った予測をどれだけ見分けられるか |
 | ECE（`any`、低いほど良い） | 0.0231 ± 0.0034 | 10シード | 予測確率の校正の良さ |
 
-<p align="center"><img src="docs/assets/eval_protocol_ja.png" alt="数値解釈における制約" width="100%" /></p>
+<p align="center"><img src="docs/assets/eval_constraints_ja.png" alt="数値解釈における制約" width="100%" /></p>
 
 > **数値は、次の評価条件とあわせて解釈すること。**
 > - 各foldと各シードは、`limit_images=8000` で抽出したデータ（交差検証では、前処理済みデータにない画像を除いた6,852枚）で**1エポック**だけ追加学習している。

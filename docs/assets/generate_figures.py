@@ -274,7 +274,7 @@ def eval_protocol() -> None:
 {chr(10).join(parts)}
     <text x="40" y="{footer_y}" fill="{MUTED}" font-size="13">{T("Details: docs/evaluation_notes.md · Source: rsna_cv_summary.json", "詳細は docs/evaluation_notes_ja.md。出典は rsna_cv_summary.json。")}</text>"""
     write(
-        "eval_protocol.svg",
+        "eval_constraints.svg",
         _svg(960, height, T("Evaluation protocol caveats", "評価手順上の制約"), T("Four constraint cards for metrics.", "指標解釈のための四つの制約。"), body),
     )
 

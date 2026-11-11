@@ -30,7 +30,7 @@
 
 ## 数値の解釈
 
-<p align="center"><img src="assets/eval_protocol_ja.png" alt="評価上の制約" width="100%" /></p>
+<p align="center"><img src="assets/eval_constraints_ja.png" alt="評価上の制約" width="100%" /></p>
 
 <p align="center"><img src="assets/evidence_chain_ja.png" alt="根拠連鎖" width="100%" /></p>
 
