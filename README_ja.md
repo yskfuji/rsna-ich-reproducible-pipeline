@@ -116,7 +116,7 @@ flowchart TD
 python docs/assets/generate_figures.py
 ```
 
-図はSVGであり、患者画素を含まない。指標カードの数値は `rsna_cv_summary.json` から埋め込む。
+表示用資産はPNG（原図はSVG）であり、患者画素を含まない。指標カードの数値は `rsna_cv_summary.json` から埋め込む。
 
 ## スナップショットおよび引用
 

@@ -106,7 +106,7 @@ More: [picture-only index](docs/visual_index.md) · [API demo](docs/api_demo.md)
 python docs/assets/generate_figures.py
 ```
 
-Figures are SVG (no patient pixels). Metric cards are filled from `rsna_cv_summary.json`.
+Display assets are PNG (SVG is the editable source). No patient pixels. Metric cards are filled from `rsna_cv_summary.json`.
 
 ## Snapshot and citation
 
