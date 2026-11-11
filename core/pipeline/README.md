@@ -13,6 +13,22 @@
 このフォルダ（pipeline/）は RSNA ICH の学習・評価・推論を「**再現できる形で**」回すための最小パイプラインです。
 読者が短時間で判断できるよう、**再現性 / 分割設計（リーク対策）/ 比較軸 / アブレーション** を先頭にまとめています。
 
+## 絵で先に掴む
+
+![パイプライン](../../docs/assets/architecture.svg)
+
+![分割](../../docs/assets/split_study.svg)
+
+![指標](../../docs/assets/results_snapshot.svg)
+
+![制約](../../docs/assets/eval_protocol.svg)
+
+![fold別](../../docs/assets/cv_folds.svg)
+
+![不確実性](../../docs/assets/uncertainty_seeds.svg)
+
+ルートの絵中心の案内: [../../README_ja.md](../../README_ja.md)
+
 ---
 
 ## TL;DR（この README で分かること）

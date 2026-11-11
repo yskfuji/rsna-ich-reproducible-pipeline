@@ -2,17 +2,21 @@
 
 **Language:** English | [Japanese](README.md)
 
-This folder is the **public entry point** for the RSNA ICH classification pipeline. It is written for hiring review, external technical inspection, and fast project onboarding.
+This folder is the **public entry point** for the RSNA ICH classification pipeline. Pictures come before prose.
 
-## What a reviewer can verify quickly
+## Look first
 
-- **What it does**: trains, evaluates, and audits RSNA ICH models
-- **API demo**: exposes public-facing `health`, `model metadata`, and `ich inference` schemas via FastAPI
-- **Who it is for**: hiring managers, ML engineers, and researchers who care about reproducibility
-- **Fastest first run**: `python ../scripts/smoke_test.py --use_dummy_data`
-- **Detailed docs**:
-  - Japanese: `../core/pipeline/README.md`
-  - English: `../core/pipeline/README_en.md`
+![Pipeline](../docs/assets/architecture.svg)
+
+![Six labels](../docs/assets/labels_taxonomy.svg)
+
+![Reader paths](../docs/assets/reader_path.svg)
+
+![Metrics](../docs/assets/results_snapshot.svg)
+
+![Constraints](../docs/assets/eval_protocol.svg)
+
+Picture-first root README: [../README.md](../README.md)
 
 ## Representative metrics
 
@@ -38,24 +42,33 @@ See the [evaluation notes](../docs/evaluation_notes.md) for details.
 - reproducibility artifacts such as `meta.json`, `log.jsonl`, and `split_stats`
 - subset identity checks via `subset_fingerprint_sha256`
 
+![Study-level split](../docs/assets/split_study.svg)
+
 ## Quick links
 
-- Audit quick guide: `./AUDIT_GUIDE.md`
-- API demo note: `../docs/api_demo.md`
-- Citation: `../CITATION.cff`
-- Release-note source: `../docs/releases/v0.6.0-rsna.md`
-- Roadmap: `../ROADMAP.md`
+| Need | Open |
+|---|---|
+| Fastest first run | `python ../scripts/smoke_test.py --use_dummy_data` |
+| Detailed JA docs | [../core/pipeline/README.md](../core/pipeline/README.md) |
+| Detailed EN docs | [../core/pipeline/README_en.md](../core/pipeline/README_en.md) |
+| Audit quick guide | [./AUDIT_GUIDE.md](./AUDIT_GUIDE.md) |
+| API demo | [../docs/api_demo.md](../docs/api_demo.md) |
+| Citation | [../CITATION.cff](../CITATION.cff) |
+| Release notes | [../docs/releases/v0.6.0-rsna.md](../docs/releases/v0.6.0-rsna.md) |
+| Roadmap | [../ROADMAP.md](../ROADMAP.md) |
+
+![Included vs excluded](../docs/assets/included_excluded.svg)
 
 ## MLflow tracking schema
 
-When `--mlflow` is enabled, this repository follows the same public tracking schema used across the three portfolio repositories.
+When `--mlflow` is enabled, this public repository uses a shared tracking schema across the three portfolio repositories.
 
-- Common run tags: `repo_name`, `task_type`, `model_family`, `tracking_schema=public_portfolio_v1`
-- Common artifact groups:
-  - `run_metadata/`: `meta.json` and, when available, a config snapshot or task-specific JSON
+- Shared run tags: `repo_name`, `task_type`, `model_family`, `tracking_schema=public_portfolio_v1`
+- Shared artifact groups:
+  - `run_metadata/`: `meta.json` plus optional config snapshots and task-specific JSON
   - `training_trace/`: `log.jsonl`
-  - `checkpoints/`: `last.pt`, `best.pt`, and any task-specific best-checkpoint variants
-- Goal: make run review easier across segmentation and classification repos without claiming a production MLOps platform
+  - `checkpoints/`: `last.pt`, `best.pt`, and task-specific best checkpoints
+- Goal: make segmentation and classification runs browsable the same way, without claiming a production MLOps platform
 
 ## Current portfolio snapshot
 
@@ -63,6 +76,4 @@ The current portfolio snapshot corresponds to:
 
 ✅ `v0.6.0-rsna`
 
-Active development continues in the repository.
-
-This public package intentionally excludes `Datasets/`, `runs/`, and `results/`.
+Active development continues. This public folder does not ship `Datasets/`, `runs/`, or `results/`. Use the detailed README for commands that need your own data.

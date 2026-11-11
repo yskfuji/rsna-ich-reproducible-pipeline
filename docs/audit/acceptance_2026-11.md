@@ -58,8 +58,9 @@
 | ファイル | 行 | 規則 | 例外とする理由 |
 |---|---:|---|---|
 | `docs/evaluation_notes_ja.md` | 3 | 文末の句点 | 言語切り替えのリンク行で、文ではない |
-| `docs/evaluation_notes_ja.md` | 62 | 文の長さ | 英語の論文名をそのまま引用している |
-| `docs/evaluation_notes_ja.md` | 66 | 文の長さ | 英語の論文名をそのまま引用している |
+| `docs/evaluation_notes_ja.md` | 92 | 文の長さ | 英語の論文名をそのまま引用している（図追加で行番号が移動） |
+| `docs/evaluation_notes_ja.md` | 96 | 文の長さ | 英語の論文名をそのまま引用している（図追加で行番号が移動） |
+| `docs/reproducibility_checklist_ja.md` | 11, 42 | 文の長さ | 既存の箇条書き。今回の図索引の追記で行番号だけが動いた |
 | プロフィールの `README.md` | 3, 9, 11, 13, 15 | 文の長さ | 英語の段落で、日本語向けの規則の対象外 |
 
 ## 5. 一次資料との照合

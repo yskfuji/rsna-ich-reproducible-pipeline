@@ -4,6 +4,32 @@
 
 This page explains what the headline metrics in the READMEs measure, what they do not measure, and where each number comes from. Every value below is recomputed in CI from [`core/pipeline/reports/rsna_cv_summary.json`](../core/pipeline/reports/rsna_cv_summary.json) by [`scripts/check_metric_claims.py`](../scripts/check_metric_claims.py).
 
+## 0. Picture first
+
+![Evaluation constraints](assets/eval_protocol.svg)
+
+![Study-level split](assets/split_study.svg)
+
+![Six ICH labels](assets/labels_taxonomy.svg)
+
+![Evidence chain](assets/evidence_chain.svg)
+
+![Per-fold metrics](assets/cv_folds.svg)
+
+![Uncertainty by seed](assets/uncertainty_seeds.svg)
+
+```mermaid
+flowchart TB
+  subgraph cite [Safe to cite only with]
+    C1[1-epoch fine-tune]
+    C2[shared initial checkpoint]
+    C3[temperature on same holdout]
+    C4[not a medical device]
+  end
+  H[Headline number] --> cite
+  cite --> N[evaluation_notes.md]
+```
+
 ## 1. Headline numbers
 
 Values are mean ± sample standard deviation (ddof=1).

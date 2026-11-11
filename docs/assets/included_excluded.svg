@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="400" viewBox="0 0 1200 400" role="img" aria-labelledby="title desc">
+  <title id="title">Included versus excluded artifacts</title>
+  <desc id="desc">Two-column view of public versus private content.</desc>
+  <rect width="1200" height="400" fill="#0B1220"/>
+  <g font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Helvetica, Arial, sans-serif">
+    <text x="40" y="48" fill="#F1F5F9" font-size="32" font-weight="700">What ships publicly</text>
+    <text x="40" y="82" fill="#94A3B8" font-size="18">If it can identify a patient or recreate a scan, it stays private.</text>
+    <rect x="40" y="120" rx="20" ry="20" width="540" height="240" fill="#152033" stroke="#84CC16" stroke-width="3"/>
+    <text x="70" y="170" fill="#84CC16" font-size="24" font-weight="700">Included</text>
+    <text x="70" y="215" fill="#F1F5F9" font-size="18">source · configs · tests · CI</text>
+    <text x="70" y="250" fill="#F1F5F9" font-size="18">summary JSON · static figures</text>
+    <text x="70" y="285" fill="#F1F5F9" font-size="18">evaluation notes · checklists</text>
+    <rect x="620" y="120" rx="20" ry="20" width="540" height="240" fill="#152033" stroke="#F43F5E" stroke-width="3"/>
+    <text x="650" y="170" fill="#F43F5E" font-size="24" font-weight="700">Excluded</text>
+    <text x="650" y="215" fill="#F1F5F9" font-size="18">RSNA DICOM / labels</text>
+    <text x="650" y="250" fill="#F1F5F9" font-size="18">Datasets/ · runs/ · results/ · logs/</text>
+    <text x="650" y="285" fill="#F1F5F9" font-size="18">trained weights (*.pt)</text>
+  </g>
+</svg>

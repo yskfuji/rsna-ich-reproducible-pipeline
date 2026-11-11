@@ -1,33 +1,39 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="360" viewBox="0 0 1200 360" role="img" aria-labelledby="title desc">
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="370" viewBox="0 0 1200 370" role="img" aria-labelledby="title desc">
   <title id="title">RSNA pipeline architecture</title>
-  <desc id="desc">Flow from RSNA CT data to preprocessing, ConvNeXt classification, calibration, and audit artifacts.</desc>
-  <rect width="1200" height="360" fill="#0f172a"/>
-  <text x="60" y="52" fill="#f8fafc" font-family="Arial, Helvetica, sans-serif" font-size="30" font-weight="700">RSNA ICH pipeline overview</text>
-  <text x="60" y="86" fill="#cbd5e1" font-family="Arial, Helvetica, sans-serif" font-size="18">CT slices → preprocessed SQLite → ConvNeXt-based training/inference → calibration + audit outputs</text>
-  <g font-family="Arial, Helvetica, sans-serif">
-    <rect x="60" y="130" rx="18" ry="18" width="220" height="140" fill="#1d4ed8"/>
-    <text x="90" y="178" fill="#ffffff" font-size="24" font-weight="700">RSNA CT data</text>
-    <text x="90" y="212" fill="#dbeafe" font-size="18">DICOM or preprocessed</text>
-    <text x="90" y="238" fill="#dbeafe" font-size="18">slice stacks</text>
-
-    <rect x="330" y="130" rx="18" ry="18" width="220" height="140" fill="#0f766e"/>
-    <text x="358" y="178" fill="#ffffff" font-size="24" font-weight="700">Preprocess</text>
-    <text x="358" y="212" fill="#ccfbf1" font-size="18">SQLite bundle</text>
-    <text x="358" y="238" fill="#ccfbf1" font-size="18">group-split ready</text>
-
-    <rect x="600" y="130" rx="18" ry="18" width="220" height="140" fill="#7c3aed"/>
-    <text x="632" y="178" fill="#ffffff" font-size="24" font-weight="700">ConvNeXt 2.5D</text>
-    <text x="632" y="212" fill="#ede9fe" font-size="18">train / eval / infer</text>
-    <text x="632" y="238" fill="#ede9fe" font-size="18">weighted logloss focus</text>
-
-    <rect x="870" y="130" rx="18" ry="18" width="270" height="140" fill="#be123c"/>
-    <text x="900" y="178" fill="#ffffff" font-size="24" font-weight="700">Audit + calibration</text>
-    <text x="900" y="212" fill="#ffe4e6" font-size="18">ECE / Brier / error AUROC</text>
-    <text x="900" y="238" fill="#ffe4e6" font-size="18">meta.json / log.jsonl</text>
-  </g>
-  <g stroke="#94a3b8" stroke-width="6" fill="none" stroke-linecap="round">
-    <path d="M280 200 H320"/>
-    <path d="M550 200 H590"/>
-    <path d="M820 200 H860"/>
+  <desc id="desc">Five-stage flow from CT input to published audits.</desc>
+  <rect width="1200" height="370" fill="#0B1220"/>
+  <g font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Helvetica, Arial, sans-serif">
+    <text x="40" y="48" fill="#F1F5F9" font-size="32" font-weight="700">What happens in this pipeline</text>
+    <text x="40" y="82" fill="#94A3B8" font-size="18">From CT slices to audited metrics — medical images stay off the public repository.</text>
+    <rect x="40" y="120" rx="20" ry="20" width="200" height="170" fill="#152033" stroke="#14B8A6" stroke-width="3"/>
+    <circle cx="76" cy="158" r="14" fill="#14B8A6"/>
+    <text x="100" y="166" fill="#F1F5F9" font-size="22" font-weight="700">1. CT input</text>
+    <text x="64" y="210" fill="#94A3B8" font-size="16">DICOM / SQLite</text>
+    <text x="64" y="238" fill="#94A3B8" font-size="16">HU window + stacks</text>
+    <rect x="270" y="120" rx="20" ry="20" width="200" height="170" fill="#152033" stroke="#38BDF8" stroke-width="3"/>
+    <circle cx="306" cy="158" r="14" fill="#38BDF8"/>
+    <text x="330" y="166" fill="#F1F5F9" font-size="22" font-weight="700">2. Split</text>
+    <text x="294" y="210" fill="#94A3B8" font-size="16">study GroupKFold</text>
+    <text x="294" y="238" fill="#94A3B8" font-size="16">leakage audit</text>
+    <rect x="500" y="120" rx="20" ry="20" width="200" height="170" fill="#152033" stroke="#F59E0B" stroke-width="3"/>
+    <circle cx="536" cy="158" r="14" fill="#F59E0B"/>
+    <text x="560" y="166" fill="#F1F5F9" font-size="22" font-weight="700">3. Model</text>
+    <text x="524" y="210" fill="#94A3B8" font-size="16">ConvNeXt 2.5D</text>
+    <text x="524" y="238" fill="#94A3B8" font-size="16">weighted logloss</text>
+    <rect x="730" y="120" rx="20" ry="20" width="200" height="170" fill="#152033" stroke="#84CC16" stroke-width="3"/>
+    <circle cx="766" cy="158" r="14" fill="#84CC16"/>
+    <text x="790" y="166" fill="#F1F5F9" font-size="22" font-weight="700">4. Calibrate</text>
+    <text x="754" y="210" fill="#94A3B8" font-size="16">temperature + ECE</text>
+    <text x="754" y="238" fill="#94A3B8" font-size="16">MC Dropout</text>
+    <rect x="960" y="120" rx="20" ry="20" width="200" height="170" fill="#152033" stroke="#F43F5E" stroke-width="3"/>
+    <circle cx="996" cy="158" r="14" fill="#F43F5E"/>
+    <text x="1020" y="166" fill="#F1F5F9" font-size="22" font-weight="700">5. Publish</text>
+    <text x="984" y="210" fill="#94A3B8" font-size="16">reports + checks</text>
+    <text x="984" y="238" fill="#94A3B8" font-size="16">no patient images</text>
+    <path d="M240 205 H268" stroke="#94A3B8" stroke-width="5" stroke-linecap="round"/><path d="M260 193 L274 205 L260 217" fill="#94A3B8"/>
+    <path d="M470 205 H498" stroke="#94A3B8" stroke-width="5" stroke-linecap="round"/><path d="M490 193 L504 205 L490 217" fill="#94A3B8"/>
+    <path d="M700 205 H728" stroke="#94A3B8" stroke-width="5" stroke-linecap="round"/><path d="M720 193 L734 205 L720 217" fill="#94A3B8"/>
+    <path d="M930 205 H958" stroke="#94A3B8" stroke-width="5" stroke-linecap="round"/><path d="M950 193 L964 205 L950 217" fill="#94A3B8"/>
+    <text x="40" y="340" fill="#94A3B8" font-size="15">Public bundle = code + configs + summary JSON. Datasets/, results/, and *.pt weights are excluded.</text>
   </g>
 </svg>

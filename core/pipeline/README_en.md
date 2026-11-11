@@ -13,6 +13,22 @@ Active development continues in the repository.
 This folder (pipeline/) is a minimal pipeline to run RSNA ICH training/evaluation/inference in an **auditable, reproducible** way.
 To help reviewers decide quickly, this README starts with **reproducibility, split design (leakage prevention), comparison axes, and ablation results**.
 
+## Look at the pictures first
+
+![Pipeline](../../docs/assets/architecture.svg)
+
+![Split design](../../docs/assets/split_study.svg)
+
+![Metrics](../../docs/assets/results_snapshot.svg)
+
+![Constraints](../../docs/assets/eval_protocol.svg)
+
+![Per-fold](../../docs/assets/cv_folds.svg)
+
+![Uncertainty](../../docs/assets/uncertainty_seeds.svg)
+
+Picture-first landing page: [../../README.md](../../README.md)
+
 ---
 
 ## TL;DR (what you can verify here)

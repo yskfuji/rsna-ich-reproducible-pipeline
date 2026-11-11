@@ -2,6 +2,8 @@
 
 Use this page as a fast external-review checklist for the public RSNA ICH repository.
 
+For a picture-only tour, open [visual_index.md](visual_index.md) first.
+
 ## 1. Package integrity
 
 - Confirm the stable snapshot tag referenced in the README and release note.
