@@ -1,8 +1,8 @@
 # datasets / generated artifacts (do not publish)
-# Anchored so that core/pipeline/src/datasets/ (source code) is not ignored
-# on case-insensitive filesystems.
-/Datasets/
-/datasets/
+Datasets/
+datasets/
+# With core.ignorecase=true the two lines above also match the source package.
+!core/pipeline/src/datasets/
 runs/
 results/
 logs/

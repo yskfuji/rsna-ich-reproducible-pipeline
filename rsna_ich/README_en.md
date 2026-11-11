@@ -24,8 +24,8 @@ Mean ± sample standard deviation (ddof=1). The underlying values are in [`../co
 - ECE (`any`): **0.0231 ± 0.0034** (10 seeds)
 
 Evaluation conditions:
-- Each fold or seed fine-tunes for 1 epoch on an 8,000-image subsample.
-- The initial checkpoint was trained on 98% of the studies in the same training pool. Read the values as fine-tuning stability, not as performance on unseen studies.
+- Each fold or seed fine-tunes for 1 epoch on a subsample drawn with `limit_images=8000` (6,852 images remained in the CV run after dropping images missing from the preprocessed store).
+- The initial checkpoint was trained on 98% of the studies in the same preprocessed training pool (632,808 of 645,793 slices). Read the values as fine-tuning stability, not as performance on unseen studies.
 - Temperature scaling is fitted on the same holdout used to report ECE, so calibration metrics are optimistic.
 - This is a research and portfolio implementation, not a medical device.
 

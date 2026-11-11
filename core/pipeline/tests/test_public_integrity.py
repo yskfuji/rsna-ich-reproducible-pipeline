@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import json
 import shutil
 import subprocess
 import sys
@@ -46,10 +47,32 @@ def test_caveat_must_share_section_with_headline_numbers(tmp_path: Path) -> None
     errors = cmc.run_checks(tmp_path)
     assert any("lacks caveat marker 'not a medical device'" in e for e in errors), errors
 
+    shutil.copy(REPO / "README.md", readme)
+    headline = cmc.CLAIMS[0].expected(json.loads((tmp_path / cmc.SUMMARY.relative_to(cmc.ROOT)).read_text()))
+    readme.write_text(readme.read_text(encoding="utf-8") + f"\n## Summary\n\n{headline}\n", encoding="utf-8")
+
+    errors = cmc.run_checks(tmp_path)
+    assert any("section '## Summary' lacks caveat marker" in e for e in errors), errors
+
 
 def test_public_hygiene() -> None:
     proc = _run("scripts/check_public_hygiene.py")
     assert proc.returncode == 0, proc.stdout
+
+
+@pytest.mark.skipif(shutil.which("git") is None, reason="git not available")
+def test_hygiene_rejects_ignore_rules_that_hide_the_dataset_package(tmp_path: Path) -> None:
+    clone = tmp_path / "repo"
+    subprocess.run(["git", "clone", "-q", "--no-hardlinks", str(REPO), str(clone)], check=True)
+    for rel in (".gitignore", "core/pipeline/.gitignore"):
+        path = clone / rel
+        kept = [ln for ln in path.read_text(encoding="utf-8").splitlines() if "src/datasets" not in ln]
+        path.write_text("\n".join(kept) + "\n", encoding="utf-8")
+
+    proc = _run("scripts/check_public_hygiene.py", cwd=clone)
+
+    assert proc.returncode == 1
+    assert "core/pipeline/src/datasets/_new_module_probe.py is ignored (core.ignorecase=true)" in proc.stdout
 
 
 @pytest.mark.skipif(shutil.which("git") is None, reason="git not available")

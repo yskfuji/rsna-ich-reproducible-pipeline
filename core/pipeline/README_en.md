@@ -18,8 +18,8 @@ To help reviewers decide quickly, this README starts with **reproducibility, spl
 ## TL;DR (what you can verify here)
 
 > **Evaluation boundary (read first).** All headline numbers are mean ± sample standard deviation (ddof=1) recomputed in CI from [`reports/rsna_cv_summary.json`](reports/rsna_cv_summary.json).
-> - Each CV fold and each uncertainty seed fine-tunes for **1 epoch** on an 8,000-image subsample.
-> - Every run starts from the same **initial checkpoint** (`rsna_convnext25d_final2_full_mps_nosamp_nopw_20260202_222608/best.pt`), trained for 6 epochs on 98% of the studies in `stage_2_train`. About 98% of each validation fold is therefore expected to have been training data for that checkpoint (expected value, not measured). The numbers show fine-tuning stability, not performance on unseen studies.
+> - Each CV fold and each uncertainty seed fine-tunes for **1 epoch** on a subsample drawn with `limit_images=8000` (6,852 images remained in the CV run after dropping images missing from the preprocessed store).
+> - Every run starts from the same **initial checkpoint** (`rsna_convnext25d_final2_full_mps_nosamp_nopw_20260202_222608/best.pt`), trained for 6 epochs on 98% of the studies in the preprocessed training pool (645,793 slices). About 98% of each validation fold is therefore expected to have been training data for that checkpoint (expected value, not measured). The numbers show fine-tuning stability, not performance on unseen studies.
 > - Temperature scaling is fitted on the **same holdout** used to report ECE, Brier and AURC.
 > - Splits group by study; patient-level grouping is not implemented.
 > - This is a research and portfolio implementation, **not a medical device**.
@@ -44,6 +44,7 @@ To help reviewers decide quickly, this README starts with **reproducibility, spl
   - AURC(weighted logloss): **0.00837 ± 0.00225**
   - coverage=0.8 accuracy(any) gain: **+2.53 ± 0.94 pp** (the baseline arm gains +2.98 pp under the same protocol)
   - vs. baseline (same protocol): ECE **-0.0091**, Brier **-0.0040**, AURC **-0.00139**, AUROC **+0.0046**
+  - The AUROC difference is within noise: paired by seed, it improved in only 5 of 10 seeds.
 - **Temperature-scaling boundary (important)**: the uncertainty numbers in this README come from running `--fit-temperature` on the same holdout validation split used for evaluation (fit set = eval set), so ECE/Brier may look optimistic. For strict reporting, use a calib/eval split or a separate evaluation holdout.
 - **Audit hook (subset identity)**: in addition to `split_stats` consistency, record sorted `image_id` SHA256 as `subset_fingerprint_sha256` in **`meta.json` (implemented)**. `tools/eval_rsna_uncertainty.py` also outputs `adopted_subset_fingerprint_sha256` / `val_subset_fingerprint_sha256` in its JSON.
   - `subset_fingerprint_sha256` definition: sort adopted `image_id` ascending, join with `\n`, take SHA256 of the UTF-8 string (hex)
@@ -303,7 +304,7 @@ Where `init_from` comes from:
 - `results/rsna_convnext25d_final2_full_mps_nosamp_nopw_20260202_222608/best.pt`
   - A checkpoint saved as **minimum `val_loss`** on holdout validation (`split_by=study`, `val_frac=0.02`) in another run.
   - Its selection did not use this report’s evaluation results.
-  - **Its training data are not independent of this README’s validation folds.** It was trained on 632,808 slices (98% of the studies in `stage_2_train`), and the CV and holdout subsamples are drawn from the same pool. Most validation images were therefore probably seen by this checkpoint. A strict generalization estimate needs a CV that starts from ImageNet weights, or an initial checkpoint whose training studies exclude every validation study.
+  - **Its training data are not independent of this README’s validation folds.** It was trained on 632,808 slices (98% of the studies in the 645,793-slice preprocessed training pool), and the CV and holdout subsamples are drawn from the same pool. Most validation images were therefore probably seen by this checkpoint. A strict generalization estimate needs a CV that starts from ImageNet weights, or an initial checkpoint whose training studies exclude every validation study.
   - Used as a stable fine-tuning initialization; we do not swap it based on the CV/holdout results in this README.
   - If you want a checkpoint saved by minimum weighted logloss, use `best_wlogloss.pt` in the same folder.
 
@@ -538,7 +539,7 @@ $$
 | Kaggle LB reference (public) | ~0.046–0.060 | Full dataset, raw probs, different eval conditions |
 
 - vs. class-prior baseline: ~4.5× improvement (confirms the model is working).
-- Kaggle LB comparison is **not direct**: data volume (this README uses limit_images=8000 ≈ 1.2% of full data), `enforce_any_max` use, and val set size all differ.
+- Kaggle LB comparison is **not direct**: data volume (this README uses limit_images=8000 ≈ 1.2% of the 645,793 preprocessed slices), `enforce_any_max` use, and val set size all differ.
 
 **Statistical uncertainty of single-holdout estimates**:
 - val_frac=0.05 × limit_images=8000 ≈ **~400 samples** in the val set.

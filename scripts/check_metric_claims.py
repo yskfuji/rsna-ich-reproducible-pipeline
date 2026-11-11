@@ -29,7 +29,11 @@ HEADLINE_DOCS = {
 DETAIL_DOCS = {
     "core/pipeline/README.md": "ja",
     "core/pipeline/README_en.md": "en",
+    "docs/evaluation_notes.md": "en",
+    "docs/evaluation_notes_ja.md": "ja",
 }
+# Documents that also state the comparison against the baseline arm.
+COMPARISON_DOCS = ("core/pipeline/README.md", "core/pipeline/README_en.md")
 
 CAVEAT_MARKERS = {
     "en": (
@@ -116,6 +120,24 @@ def _section_bounds(text: str, pos: int) -> tuple[int, int]:
     return start, end
 
 
+@dataclass(frozen=True)
+class Delta:
+    """Difference of means, retrained_with_dropout minus baseline, printed with a sign."""
+
+    name: str
+    key: str
+    decimals: int
+
+    def expected(self, summary: dict[str, Any]) -> str:
+        arm = statistics.mean(_unc(self.key)(summary))
+        base = statistics.mean(_base(self.key)(summary))
+        return f"{arm - base:+.{self.decimals}f}"
+
+
+def _base(key: str) -> Callable[[dict[str, Any]], list[float]]:
+    return lambda s: [float(r["baseline"][key]) for r in s["uncertainty"]["seeds"]]
+
+
 CLAIMS = (
     Claim("weighted logloss (CV)", _cv("val_logloss_weighted"), 5, True),
     Claim("mean AUC (CV)", _cv("val_auc_mean"), 5, True),
@@ -124,6 +146,13 @@ CLAIMS = (
     Claim("Brier (any)", _unc("brier_any"), 4, False),
     Claim("AURC (weighted logloss)", _unc("aurc_weighted_logloss"), 5, False),
     Claim("accuracy gain at coverage 0.8", _unc("accuracy_any_improve_pp"), 2, False, "+", " pp"),
+)
+
+DELTAS = (
+    Delta("ECE delta", "ece_any", 4),
+    Delta("Brier delta", "brier_any", 4),
+    Delta("AURC delta", "aurc_weighted_logloss", 5),
+    Delta("AUROC delta", "auroc_uncertainty_detect_error_any", 4),
 )
 
 
@@ -154,6 +183,16 @@ def run_checks(root: Path = ROOT) -> list[str]:
             if rel in texts and want not in texts[rel]:
                 errors.append(f"{rel}: '{claim.name}' should read '{want}'")
 
+    for rel in COMPARISON_DOCS:
+        text = texts.get(rel, "")
+        for delta in DELTAS:
+            want = f"**{delta.expected(summary)}**"
+            if want not in text:
+                errors.append(f"{rel}: '{delta.name}' should read '{want}'")
+        base_gain = statistics.mean(_base("accuracy_any_improve_pp")(summary))
+        if f"+{base_gain:.2f} pp" not in text:
+            errors.append(f"{rel}: baseline accuracy gain should read '+{base_gain:.2f} pp'")
+
     for rel, lang in docs.items():
         text = texts.get(rel, "")
         for marker in CAVEAT_MARKERS[lang]:
@@ -169,9 +208,11 @@ def run_checks(root: Path = ROOT) -> list[str]:
         for claim in CLAIMS:
             if not claim.headline:
                 continue
-            pos = text.find(claim.expected(summary))
-            if pos >= 0:
+            want = claim.expected(summary)
+            pos = text.find(want)
+            while pos >= 0:
                 spans.add(_section_bounds(text, pos))
+                pos = text.find(want, pos + 1)
         for start, end in sorted(spans):
             section = text[start:end]
             title = section.splitlines()[0] if start else "(top of file)"
@@ -180,7 +221,8 @@ def run_checks(root: Path = ROOT) -> list[str]:
                     errors.append(f"{rel}: section '{title}' lacks caveat marker '{marker}'")
 
     for path in sorted([*root.glob("**/*.md"), *root.glob("**/*.svg")]):
-        if ".git" in path.parts or "audit" in path.parts:
+        parts = path.relative_to(root).parts
+        if ".git" in parts or "audit" in parts:
             continue
         text = path.read_text(encoding="utf-8", errors="replace")
         for old in SUPERSEDED:

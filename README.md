@@ -66,8 +66,8 @@ Mean ± sample standard deviation (ddof=1). The per-fold and per-seed values are
 | ECE (`any`) ↓ | 0.0231 ± 0.0034 | 10 seeds | Probability calibration |
 
 > **Read these numbers together with their evaluation conditions.**
-> - Each fold or seed fine-tunes for **1 epoch** on an 8,000-image subsample.
-> - Every run starts from the same **initial checkpoint**, which was trained on 98% of the studies in the same training pool. Most validation images were therefore probably seen before fine-tuning. Read the values as fine-tuning stability, not as performance on unseen studies.
+> - Each fold or seed fine-tunes for **1 epoch** on a subsample drawn with `limit_images=8000` (6,852 images remained in the CV run after dropping images missing from the preprocessed store).
+> - Every run starts from the same **initial checkpoint**, which was trained on 98% of the studies in the same preprocessed training pool (632,808 of 645,793 slices). Most validation images were therefore probably seen before fine-tuning. Read the values as fine-tuning stability, not as performance on unseen studies.
 > - Temperature scaling is fitted on the **same holdout** that is used to report ECE, so calibration metrics are optimistic.
 > - Splits group by study, not by patient.
 > - This is a research and portfolio implementation, **not a medical device**.

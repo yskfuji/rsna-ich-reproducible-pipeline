@@ -4,10 +4,9 @@ __pycache__/
 .mypy_cache/
 .ruff_cache/
 .venv/
-# Anchored: on case-insensitive filesystems (core.ignorecase=true) an
-# unanchored "Datasets/" also matches the source package src/datasets/.
-/Datasets/
-/datasets/
+Datasets/
+datasets/
+# With core.ignorecase=true the two lines above also match the source package.
 !/src/datasets/
 data/
 logs/

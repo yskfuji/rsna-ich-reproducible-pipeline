@@ -18,9 +18,9 @@
 | 初期重み | initial checkpoint（`init_from`） | 追加学習を始めるときに読み込むモデルの重みです。 |
 | 追加学習 | fine-tuning | 学習済みの重みから学習を続けることです。 |
 | 加重マルチラベル対数損失 | weighted multi-label logloss（`val_logloss_weighted`） | Kaggle RSNA ICHの評価指標です。定義は [評価ノート](evaluation_notes_ja.md) を参照してください。 |
-| 校正 | calibration | 予測確率と実際の発生頻度を一致させることです。「較正」とは書きません。 |
+| 校正 | calibration | 予測確率が、実際に陽性となる割合と一致するように確率を調整することです。「較正」とは書きません。 |
 | 温度スケーリング | temperature scaling | ロジットを1つの温度で割って確率を校正する方法です。 |
-| ECE | expected calibration error | 予測確率を区間に分け、区間ごとの確率と正解率の差を平均した値です。 |
+| ECE | expected calibration error | 予測確率を等幅の区間に分け、区間ごとに平均予測確率と陽性の割合の差を求め、区間の件数で重み付けして平均した値です。 |
 | Brierスコア | Brier score | 予測確率と正解（0または1）の差の二乗平均です。 |
 | 誤り検出AUROC | error-detection AUROC | 不確実性スコアで予測の誤りをどれだけ見分けられるかを表すAUROCです。 |
 | 被覆率 | coverage | 確信度の高い順に予測を採用したとき、採用した割合です。 |

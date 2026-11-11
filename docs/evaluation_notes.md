@@ -20,14 +20,14 @@ Values are mean ± sample standard deviation (ddof=1).
 
 ## 2. Limitations (read before citing the numbers)
 
-1. **Short training budget.** Each fold or seed fine-tunes for 1 epoch on an 8,000-image subsample. The numbers show how stable fine-tuning is; they are not a full training run.
-2. **Initial checkpoint overlap.** All runs start from the same initial checkpoint (`rsna_convnext25d_final2_full_mps_nosamp_nopw_20260202_222608/best.pt`). It was trained for 6 epochs on 632,808 slices, holding out only 2% of studies (`val_frac=0.02`). The 8,000-image subsample comes from the same `stage_2_train` pool. We therefore expect about 98% of each validation fold to have been training data for the initial checkpoint. This is an expected value; the exact overlap has not been measured. The numbers must not be read as performance on unseen studies.
+1. **Short training budget.** Each fold or seed fine-tunes for 1 epoch on a subsample drawn with `limit_images=8000` (6,852 images remained in the CV run after dropping images missing from the preprocessed store). The numbers show how stable fine-tuning is; they are not a full training run.
+2. **Initial checkpoint overlap.** All runs start from the same initial checkpoint (`rsna_convnext25d_final2_full_mps_nosamp_nopw_20260202_222608/best.pt`). It was trained for 6 epochs on 632,808 of the 645,793 preprocessed slices, holding out only 2% of studies (`val_frac=0.02`). The subsamples for CV and for the uncertainty seeds come from the same preprocessed pool. We therefore expect about 98% of each validation fold to have been training data for the initial checkpoint. This is an expected value; the exact overlap has not been measured. The numbers must not be read as performance on unseen studies.
 3. **Calibration fitted on the evaluation set.** The temperature is fitted on the same holdout used for ECE, Brier and AURC (fit set = evaluation set), so these values are optimistic.
 4. **Study-level, not patient-level, splits.** The split groups by `StudyInstanceUID`. A patient with several studies can appear on both sides of a split. Patient-level grouping is not implemented.
 5. **Fold-to-fold spread understates uncertainty.** Fold results share training data and are correlated, so the standard deviation across folds is not an unbiased estimate of the variance of the CV estimate (Bengio and Grandvalet, 2004).
 6. **Small uncertainty holdouts.** Each seed evaluates 334–354 images from 293–297 studies; 15–16% of those studies contain hemorrhage.
 7. **Post-processing.** All CV scores apply `enforce_any_max=True`, which sets p(`any`) to at least the largest subtype probability before scoring.
-8. **Not a medical device.** This repository is a research and portfolio implementation. It has not been validated for clinical use and must not be used for diagnosis.
+8. **Not a medical device.** This repository is a research and portfolio implementation and is not a medical device. It has not been validated for clinical use and must not be used for diagnosis.
 
 ## 3. Metric definitions
 

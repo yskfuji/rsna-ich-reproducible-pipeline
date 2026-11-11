@@ -16,6 +16,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import re
 from pathlib import Path
 from typing import Any
 
@@ -60,7 +61,7 @@ def _init_name(meta: dict[str, Any]) -> str | None:
 
 def export_cv(cv_root: Path) -> dict[str, Any]:
     fold_dirs = sorted(
-        (p for p in cv_root.iterdir() if p.is_dir() and p.name.startswith("fold")),
+        (p for p in cv_root.iterdir() if p.is_dir() and re.fullmatch(r"fold\d+", p.name)),
         key=lambda p: int(p.name.removeprefix("fold")),
     )
     folds: list[dict[str, Any]] = []
@@ -112,8 +113,14 @@ def export_uncertainty(sweep_root: Path) -> dict[str, Any]:
             settings["dropout_stage_p"] = float(arm["dropout_stage_p"])
             settings["dropout_head_p"] = float(arm["dropout_head_p"])
             settings["coverage_point"] = float(arm["coverage_point"])
+            # Not recorded in the run outputs. The sweep never passes --ece-bins, so
+            # eval_rsna_uncertainty.py uses its default of 15, and its --fit-temperature
+            # fits on the same split it evaluates.
             settings["ece_bins"] = 15
             settings["temperature_fit_set"] = "same holdout as evaluation"
+            settings["settings_from_code"] = ["ece_bins", "temperature_fit_set"]
+    if settings is not None:
+        settings["temperature_fitted"] = any(abs(s["temperature"] - 1.0) > 1e-6 for s in seeds)
     return {"run": sweep_root.name, "settings": settings, "seeds": seeds}
 
 

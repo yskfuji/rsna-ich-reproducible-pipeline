@@ -49,15 +49,18 @@ def _check_paths(root: Path) -> list[str]:
 
 def _unpublished_sources(root: Path) -> list[str] | None:
     """Return .py files present on disk but not tracked by Git (None if not a Git checkout)."""
-    proc = subprocess.run(
-        ["git", "ls-files", "--", *SOURCE_DIRS],
-        cwd=root,
-        capture_output=True,
-        text=True,
-    )
+    try:
+        proc = subprocess.run(
+            ["git", "ls-files", "-z", "--", *SOURCE_DIRS],
+            cwd=root,
+            capture_output=True,
+            text=True,
+        )
+    except FileNotFoundError:
+        return None
     if proc.returncode != 0:
         return None
-    tracked = set(proc.stdout.splitlines())
+    tracked = set(filter(None, proc.stdout.split("\0")))
     on_disk = {
         p.relative_to(root).as_posix()
         for d in SOURCE_DIRS

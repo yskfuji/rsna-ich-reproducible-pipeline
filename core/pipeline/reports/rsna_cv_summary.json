@@ -81,7 +81,12 @@
       "dropout_head_p": 0.2,
       "coverage_point": 0.8,
       "ece_bins": 15,
-      "temperature_fit_set": "same holdout as evaluation"
+      "temperature_fit_set": "same holdout as evaluation",
+      "settings_from_code": [
+        "ece_bins",
+        "temperature_fit_set"
+      ],
+      "temperature_fitted": true
     },
     "seeds": [
       {
