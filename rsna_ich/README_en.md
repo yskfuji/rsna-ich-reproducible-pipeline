@@ -6,15 +6,15 @@ This folder is the **public entry point** for the RSNA ICH classification pipeli
 
 ## Look first
 
-![Pipeline](../docs/assets/architecture.svg)
+<p align="center"><img src="../docs/assets/architecture.png" alt="Pipeline" width="100%" /></p>
 
-![Six labels](../docs/assets/labels_taxonomy.svg)
+<p align="center"><img src="../docs/assets/labels_taxonomy.png" alt="Six labels" width="100%" /></p>
 
-![Reader paths](../docs/assets/reader_path.svg)
+<p align="center"><img src="../docs/assets/reader_path.png" alt="Reader paths" width="100%" /></p>
 
-![Metrics](../docs/assets/results_snapshot.svg)
+<p align="center"><img src="../docs/assets/results_snapshot.png" alt="Metrics" width="100%" /></p>
 
-![Constraints](../docs/assets/eval_protocol.svg)
+<p align="center"><img src="../docs/assets/eval_protocol.png" alt="Constraints" width="100%" /></p>
 
 Picture-first root README: [../README.md](../README.md)
 
@@ -42,7 +42,7 @@ See the [evaluation notes](../docs/evaluation_notes.md) for details.
 - reproducibility artifacts such as `meta.json`, `log.jsonl`, and `split_stats`
 - subset identity checks via `subset_fingerprint_sha256`
 
-![Study-level split](../docs/assets/split_study.svg)
+<p align="center"><img src="../docs/assets/split_study.png" alt="Study-level split" width="100%" /></p>
 
 ## Quick links
 
@@ -57,7 +57,7 @@ See the [evaluation notes](../docs/evaluation_notes.md) for details.
 | Release notes | [../docs/releases/v0.6.0-rsna.md](../docs/releases/v0.6.0-rsna.md) |
 | Roadmap | [../ROADMAP.md](../ROADMAP.md) |
 
-![Included vs excluded](../docs/assets/included_excluded.svg)
+<p align="center"><img src="../docs/assets/included_excluded.png" alt="Included vs excluded" width="100%" /></p>
 
 ## MLflow tracking schema
 

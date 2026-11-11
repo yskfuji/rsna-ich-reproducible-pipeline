@@ -6,15 +6,15 @@
 
 ## 概観
 
-![流れ](../docs/assets/architecture.svg)
+<p align="center"><img src="../docs/assets/architecture.png" alt="流れ" width="100%" /></p>
 
-![6ラベル](../docs/assets/labels_taxonomy.svg)
+<p align="center"><img src="../docs/assets/labels_taxonomy.png" alt="6ラベル" width="100%" /></p>
 
-![読者別経路](../docs/assets/reader_path.svg)
+<p align="center"><img src="../docs/assets/reader_path.png" alt="読者別経路" width="100%" /></p>
 
-![指標](../docs/assets/results_snapshot.svg)
+<p align="center"><img src="../docs/assets/results_snapshot.png" alt="指標" width="100%" /></p>
 
-![制約](../docs/assets/eval_protocol.svg)
+<p align="center"><img src="../docs/assets/eval_protocol.png" alt="制約" width="100%" /></p>
 
 ルートの図中心README：[../README_ja.md](../README_ja.md)
 
@@ -43,7 +43,7 @@
 - `meta.json` / `log.jsonl` / `split_stats` による再現性監査
 - `subset_fingerprint_sha256` による対象集合の同一性確認
 
-![分割の考え方](../docs/assets/split_study.svg)
+<p align="center"><img src="../docs/assets/split_study.png" alt="分割の考え方" width="100%" /></p>
 
 ## 参照リンク
 
@@ -58,7 +58,7 @@
 | リリースノート | [../docs/releases/v0.6.0-rsna_ja.md](../docs/releases/v0.6.0-rsna_ja.md) |
 | ロードマップ | [../ROADMAP.md](../ROADMAP.md) |
 
-![公開範囲](../docs/assets/included_excluded.svg)
+<p align="center"><img src="../docs/assets/included_excluded.png" alt="公開範囲" width="100%" /></p>
 
 ## MLflow 追跡スキーマ
 

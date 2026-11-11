@@ -10,13 +10,13 @@ Reproducible intracranial hemorrhage classification for the RSNA ICH challenge �
 
 ## Look first (30 seconds)
 
-![What happens in this pipeline](docs/assets/architecture.svg)
+<p align="center"><img src="docs/assets/architecture.png" alt="What happens in this pipeline" width="100%" /></p>
 
-![Six labels the model predicts](docs/assets/labels_taxonomy.svg)
+<p align="center"><img src="docs/assets/labels_taxonomy.png" alt="Six labels the model predicts" width="100%" /></p>
 
-![How the split avoids leakage](docs/assets/split_study.svg)
+<p align="center"><img src="docs/assets/split_study.png" alt="How the split avoids leakage" width="100%" /></p>
 
-![Pick your path](docs/assets/reader_path.svg)
+<p align="center"><img src="docs/assets/reader_path.png" alt="Pick your path" width="100%" /></p>
 
 ```mermaid
 flowchart LR
@@ -29,11 +29,11 @@ flowchart LR
 
 ## Numbers you will see quoted
 
-![Metrics snapshot](docs/assets/results_snapshot.svg)
+<p align="center"><img src="docs/assets/results_snapshot.png" alt="Metrics snapshot" width="100%" /></p>
 
-![Per-fold logloss and AUC](docs/assets/cv_folds.svg)
+<p align="center"><img src="docs/assets/cv_folds.png" alt="Per-fold logloss and AUC" width="100%" /></p>
 
-![Uncertainty across seeds](docs/assets/uncertainty_seeds.svg)
+<p align="center"><img src="docs/assets/uncertainty_seeds.png" alt="Uncertainty across seeds" width="100%" /></p>
 
 ### Representative results
 
@@ -46,7 +46,7 @@ Mean ± sample standard deviation (ddof=1). The per-fold and per-seed values are
 | Error-detection AUROC (`any`) ↑ | 0.9424 ± 0.0200 | 10 seeds | How well uncertainty flags wrong predictions |
 | ECE (`any`) ↓ | 0.0231 ± 0.0034 | 10 seeds | Probability calibration |
 
-![Read these numbers with constraints](docs/assets/eval_protocol.svg)
+<p align="center"><img src="docs/assets/eval_protocol.png" alt="Read these numbers with constraints" width="100%" /></p>
 
 > **Read these numbers together with their evaluation conditions.**
 > - Each fold or seed fine-tunes for **1 epoch** on a subsample drawn with `limit_images=8000` (6,852 images remained in the CV run after dropping images missing from the preprocessed store).
@@ -57,7 +57,7 @@ Mean ± sample standard deviation (ddof=1). The per-fold and per-seed values are
 >
 > Details and references: [docs/evaluation_notes.md](docs/evaluation_notes.md). Medical images are not included.
 
-![Evidence chain for a README number](docs/assets/evidence_chain.svg)
+<p align="center"><img src="docs/assets/evidence_chain.png" alt="Evidence chain for a README number" width="100%" /></p>
 
 ## Quickstart without medical data
 
@@ -83,9 +83,9 @@ Full training and evaluation need your own Kaggle download: [core/pipeline/READM
 
 ## Map of the repository
 
-![Where to look](docs/assets/repo_map.svg)
+<p align="center"><img src="docs/assets/repo_map.png" alt="Where to look" width="100%" /></p>
 
-![What ships publicly](docs/assets/included_excluded.svg)
+<p align="center"><img src="docs/assets/included_excluded.png" alt="What ships publicly" width="100%" /></p>
 
 | Want… | Open… |
 |---|---|

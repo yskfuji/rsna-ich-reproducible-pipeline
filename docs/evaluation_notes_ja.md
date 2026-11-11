@@ -6,32 +6,32 @@
 
 ## 0. 図による整理
 
-![評価の制約](assets/eval_protocol.svg)
+<p align="center"><img src="assets/eval_protocol.png" alt="評価の制約" width="100%" /></p>
 
 *要点は次の四点である。追加学習は1エポックに限る。初期重みは共通である。校正と評価は同じ検証データを用いる。医療機器ではない。*
 
-![検査単位の分割](assets/split_study.svg)
+<p align="center"><img src="assets/split_study.png" alt="検査単位の分割" width="100%" /></p>
 
-![6ラベルの模式](assets/labels_taxonomy.svg)
+<p align="center"><img src="assets/labels_taxonomy.png" alt="6ラベルの模式" width="100%" /></p>
 
 *図は模式図である。実患者の画像ではない。*
 
-![根拠のつながり](assets/evidence_chain.svg)
+<p align="center"><img src="assets/evidence_chain.png" alt="根拠のつながり" width="100%" /></p>
 
-![fold別指標](assets/cv_folds.svg)
+<p align="center"><img src="assets/cv_folds.png" alt="fold別指標" width="100%" /></p>
 
-![シード別の不確実性](assets/uncertainty_seeds.svg)
+<p align="center"><img src="assets/uncertainty_seeds.png" alt="シード別の不確実性" width="100%" /></p>
 
 ```mermaid
 flowchart TB
-  subgraph cite [引用時に必ず付記する条件]
-    C1[1エポックの追加学習]
-    C2[共通の初期重み]
-    C3[温度推定と評価が同じ検証データ]
-    C4[医療機器ではない]
-  end
-  H[代表指標] --> cite
-  cite --> N[evaluation_notes_ja.md]
+  H[代表指標] --> C1[1エポックの追加学習]
+  H --> C2[共通の初期重み]
+  H --> C3[同じ検証データで温度推定]
+  H --> C4[医療機器ではない]
+  C1 --> N[evaluation_notes_ja.md]
+  C2 --> N
+  C3 --> N
+  C4 --> N
 ```
 
 ## 1. 代表指標

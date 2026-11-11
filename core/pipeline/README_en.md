@@ -15,17 +15,17 @@ To help reviewers decide quickly, this README starts with **reproducibility, spl
 
 ## Look at the pictures first
 
-![Pipeline](../../docs/assets/architecture.svg)
+<p align="center"><img src="../../docs/assets/architecture.png" alt="Pipeline" width="100%" /></p>
 
-![Split design](../../docs/assets/split_study.svg)
+<p align="center"><img src="../../docs/assets/split_study.png" alt="Split design" width="100%" /></p>
 
-![Metrics](../../docs/assets/results_snapshot.svg)
+<p align="center"><img src="../../docs/assets/results_snapshot.png" alt="Metrics" width="100%" /></p>
 
-![Constraints](../../docs/assets/eval_protocol.svg)
+<p align="center"><img src="../../docs/assets/eval_protocol.png" alt="Constraints" width="100%" /></p>
 
-![Per-fold](../../docs/assets/cv_folds.svg)
+<p align="center"><img src="../../docs/assets/cv_folds.png" alt="Per-fold" width="100%" /></p>
 
-![Uncertainty](../../docs/assets/uncertainty_seeds.svg)
+<p align="center"><img src="../../docs/assets/uncertainty_seeds.png" alt="Uncertainty" width="100%" /></p>
 
 Picture-first landing page: [../../README.md](../../README.md)
 

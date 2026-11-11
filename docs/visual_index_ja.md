@@ -6,37 +6,37 @@
 
 ## 全体の流れ
 
-![architecture](assets/architecture.svg)
+<p align="center"><img src="assets/architecture.png" alt="architecture" width="100%" /></p>
 
 ## 予測ラベル
 
-![labels](assets/labels_taxonomy.svg)
+<p align="center"><img src="assets/labels_taxonomy.png" alt="labels" width="100%" /></p>
 
 ## 分割
 
-![split](assets/split_study.svg)
+<p align="center"><img src="assets/split_study.png" alt="split" width="100%" /></p>
 
 ## 指標
 
-![results](assets/results_snapshot.svg)
+<p align="center"><img src="assets/results_snapshot.png" alt="results" width="100%" /></p>
 
-![cv folds](assets/cv_folds.svg)
+<p align="center"><img src="assets/cv_folds.png" alt="cv folds" width="100%" /></p>
 
-![uncertainty](assets/uncertainty_seeds.svg)
+<p align="center"><img src="assets/uncertainty_seeds.png" alt="uncertainty" width="100%" /></p>
 
 ## 数値の解釈
 
-![protocol](assets/eval_protocol.svg)
+<p align="center"><img src="assets/eval_protocol.png" alt="protocol" width="100%" /></p>
 
-![evidence](assets/evidence_chain.svg)
+<p align="center"><img src="assets/evidence_chain.png" alt="evidence" width="100%" /></p>
 
 ## リポジトリ
 
-![repo map](assets/repo_map.svg)
+<p align="center"><img src="assets/repo_map.png" alt="repo map" width="100%" /></p>
 
-![reader path](assets/reader_path.svg)
+<p align="center"><img src="assets/reader_path.png" alt="reader path" width="100%" /></p>
 
-![included](assets/included_excluded.svg)
+<p align="center"><img src="assets/included_excluded.png" alt="included" width="100%" /></p>
 
 ## 図の再生成
 

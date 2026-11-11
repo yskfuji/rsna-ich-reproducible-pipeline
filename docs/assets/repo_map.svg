@@ -1,26 +1,27 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="370" viewBox="0 0 1200 370" role="img" aria-labelledby="title desc">
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 340" width="100%" preserveAspectRatio="xMidYMid meet" role="img" aria-labelledby="title desc">
   <title id="title">Repository map</title>
-  <desc id="desc">Four primary directories for reviewers.</desc>
-  <rect width="1200" height="370" fill="#0B1220"/>
-  <g font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Helvetica, Arial, sans-serif">
-    <text x="40" y="48" fill="#F1F5F9" font-size="32" font-weight="700">Where to look</text>
-    <text x="40" y="82" fill="#94A3B8" font-size="18">Four doors. Open them in order if you have five minutes.</text>
-    <rect x="40" y="130" rx="18" ry="18" width="260" height="160" fill="#152033" stroke="#38BDF8" stroke-width="3"/>
-    <text x="62" y="178" fill="#F1F5F9" font-size="24" font-weight="700">README</text>
-    <text x="62" y="218" fill="#94A3B8" font-size="16">30-second picture</text>
-    <text x="62" y="246" fill="#94A3B8" font-size="16">then quickstart</text>
-    <rect x="340" y="130" rx="18" ry="18" width="240" height="160" fill="#152033" stroke="#14B8A6" stroke-width="3"/>
-    <text x="362" y="178" fill="#F1F5F9" font-size="24" font-weight="700">docs/</text>
-    <text x="362" y="218" fill="#94A3B8" font-size="16">figures · notes</text>
-    <text x="362" y="246" fill="#94A3B8" font-size="16">glossary · audit</text>
-    <rect x="620" y="130" rx="18" ry="18" width="260" height="160" fill="#152033" stroke="#F59E0B" stroke-width="3"/>
-    <text x="642" y="178" fill="#F1F5F9" font-size="24" font-weight="700">core/pipeline/</text>
-    <text x="642" y="218" fill="#94A3B8" font-size="16">train · eval · API</text>
-    <text x="642" y="246" fill="#94A3B8" font-size="16">tests · reports</text>
-    <rect x="920" y="130" rx="18" ry="18" width="240" height="160" fill="#152033" stroke="#F43F5E" stroke-width="3"/>
-    <text x="942" y="178" fill="#F1F5F9" font-size="24" font-weight="700">scripts/</text>
-    <text x="942" y="218" fill="#94A3B8" font-size="16">CI guards</text>
-    <text x="942" y="246" fill="#94A3B8" font-size="16">smoke · claims</text>
-    <text x="40" y="340" fill="#94A3B8" font-size="15">rsna_ich/ mirrors this landing page for portfolio reviewers who start from that folder.</text>
+  <desc id="desc">Four primary directories.</desc>
+  <rect width="960" height="340" fill="#0B1220"/>
+  <g font-family="Helvetica, Arial, sans-serif">
+    <text x="40" y="42" fill="#F1F5F9" font-size="28" font-weight="700">Where to look</text>
+    <text x="40" y="74" fill="#94A3B8" font-size="16">Four doors. Open them in order if you have five minutes.</text>
+    <rect x="40" y="110" rx="14" ry="14" width="200" height="150" fill="#152033" stroke="#38BDF8" stroke-width="3"/>
+    <text x="56" y="152" fill="#F1F5F9" font-size="20" font-weight="700">README</text>
+    <text x="56" y="190" fill="#94A3B8" font-size="14">30-second picture</text>
+    <text x="56" y="216" fill="#94A3B8" font-size="14">then quickstart</text>
+    <rect x="270" y="110" rx="14" ry="14" width="200" height="150" fill="#152033" stroke="#14B8A6" stroke-width="3"/>
+    <text x="286" y="152" fill="#F1F5F9" font-size="20" font-weight="700">docs/</text>
+    <text x="286" y="190" fill="#94A3B8" font-size="14">figures · notes</text>
+    <text x="286" y="216" fill="#94A3B8" font-size="14">glossary · audit</text>
+    <rect x="500" y="110" rx="14" ry="14" width="210" height="150" fill="#152033" stroke="#F59E0B" stroke-width="3"/>
+    <text x="516" y="152" fill="#F1F5F9" font-size="20" font-weight="700">core/pipeline/</text>
+    <text x="516" y="190" fill="#94A3B8" font-size="14">train · eval · API</text>
+    <text x="516" y="216" fill="#94A3B8" font-size="14">tests · reports</text>
+    <rect x="740" y="110" rx="14" ry="14" width="180" height="150" fill="#152033" stroke="#F43F5E" stroke-width="3"/>
+    <text x="756" y="152" fill="#F1F5F9" font-size="20" font-weight="700">scripts/</text>
+    <text x="756" y="190" fill="#94A3B8" font-size="14">CI guards</text>
+    <text x="756" y="216" fill="#94A3B8" font-size="14">smoke · claims</text>
+    <text x="40" y="300" fill="#94A3B8" font-size="13">rsna_ich/ mirrors this landing page for portfolio reviewers.</text>
   </g>
 </svg>

@@ -10,19 +10,19 @@
 
 ## 概観（約30秒）
 
-![パイプラインの流れ](docs/assets/architecture.svg)
+<p align="center"><img src="docs/assets/architecture.png" alt="パイプラインの流れ" width="100%" /></p>
 
 *処理の流れ：CT入力 → 検査単位分割 → ConvNeXt → 校正および不確実性評価 → 公開レポート*
 
-![予測対象の6ラベル](docs/assets/labels_taxonomy.svg)
+<p align="center"><img src="docs/assets/labels_taxonomy.png" alt="予測対象の6ラベル" width="100%" /></p>
 
 *硬膜外・硬膜下・くも膜下・脳実質内・脳室内、ならびにいずれかの出血の有無を示す `any`。図は模式図であり、実画像ではない。*
 
-![情報リークを抑制する分割](docs/assets/split_study.svg)
+<p align="center"><img src="docs/assets/split_study.png" alt="情報リークを抑制する分割" width="100%" /></p>
 
 *左は本リポジトリが採用する検査単位分割。右は画像単位分割に伴い生じうる情報リークの模式である。*
 
-![読者別の確認経路](docs/assets/reader_path.svg)
+<p align="center"><img src="docs/assets/reader_path.png" alt="読者別の確認経路" width="100%" /></p>
 
 *採用審査、機械学習実装、研究再現の三経路。いずれの経路も評価上の制約の確認に帰着する。*
 
@@ -37,11 +37,11 @@ flowchart LR
 
 ## 代表指標
 
-![指標の要約](docs/assets/results_snapshot.svg)
+<p align="center"><img src="docs/assets/results_snapshot.png" alt="指標の要約" width="100%" /></p>
 
-![fold別の対数損失とAUC](docs/assets/cv_folds.svg)
+<p align="center"><img src="docs/assets/cv_folds.png" alt="fold別の対数損失とAUC" width="100%" /></p>
 
-![シード別の不確実性指標](docs/assets/uncertainty_seeds.svg)
+<p align="center"><img src="docs/assets/uncertainty_seeds.png" alt="シード別の不確実性指標" width="100%" /></p>
 
 ### 数値の要約
 
@@ -54,7 +54,7 @@ flowchart LR
 | 誤り検出AUROC（`any`、高いほど良い） | 0.9424 ± 0.0200 | 10シード | 不確実性で誤った予測をどれだけ見分けられるか |
 | ECE（`any`、低いほど良い） | 0.0231 ± 0.0034 | 10シード | 予測確率の校正の良さ |
 
-![数値解釈における制約](docs/assets/eval_protocol.svg)
+<p align="center"><img src="docs/assets/eval_protocol.png" alt="数値解釈における制約" width="100%" /></p>
 
 > **数値は、次の評価条件とあわせて解釈すること。**
 > - 各foldと各シードは、`limit_images=8000` で抽出したデータ（交差検証では、前処理済みデータにない画像を除いた6,852枚）で**1エポック**だけ追加学習している。
@@ -65,7 +65,7 @@ flowchart LR
 >
 > 詳細な条件および参考文献は [docs/evaluation_notes_ja.md](docs/evaluation_notes_ja.md) を参照する。医用画像は公開物に含めない。
 
-![代表指標の検証連鎖](docs/assets/evidence_chain.svg)
+<p align="center"><img src="docs/assets/evidence_chain.png" alt="代表指標の検証連鎖" width="100%" /></p>
 
 用語の対応は [用語集](docs/glossary_ja.md) を参照する。
 
@@ -93,9 +93,9 @@ flowchart TD
 
 ## リポジトリ構成
 
-![確認すべきディレクトリ](docs/assets/repo_map.svg)
+<p align="center"><img src="docs/assets/repo_map.png" alt="確認すべきディレクトリ" width="100%" /></p>
 
-![公開範囲](docs/assets/included_excluded.svg)
+<p align="center"><img src="docs/assets/included_excluded.png" alt="公開範囲" width="100%" /></p>
 
 | 確認事項 | 参照先 |
 |---|---|

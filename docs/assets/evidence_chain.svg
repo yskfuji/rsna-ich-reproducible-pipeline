@@ -1,25 +1,23 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="360" viewBox="0 0 1200 360" role="img" aria-labelledby="title desc">
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 310" width="100%" preserveAspectRatio="xMidYMid meet" role="img" aria-labelledby="title desc">
   <title id="title">Evidence chain for metrics</title>
-  <desc id="desc">Flow from README claim to per-fold scalars.</desc>
-  <rect width="1200" height="360" fill="#0B1220"/>
-  <g font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Helvetica, Arial, sans-serif">
-    <text x="40" y="48" fill="#F1F5F9" font-size="32" font-weight="700">How a README number is checked</text>
-    <text x="40" y="82" fill="#94A3B8" font-size="18">CI recomputes every headline value from the per-fold / per-seed JSON.</text>
-    <rect x="40" y="130" rx="16" width="200" height="100" fill="#152033" stroke="#38BDF8" stroke-width="3"/>
-    <text x="70" y="190" fill="#F1F5F9" font-size="18" font-weight="700">README claim</text>
-    <path d="M250 180 H300" stroke="#94A3B8" stroke-width="4"/><polygon points="300,172 318,180 300,188" fill="#94A3B8"/>
-    <rect x="320" y="130" rx="16" width="220" height="100" fill="#152033" stroke="#14B8A6" stroke-width="3"/>
-    <text x="350" y="180" fill="#F1F5F9" font-size="18" font-weight="700">mean ± sd</text>
-    <text x="350" y="205" fill="#94A3B8" font-size="14">recomputed</text>
-    <path d="M550 180 H600" stroke="#94A3B8" stroke-width="4"/><polygon points="600,172 618,180 600,188" fill="#94A3B8"/>
-    <rect x="620" y="130" rx="16" width="240" height="100" fill="#152033" stroke="#F59E0B" stroke-width="3"/>
-    <text x="650" y="180" fill="#F1F5F9" font-size="18" font-weight="700">rsna_cv_summary</text>
-    <text x="650" y="205" fill="#94A3B8" font-size="14">.json</text>
-    <path d="M870 180 H920" stroke="#94A3B8" stroke-width="4"/><polygon points="920,172 938,180 920,188" fill="#94A3B8"/>
-    <rect x="940" y="130" rx="16" width="220" height="100" fill="#152033" stroke="#F43F5E" stroke-width="3"/>
-    <text x="970" y="180" fill="#F1F5F9" font-size="18" font-weight="700">fold / seed</text>
-    <text x="970" y="205" fill="#94A3B8" font-size="14">raw scalars</text>
-    <text x="40" y="290" fill="#94A3B8" font-size="15">Guard: scripts/check_metric_claims.py · Hygiene: scripts/check_public_hygiene.py</text>
-    <text x="40" y="320" fill="#94A3B8" font-size="15">Caveats must sit in the same Markdown section as the numbers they qualify.</text>
+  <desc id="desc">Flow from README claim to scalars.</desc>
+  <rect width="960" height="310" fill="#0B1220"/>
+  <g font-family="Helvetica, Arial, sans-serif">
+    <text x="40" y="42" fill="#F1F5F9" font-size="28" font-weight="700">How a README number is checked</text>
+    <text x="40" y="74" fill="#94A3B8" font-size="16">CI recomputes every headline value from the per-fold / per-seed JSON.</text>
+    <rect x="40" y="110" rx="12" width="180" height="90" fill="#152033" stroke="#38BDF8" stroke-width="3"/>
+    <text x="56" y="162" fill="#F1F5F9" font-size="15" font-weight="700">1. README claim</text>
+    <rect x="280" y="110" rx="12" width="180" height="90" fill="#152033" stroke="#14B8A6" stroke-width="3"/>
+    <text x="296" y="162" fill="#F1F5F9" font-size="15" font-weight="700">2. mean ± sd</text>
+    <rect x="520" y="110" rx="12" width="180" height="90" fill="#152033" stroke="#F59E0B" stroke-width="3"/>
+    <text x="536" y="162" fill="#F1F5F9" font-size="15" font-weight="700">3. summary JSON</text>
+    <rect x="760" y="110" rx="12" width="180" height="90" fill="#152033" stroke="#F43F5E" stroke-width="3"/>
+    <text x="776" y="162" fill="#F1F5F9" font-size="15" font-weight="700">4. fold / seed</text>
+    <path d="M220 155 H270" stroke="#94A3B8" stroke-width="3"/>
+    <path d="M460 155 H510" stroke="#94A3B8" stroke-width="3"/>
+    <path d="M700 155 H750" stroke="#94A3B8" stroke-width="3"/>
+    <text x="40" y="250" fill="#94A3B8" font-size="13">Guard: scripts/check_metric_claims.py · Hygiene: scripts/check_public_hygiene.py</text>
+    <text x="40" y="278" fill="#94A3B8" font-size="13">Caveats must sit in the same Markdown section as the numbers they qualify.</text>
   </g>
 </svg>

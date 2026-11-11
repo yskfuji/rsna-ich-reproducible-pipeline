@@ -6,28 +6,28 @@ This page explains what the headline metrics in the READMEs measure, what they d
 
 ## 0. Picture first
 
-![Evaluation constraints](assets/eval_protocol.svg)
+<p align="center"><img src="assets/eval_protocol.png" alt="Evaluation constraints" width="100%" /></p>
 
-![Study-level split](assets/split_study.svg)
+<p align="center"><img src="assets/split_study.png" alt="Study-level split" width="100%" /></p>
 
-![Six ICH labels](assets/labels_taxonomy.svg)
+<p align="center"><img src="assets/labels_taxonomy.png" alt="Six ICH labels" width="100%" /></p>
 
-![Evidence chain](assets/evidence_chain.svg)
+<p align="center"><img src="assets/evidence_chain.png" alt="Evidence chain" width="100%" /></p>
 
-![Per-fold metrics](assets/cv_folds.svg)
+<p align="center"><img src="assets/cv_folds.png" alt="Per-fold metrics" width="100%" /></p>
 
-![Uncertainty by seed](assets/uncertainty_seeds.svg)
+<p align="center"><img src="assets/uncertainty_seeds.png" alt="Uncertainty by seed" width="100%" /></p>
 
 ```mermaid
 flowchart TB
-  subgraph cite [Safe to cite only with]
-    C1[1-epoch fine-tune]
-    C2[shared initial checkpoint]
-    C3[temperature on same holdout]
-    C4[not a medical device]
-  end
-  H[Headline number] --> cite
-  cite --> N[evaluation_notes.md]
+  H[Headline number] --> C1[1-epoch fine-tune]
+  H --> C2[shared initial checkpoint]
+  H --> C3[temperature on same holdout]
+  H --> C4[not a medical device]
+  C1 --> N[evaluation_notes.md]
+  C2 --> N
+  C3 --> N
+  C4 --> N
 ```
 
 ## 1. Headline numbers

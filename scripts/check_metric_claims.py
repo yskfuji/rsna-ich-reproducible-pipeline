@@ -25,6 +25,7 @@ HEADLINE_DOCS = {
     "rsna_ich/README.md": "ja",
     "rsna_ich/README_en.md": "en",
     "docs/assets/results_snapshot.svg": "svg",
+    # PNG is the GitHub display asset; headline digits must still appear in the SVG source.
 }
 DETAIL_DOCS = {
     "core/pipeline/README.md": "ja",

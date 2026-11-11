@@ -15,17 +15,17 @@
 
 ## 図による概観
 
-![パイプライン](../../docs/assets/architecture.svg)
+<p align="center"><img src="../../docs/assets/architecture.png" alt="パイプライン" width="100%" /></p>
 
-![分割](../../docs/assets/split_study.svg)
+<p align="center"><img src="../../docs/assets/split_study.png" alt="分割" width="100%" /></p>
 
-![指標](../../docs/assets/results_snapshot.svg)
+<p align="center"><img src="../../docs/assets/results_snapshot.png" alt="指標" width="100%" /></p>
 
-![制約](../../docs/assets/eval_protocol.svg)
+<p align="center"><img src="../../docs/assets/eval_protocol.png" alt="制約" width="100%" /></p>
 
-![fold別](../../docs/assets/cv_folds.svg)
+<p align="center"><img src="../../docs/assets/cv_folds.png" alt="fold別" width="100%" /></p>
 
-![不確実性](../../docs/assets/uncertainty_seeds.svg)
+<p align="center"><img src="../../docs/assets/uncertainty_seeds.png" alt="不確実性" width="100%" /></p>
 
 ルートの図中心案内: [../../README_ja.md](../../README_ja.md)
 

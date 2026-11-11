@@ -53,6 +53,7 @@ MUST_IGNORE = (
 )
 
 MD_LINK = re.compile(r"!?\[[^\]]*\]\(([^)\s]+)(?:\s+\"[^\"]*\")?\)")
+HTML_IMG = re.compile(r"<img\b[^>]*\bsrc=[\"']([^\"']+)[\"']", re.I)
 
 
 def _git(*args: str) -> subprocess.CompletedProcess[str]:
@@ -111,7 +112,8 @@ def check_links(files: list[str]) -> list[str]:
             continue
         text = (ROOT / rel).read_text(encoding="utf-8")
         text = re.sub(r"```.*?```", "", text, flags=re.S)
-        for target in MD_LINK.findall(text):
+        targets = list(MD_LINK.findall(text)) + list(HTML_IMG.findall(text))
+        for target in targets:
             if re.match(r"^[a-z][a-z0-9+.-]*:", target) or target.startswith("#"):
                 continue
             path_part = unquote(target.split("#", 1)[0])
