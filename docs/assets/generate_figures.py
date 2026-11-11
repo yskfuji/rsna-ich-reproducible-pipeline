@@ -20,7 +20,8 @@ ROOT = Path(__file__).resolve().parents[2]
 SUMMARY = ROOT / "core/pipeline/reports/rsna_cv_summary.json"
 OUT = Path(__file__).resolve().parent
 
-FONT = "Helvetica, Arial, sans-serif"
+# Single-quoted family names so the SVG attribute can use double quotes.
+FONT = "'Hiragino Sans', 'Hiragino Kaku Gothic ProN', 'Noto Sans CJK JP', 'Yu Gothic', 'Helvetica Neue', Helvetica, Arial, sans-serif"
 BG = "#0B1220"
 CARD = "#152033"
 LINE = "#1F2A3D"
@@ -37,7 +38,6 @@ def T(en: str, ja: str) -> str:
     return ja if LANG == "ja" else en
 
 
-
 def _esc(s: str) -> str:
     return (
         s.replace("&", "&amp;")
@@ -45,6 +45,44 @@ def _esc(s: str) -> str:
         .replace(">", "&gt;")
         .replace('"', "&quot;")
     )
+
+
+def _text_width(s: str, size: float) -> float:
+    """Approximate rendered width for mixed JA/EN (used only for layout)."""
+    w = 0.0
+    for ch in s:
+        w += size if ord(ch) > 0x2E80 else size * 0.55
+    return w
+
+
+def _wrap(s: str, size: float, max_width: float) -> list[str]:
+    """Greedy wrap that prefers breaks at spaces / middle dots / ideographic commas."""
+    if _text_width(s, size) <= max_width:
+        return [s]
+    lines: list[str] = []
+    buf = ""
+    for ch in s:
+        trial = buf + ch
+        if _text_width(trial, size) <= max_width:
+            buf = trial
+            continue
+        if buf:
+            lines.append(buf)
+        buf = ch
+    if buf:
+        lines.append(buf)
+    return lines or [s]
+
+
+def _multiline(x: float, y: float, lines: list[str], *, fill: str, size: float, weight: str = "400", leading: float | None = None) -> str:
+    lead = leading if leading is not None else size * 1.35
+    out = []
+    for i, line in enumerate(lines):
+        yy = y + i * lead
+        out.append(
+            f'    <text x="{x}" y="{yy}" fill="{fill}" font-size="{size}" font-weight="{weight}">{_esc(line)}</text>'
+        )
+    return "\n".join(out)
 
 
 def _arrow(x1: float, y1: float, x2: float, y2: float, color: str = MUTED, width: int = 4) -> str:
@@ -141,12 +179,12 @@ def architecture() -> None:
     for i, (color, title, a, b) in enumerate(stages):
         y = y0 + i * (card_h + gap)
         ys.append(y)
+        detail = f"{a}  ·  {b}"
         boxes.append(
             f"""    <rect x="{x0}" y="{y}" rx="14" ry="14" width="{card_w}" height="{card_h}" fill="{CARD}" stroke="{color}" stroke-width="3"/>
-    <circle cx="{x0 + 28}" cy="{y + 39}" r="11" fill="{color}"/>
-    <text x="{x0 + 52}" y="{y + 46}" fill="{TEXT}" font-size="20" font-weight="700">{title}</text>
-    <text x="{x0 + 280}" y="{y + 46}" fill="{MUTED}" font-size="15">{a}</text>
-    <text x="{x0 + 560}" y="{y + 46}" fill="{MUTED}" font-size="15">{b}</text>"""
+    <circle cx="{cx}" cy="{y + 22}" r="7" fill="{color}"/>
+    <text x="{cx}" y="{y + 48}" fill="{TEXT}" font-size="20" font-weight="700" text-anchor="middle">{_esc(title)}</text>
+    <text x="{cx}" y="{y + 68}" fill="{MUTED}" font-size="14" text-anchor="middle">{_esc(detail)}</text>"""
         )
     links = "\n".join(
         _arrow(cx, y + card_h, cx, y + card_h + gap) for y in ys[:-1]
@@ -154,10 +192,10 @@ def architecture() -> None:
     footer_y = ys[-1] + card_h + 36
     height = footer_y + 24
     body = f"""    <text x="40" y="42" fill="{TEXT}" font-size="28" font-weight="700">{T("What happens in this pipeline", "本パイプラインの処理流れ")}</text>
-    <text x="40" y="74" fill="{MUTED}" font-size="16">{T("CT slices to audited metrics. Medical images stay off the public repository.", "CTスライスから監査可能な指標まで。患者画像は公開物に含めない。")}</text>
+{_multiline(40, 74, _wrap(T("CT slices to audited metrics. Medical images stay off the public repository.", "CTスライスから監査可能な指標まで。患者画像は公開物に含めない。"), 15, 880), fill=MUTED, size=15)}
 {chr(10).join(boxes)}
 {links}
-    <text x="40" y="{footer_y}" fill="{MUTED}" font-size="14">{T("Public bundle = code + configs + summary JSON. Datasets/, results/, *.pt excluded.", "公開物はコード・設定・要約JSONである。Datasets/、results/、*.pt は含めない。")}</text>"""
+{_multiline(40, footer_y, _wrap(T("Public bundle = code + configs + summary JSON. Datasets/, results/, *.pt excluded.", "公開物はコード・設定・要約JSONである。Datasets/、results/、*.pt は含めない。"), 13, 880), fill=MUTED, size=13)}"""
     write(
         "architecture.svg",
         _svg(960, height, T("RSNA pipeline architecture", "RSNAパイプラインの構成"), T("Five-stage pipeline overview.", "五段階の処理概要。"), body),
@@ -201,34 +239,51 @@ def labels_taxonomy() -> None:
 
 
 def eval_protocol() -> None:
+    # 2×2 grid: 200px-wide 1×4 cards clipped Japanese body text.
+    card_w, card_h, gap_x, gap_y = 440, 150, 20, 18
+    x0, y0 = 40, 110
     cards = [
-        (40, 110, ROSE, T("1 epoch only", "1エポックのみ"), T("Fine-tune once per fold/seed", "各fold・各シードで1回のみ追加学習"), T("6,852-image subsample", "6,852枚の部分標本")),
-        (260, 110, AMBER, T("Shared init", "共通の初期重み"), T("Same checkpoint every run", "全実行で同一の初期重み"), T("trained on ~98% studies", "検査の約98%で学習済み")),
-        (480, 110, SKY, T("Same holdout", "同一の検証データ"), T("Temperature fit = ECE set", "温度推定とECE評価が同一集合"), T("calibration optimistic", "校正指標は楽観的になりうる")),
-        (700, 110, TEAL, T("Not a device", "医療機器ではない"), T("Research / portfolio only", "研究・ポートフォリオ用途"), T("no clinical validation", "臨床妥当性は未検証")),
+        (ROSE, T("1. One epoch only", "1. 1エポックのみ"), T("Fine-tune once per fold and per seed.", "各fold・各シードで1回だけ追加学習する。"), T("Subsample of 6,852 images.", "対象は6,852枚の部分標本である。")),
+        (AMBER, T("2. Shared init", "2. 共通の初期重み"), T("Every run starts from the same checkpoint.", "全実行で同一の初期重みを用いる。"), T("Trained on about 98% of studies.", "検査の約98%で学習済みである。")),
+        (SKY, T("3. Same holdout", "3. 同一の検証データ"), T("Temperature fit uses the ECE evaluation set.", "温度推定とECE評価は同一集合である。"), T("Calibration metrics may be optimistic.", "校正指標は楽観的になりうる。")),
+        (TEAL, T("4. Not a device", "4. 医療機器ではない"), T("Research and portfolio use only.", "研究およびポートフォリオ用途である。"), T("No clinical validation.", "臨床妥当性は未検証である。")),
     ]
     parts = []
-    for x, y, color, title, a, b in cards:
+    for i, (color, title, a, b) in enumerate(cards):
+        col, row = i % 2, i // 2
+        x = x0 + col * (card_w + gap_x)
+        y = y0 + row * (card_h + gap_y)
+        body_w = card_w - 36
+        a_lines = _wrap(a, 14, body_w)
+        b_lines = _wrap(b, 14, body_w)
+        body_y = y + 78
         parts.append(
-            f"""    <rect x="{x}" y="{y}" rx="14" ry="14" width="200" height="170" fill="{CARD}" stroke="{color}" stroke-width="3"/>
-    <rect x="{x}" y="{y}" width="200" height="8" fill="{color}"/>
-    <text x="{x + 14}" y="{y + 48}" fill="{TEXT}" font-size="18" font-weight="700">{title}</text>
-    <text x="{x + 14}" y="{y + 88}" fill="{MUTED}" font-size="13">{a}</text>
-    <text x="{x + 14}" y="{y + 112}" fill="{MUTED}" font-size="13">{b}</text>"""
+            f"""    <rect x="{x}" y="{y}" rx="14" ry="14" width="{card_w}" height="{card_h}" fill="{CARD}" stroke="{color}" stroke-width="3"/>
+    <rect x="{x}" y="{y}" width="{card_w}" height="8" fill="{color}"/>
+    <text x="{x + 18}" y="{y + 44}" fill="{TEXT}" font-size="18" font-weight="700">{_esc(title)}</text>
+{_multiline(x + 18, body_y, a_lines + b_lines, fill=MUTED, size=14)}"""
         )
+    footer_y = y0 + 2 * (card_h + gap_y) + 8
+    height = footer_y + 28
+    sub = T(
+        "Headline metrics measure fine-tuning stability, not unseen-study performance.",
+        "代表指標は追加学習の安定性を示すものであり、未知の検査に対する性能ではない。",
+    )
     body = f"""    <text x="40" y="42" fill="{TEXT}" font-size="28" font-weight="700">{T("Read numbers with these constraints", "数値解釈における制約")}</text>
-    <text x="40" y="74" fill="{MUTED}" font-size="16">{T("Headline metrics measure fine-tuning stability, not unseen-study performance.", "代表指標は追加学習の安定性を示すものであり、未知の検査に対する性能ではない。")}</text>
+{_multiline(40, 74, _wrap(sub, 15, 880), fill=MUTED, size=15)}
 {chr(10).join(parts)}
-    <text x="40" y="320" fill="{MUTED}" font-size="13">{T("Details: docs/evaluation_notes.md · Source: core/pipeline/reports/rsna_cv_summary.json", "詳細は docs/evaluation_notes_ja.md。出典は rsna_cv_summary.json。")}</text>"""
+    <text x="40" y="{footer_y}" fill="{MUTED}" font-size="13">{T("Details: docs/evaluation_notes.md · Source: rsna_cv_summary.json", "詳細は docs/evaluation_notes_ja.md。出典は rsna_cv_summary.json。")}</text>"""
     write(
         "eval_protocol.svg",
-        _svg(960, 360, T("Evaluation protocol caveats", "評価手順上の制約"), T("Four constraint cards for metrics.", "指標解釈のための四つの制約。"), body),
+        _svg(960, height, T("Evaluation protocol caveats", "評価手順上の制約"), T("Four constraint cards for metrics.", "指標解釈のための四つの制約。"), body),
     )
 
 
 def split_study() -> None:
-    body = f"""    <text x="40" y="42" fill="{TEXT}" font-size="28" font-weight="700">{T("How the split avoids image-level leakage", "画像単位の情報リークを避ける分割")}</text>
-    <text x="40" y="74" fill="{MUTED}" font-size="16">{T("Grouping key = StudyInstanceUID. Patient-level split is not implemented yet.", "集約鍵は StudyInstanceUID である。患者単位分割は未実装である。")}</text>
+    split_title = T("How the split avoids image-level leakage", "画像単位の情報リークを避ける分割")
+    split_sub = T("Grouping key = StudyInstanceUID. Patient-level split is not implemented yet.", "集約鍵は StudyInstanceUID である。患者単位分割は未実装である。")
+    body = f"""{_multiline(40, 42, _wrap(split_title, 26, 880), fill=TEXT, size=26, weight="700")}
+{_multiline(40, 74, _wrap(split_sub, 15, 880), fill=MUTED, size=15)}
 
     <rect x="40" y="110" rx="16" ry="16" width="420" height="220" fill="{CARD}" stroke="{TEAL}" stroke-width="3"/>
     <text x="64" y="150" fill="{TEAL}" font-size="20" font-weight="700">{T("This repo (study split)", "本リポジトリ（検査単位分割）")}</text>
@@ -278,13 +333,15 @@ def results_snapshot(summary: dict) -> None:
     parts = []
     for x, y, color, title, value, n, fill in cards:
         bar = int(160 * fill)
+        title_lines = _wrap(title, 12, 168)
+        value_size = 15 if _text_width(value, 17) > 168 else 17
         parts.append(
-            f"""    <rect x="{x}" y="{y}" rx="14" ry="14" width="200" height="200" fill="{CARD}"/>
-    <text x="{x + 14}" y="{y + 32}" fill="{MUTED}" font-size="13">{title}</text>
-    <text x="{x + 14}" y="{y + 78}" fill="{TEXT}" font-size="18" font-weight="700">{value}</text>
-    <text x="{x + 14}" y="{y + 108}" fill="{MUTED}" font-size="13">{n}</text>
-    <rect x="{x + 14}" y="{y + 140}" width="170" height="12" rx="6" fill="{LINE}"/>
-    <rect x="{x + 14}" y="{y + 140}" width="{bar}" height="12" rx="6" fill="{color}"/>"""
+            f"""    <rect x="{x}" y="{y}" rx="14" ry="14" width="200" height="200" fill="{CARD}" stroke="{color}" stroke-width="2"/>
+{_multiline(x + 16, y + 30, title_lines, fill=MUTED, size=12)}
+    <text x="{x + 16}" y="{y + 90}" fill="{TEXT}" font-size="{value_size}" font-weight="700">{_esc(value)}</text>
+    <text x="{x + 16}" y="{y + 116}" fill="{MUTED}" font-size="13">{_esc(n)}</text>
+    <rect x="{x + 16}" y="{y + 148}" width="168" height="12" rx="6" fill="{LINE}"/>
+    <rect x="{x + 16}" y="{y + 148}" width="{min(bar, 168)}" height="12" rx="6" fill="{color}"/>"""
         )
     body = f"""    <text x="40" y="42" fill="{TEXT}" font-size="28" font-weight="700">{T("Headline metrics snapshot", "代表指標の要約")}</text>
     <text x="40" y="74" fill="{MUTED}" font-size="15">{T("Mean ± sample SD (ddof=1). Source: core/pipeline/reports/rsna_cv_summary.json", "平均 ± 標本標準偏差（ddof=1）。出典は rsna_cv_summary.json。")}</text>
@@ -318,8 +375,8 @@ def cv_folds(summary: dict) -> None:
     <text x="{x2 + 8}" y="305" fill="{MUTED}" font-size="12">f{i}</text>
     <text x="{x2 - 4}" y="{268 - h2}" fill="{TEXT}" font-size="11">{auc:.4f}</text>"""
         )
-    body = f"""    <text x="40" y="42" fill="{TEXT}" font-size="28" font-weight="700">{T("Per-fold view (5-fold GroupKFold)", "fold別の結果（検査単位GroupKFold、5分割）")}</text>
-    <text x="40" y="74" fill="{MUTED}" font-size="15">{T("Lower logloss and higher AUC are better. From rsna_cv_summary.json.", "対数損失は低いほど、AUCは高いほど良い。出典は rsna_cv_summary.json。")}</text>
+    body = f"""{_multiline(40, 42, _wrap(T("Per-fold view (5-fold GroupKFold)", "fold別の結果（検査単位GroupKFold、5分割）"), 24, 880), fill=TEXT, size=24, weight="700")}
+{_multiline(40, 74, _wrap(T("Lower logloss and higher AUC are better. From rsna_cv_summary.json.", "対数損失は低いほど、AUCは高いほど良い。出典は rsna_cv_summary.json。"), 14, 880), fill=MUTED, size=14)}
     <text x="80" y="110" fill="{SKY}" font-size="16" font-weight="700">{T("Weighted logloss ↓", "加重対数損失 ↓")}</text>
     <text x="520" y="110" fill="{LIME}" font-size="16" font-weight="700">{T("Mean AUC ↑", "平均AUC ↑")}</text>
     <line x1="60" y1="280" x2="430" y2="280" stroke="{LINE}" stroke-width="2"/>
@@ -347,8 +404,8 @@ def uncertainty_seeds(summary: dict) -> None:
     <circle cx="{x}" cy="{ye}" r="8" fill="{ROSE}" opacity="0.85"/>
     <text x="{x - 6}" y="290" fill="{MUTED}" font-size="12">s{i}</text>"""
         )
-    body = f"""    <text x="40" y="42" fill="{TEXT}" font-size="28" font-weight="700">{T("Uncertainty sweep across 10 seeds", "10シードにわたる不確実性評価")}</text>
-    <text x="40" y="74" fill="{MUTED}" font-size="15">{T("Amber = error-detection AUROC ↑. Rose = ECE ↓ (plotted inverted).", "琥珀は誤り検出AUROC（高いほど良い）。薔薇色はECE（低いほど良い；図では反転表示）。")}</text>
+    body = f"""    <text x="40" y="42" fill="{TEXT}" font-size="26" font-weight="700">{T("Uncertainty sweep across 10 seeds", "10シードにわたる不確実性評価")}</text>
+{_multiline(40, 74, _wrap(T("Amber = error-detection AUROC ↑. Rose = ECE ↓ (plotted inverted).", "琥珀は誤り検出AUROC（高いほど良い）。薔薇色はECE（低いほど良い；図では反転表示）。"), 14, 880), fill=MUTED, size=14)}
     <line x1="50" y1="260" x2="910" y2="260" stroke="{LINE}" stroke-width="2"/>
 {chr(10).join(dots)}
     <rect x="70" y="320" width="12" height="12" fill="{AMBER}"/><text x="90" y="331" fill="{MUTED}" font-size="13">{T("AUROC", "AUROC")}</text>
@@ -432,9 +489,11 @@ def evidence_chain() -> None:
     ]
     parts = []
     for x, y, color, title in boxes:
+        title_lines = _wrap(title, 15, 148)
+        ty = y + 40 if len(title_lines) == 1 else y + 34
         parts.append(
             f"""    <rect x="{x}" y="{y}" rx="12" width="180" height="90" fill="{CARD}" stroke="{color}" stroke-width="3"/>
-    <text x="{x + 16}" y="{y + 52}" fill="{TEXT}" font-size="15" font-weight="700">{title}</text>"""
+{_multiline(x + 16, ty, title_lines, fill=TEXT, size=15, weight="700")}"""
         )
     links = "\n".join(
         [
@@ -473,16 +532,18 @@ def smoke_flow() -> None:
         x = cx - main_w // 2
         parts.append(
             f"""    <rect x="{x}" y="{y}" rx="14" ry="14" width="{main_w}" height="{main_h}" fill="{CARD}" stroke="{color}" stroke-width="3"/>
-    <text x="{x + 24}" y="{y + 35}" fill="{TEXT}" font-size="16" font-weight="700">{title}</text>"""
+    <text x="{cx}" y="{y + 36}" fill="{TEXT}" font-size="16" font-weight="700" text-anchor="middle">{_esc(title)}</text>"""
         )
     branch_w = 360
     by = ys[-1] + main_h + gap + 8
     yes_x, no_x = cx - 400, cx + 40
+    yes_t = T("Yes → read evaluation notes", "はい → 評価ノートを読む")
+    no_t = T("No → inspect failing output", "いいえ → 失敗した出力を見る")
     parts.append(
         f"""    <rect x="{yes_x}" y="{by}" rx="14" ry="14" width="{branch_w}" height="{main_h}" fill="{CARD}" stroke="{LIME}" stroke-width="3"/>
-    <text x="{yes_x + 20}" y="{by + 35}" fill="{TEXT}" font-size="16" font-weight="700">{T("Yes → read evaluation notes", "はい → 評価ノートを読む")}</text>
+    <text x="{yes_x + branch_w / 2}" y="{by + 36}" fill="{TEXT}" font-size="15" font-weight="700" text-anchor="middle">{_esc(yes_t)}</text>
     <rect x="{no_x}" y="{by}" rx="14" ry="14" width="{branch_w}" height="{main_h}" fill="{CARD}" stroke="{ROSE}" stroke-width="3"/>
-    <text x="{no_x + 20}" y="{by + 35}" fill="{TEXT}" font-size="16" font-weight="700">{T("No → inspect failing output", "いいえ → 失敗した出力を見る")}</text>"""
+    <text x="{no_x + branch_w / 2}" y="{by + 36}" fill="{TEXT}" font-size="15" font-weight="700" text-anchor="middle">{_esc(no_t)}</text>"""
     )
     links = [_arrow(cx, y + main_h, cx, y + main_h + gap) for y in ys[:-1]]
     yes_cx = yes_x + branch_w // 2

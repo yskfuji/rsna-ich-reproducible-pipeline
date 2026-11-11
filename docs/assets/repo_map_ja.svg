@@ -3,7 +3,7 @@
   <title id="title">リポジトリの案内</title>
   <desc id="desc">主要な四つの領域。</desc>
   <rect width="960" height="340" fill="#0B1220"/>
-  <g font-family="Helvetica, Arial, sans-serif">
+  <g font-family="'Hiragino Sans', 'Hiragino Kaku Gothic ProN', 'Noto Sans CJK JP', 'Yu Gothic', 'Helvetica Neue', Helvetica, Arial, sans-serif">
     <text x="40" y="42" fill="#F1F5F9" font-size="28" font-weight="700">参照すべき場所</text>
     <text x="40" y="74" fill="#94A3B8" font-size="16">主要な四領域である。短時間で確認する場合は左から順に参照する。</text>
     <rect x="40" y="110" rx="14" ry="14" width="200" height="150" fill="#152033" stroke="#38BDF8" stroke-width="3"/>
