@@ -240,6 +240,7 @@ Pass criteria (reproducibility, recommended):
 Tested environment (this report):
 - Python 3.12.4
 - PyTorch 2.6.0 / torchvision 0.21.0
+  - Note: `requirements.txt` pins PyTorch 2.14.1 / torchvision 0.29.1 to avoid known vulnerabilities in 2.6.0. A different version may not meet the `abs_diff <= 1e-6` criterion above. To reproduce with the recorded version, use an isolated environment without network access.
 - timm: not used (`convnext_tiny` is `torchvision.models.convnext_tiny`)
 - device: `mps`
 - matmul precision: in these runs `torch.get_float32_matmul_precision() == "highest"` (default)

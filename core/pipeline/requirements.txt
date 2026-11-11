@@ -1,10 +1,12 @@
 # Verified on 2026-11-11 with Python 3.11 (macOS arm64 and Ubuntu CPU in CI).
-# torch 2.6.0 matches the version recorded in the published run metadata.
+# The published runs recorded torch 2.6.0 (reports/rsna_cv_summary.json). That release
+# has known vulnerabilities, so the pins below use the newest torch/torchvision pair
+# available on the PyTorch CPU index with no known advisories (OSV and PyPI, 2026-11-11).
 # For a CPU-only install:
-#   pip install --index-url https://download.pytorch.org/whl/cpu torch==2.6.0 torchvision==0.21.0
+#   pip install --index-url https://download.pytorch.org/whl/cpu torch==2.14.1 torchvision==0.29.1
 #   pip install -r requirements.txt
-torch==2.6.0
-torchvision==0.21.0
+torch==2.14.1
+torchvision==0.29.1
 numpy==2.2.6
 pandas==3.1.1
 pydicom==3.0.2
@@ -14,7 +16,7 @@ fastapi==0.162.4
 starlette==1.10.0
 pydantic==2.14.3
 uvicorn==0.54.0
-python-multipart==0.0.20
+python-multipart==0.0.33
 matplotlib==3.11.2
 pyyaml==6.0.3
 nibabel==5.5.0

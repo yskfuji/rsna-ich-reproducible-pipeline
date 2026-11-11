@@ -251,6 +251,7 @@ run:
 検証済み環境（本レポート）:
 - Python 3.12.4
 - PyTorch 2.6.0 / torchvision 0.21.0
+  - 注: `requirements.txt` は既知の脆弱性を避けるため PyTorch 2.14.1 / torchvision 0.29.1 に固定しています。版が違うと上の `abs_diff <= 1e-6` を満たさないことがあります。記録と同じ版で再現する場合は、ネットワークから切り離した隔離環境で実行してください。
 - timm: 未使用（`convnext_tiny` は `torchvision.models.convnext_tiny` を使用）
 - device: `mps`
 - matmul precision: 本 run では `torch.get_float32_matmul_precision() == "highest"`（既定値）
