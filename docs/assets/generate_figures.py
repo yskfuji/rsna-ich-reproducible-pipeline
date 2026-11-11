@@ -47,6 +47,43 @@ def _esc(s: str) -> str:
     )
 
 
+def _arrow(x1: float, y1: float, x2: float, y2: float, color: str = MUTED, width: int = 4) -> str:
+    """Line plus triangle tip. Avoids SVG marker clipping on short segments."""
+    import math
+
+    dx, dy = x2 - x1, y2 - y1
+    length = math.hypot(dx, dy) or 1.0
+    ux, uy = dx / length, dy / length
+    tip = 10.0
+    bx, by = x2 - ux * tip, y2 - uy * tip
+    px, py = -uy, ux
+    half = 5.0
+    p1 = (bx + px * half, by + py * half)
+    p2 = (bx - px * half, by - py * half)
+    sx, sy = x2 - ux * (tip + 1.0), y2 - uy * (tip + 1.0)
+    return (
+        f'    <line x1="{x1:.1f}" y1="{y1:.1f}" x2="{sx:.1f}" y2="{sy:.1f}" '
+        f'stroke="{color}" stroke-width="{width}" stroke-linecap="round"/>\n'
+        f'    <polygon points="{x2:.1f},{y2:.1f} {p1[0]:.1f},{p1[1]:.1f} {p2[0]:.1f},{p2[1]:.1f}" fill="{color}"/>'
+    )
+
+
+def _elbow(points: list[tuple[float, float]], color: str = MUTED, width: int = 4) -> str:
+    """Orthogonal polyline with an arrow on the final segment."""
+    if len(points) < 2:
+        raise ValueError("need >=2 points")
+    segs: list[str] = []
+    for (x1, y1), (x2, y2) in zip(points[:-2], points[1:-1]):
+        segs.append(
+            f'    <line x1="{x1:.1f}" y1="{y1:.1f}" x2="{x2:.1f}" y2="{y2:.1f}" '
+            f'stroke="{color}" stroke-width="{width}" stroke-linecap="round"/>'
+        )
+    x1, y1 = points[-2]
+    x2, y2 = points[-1]
+    segs.append(_arrow(x1, y1, x2, y2, color, width))
+    return "\n".join(segs)
+
+
 def _svg(width: int, height: int, title: str, desc: str, body: str) -> str:
     # width=100% + viewBox only: scales inside GitHub without horizontal overflow.
     # Fixed pixel width/height caused clipping in the README column.
@@ -88,12 +125,13 @@ def write(name: str, content: str) -> None:
 
 def architecture() -> None:
     # Two-row layout avoids five-across overflow on narrow GitHub columns.
+    # Top row 1–3; bottom row 4–5 aligned under panels 2 and 3 for short elbows.
     stages = [
         (40, 110, TEAL, T("1. CT input", "1. CT入力"), T("DICOM / SQLite", "DICOM / SQLite"), T("HU window + stacks", "HU窓処理とスライス積上げ")),
         (340, 110, SKY, T("2. Split", "2. 分割"), T("study GroupKFold", "検査単位のGroupKFold"), T("leakage audit", "情報リークの監査")),
         (640, 110, AMBER, T("3. Model", "3. モデル"), T("ConvNeXt 2.5D", "ConvNeXt 2.5D"), T("weighted logloss", "加重対数損失")),
-        (190, 300, LIME, T("4. Calibrate", "4. 校正"), T("temperature + ECE", "温度スケーリングとECE"), T("MC Dropout", "MC Dropout")),
-        (490, 300, ROSE, T("5. Publish", "5. 公開"), T("reports + checks", "報告書と検査"), T("no patient images", "患者画像なし")),
+        (340, 300, LIME, T("4. Calibrate", "4. 校正"), T("temperature + ECE", "温度スケーリングとECE"), T("MC Dropout", "MC Dropout")),
+        (640, 300, ROSE, T("5. Publish", "5. 公開"), T("reports + checks", "報告書と検査"), T("no patient images", "患者画像なし")),
     ]
     boxes = []
     for x, y, color, title, a, b in stages:
@@ -104,12 +142,20 @@ def architecture() -> None:
     <text x="{x + 20}" y="{y + 78}" fill="{MUTED}" font-size="15">{a}</text>
     <text x="{x + 20}" y="{y + 104}" fill="{MUTED}" font-size="15">{b}</text>"""
         )
+    # Connectors: panel size 260×140. Flow 1→2→3→4→5.
+    # 4 under 2, 5 under 3. Elbow 3→4 lands on panel-4 top center (470,300).
+    links = "\n".join(
+        [
+            _arrow(300, 180, 340, 180),
+            _arrow(600, 180, 640, 180),
+            _elbow([(770, 250), (770, 275), (470, 275), (470, 300)]),
+            _arrow(600, 370, 640, 370),
+        ]
+    )
     body = f"""    <text x="40" y="42" fill="{TEXT}" font-size="28" font-weight="700">{T("What happens in this pipeline", "本パイプラインの処理流れ")}</text>
     <text x="40" y="74" fill="{MUTED}" font-size="16">{T("CT slices to audited metrics. Medical images stay off the public repository.", "CTスライスから監査可能な指標まで。患者画像は公開物に含めない。")}</text>
 {chr(10).join(boxes)}
-    <path d="M300 180 H330" stroke="{MUTED}" stroke-width="4" stroke-linecap="round"/>
-    <path d="M600 180 H630" stroke="{MUTED}" stroke-width="4" stroke-linecap="round"/>
-    <path d="M450 250 V290" stroke="{MUTED}" stroke-width="4" stroke-linecap="round"/>
+{links}
     <text x="40" y="480" fill="{MUTED}" font-size="14">{T("Public bundle = code + configs + summary JSON. Datasets/, results/, *.pt excluded.", "公開物はコード・設定・要約JSONである。Datasets/、results/、*.pt は含めない。")}</text>"""
     write("architecture.svg", _svg(960, 510, T("RSNA pipeline architecture", "RSNAパイプラインの構成"), T("Five-stage pipeline overview.", "五段階の処理概要。"), body))
 
@@ -373,7 +419,7 @@ def included_excluded() -> None:
 
 
 def evidence_chain() -> None:
-    # 2x2 grid avoids four-across overflow.
+    # Single row; connectors span the full 60px gaps between 180-wide cards.
     boxes = [
         (40, 110, SKY, T("1. README claim", "1. READMEの記載")),
         (280, 110, TEAL, T("2. mean ± sd", "2. 平均 ± 標準偏差")),
@@ -386,17 +432,67 @@ def evidence_chain() -> None:
             f"""    <rect x="{x}" y="{y}" rx="12" width="180" height="90" fill="{CARD}" stroke="{color}" stroke-width="3"/>
     <text x="{x + 16}" y="{y + 52}" fill="{TEXT}" font-size="15" font-weight="700">{title}</text>"""
         )
+    links = "\n".join(
+        [
+            _arrow(220, 155, 280, 155, width=3),
+            _arrow(460, 155, 520, 155, width=3),
+            _arrow(700, 155, 760, 155, width=3),
+        ]
+    )
     body = f"""    <text x="40" y="42" fill="{TEXT}" font-size="28" font-weight="700">{T("How a README number is checked", "READMEの数値が照合される経路")}</text>
     <text x="40" y="74" fill="{MUTED}" font-size="16">{T("CI recomputes every headline value from the per-fold / per-seed JSON.", "継続的統合は、fold別・シード別JSONから代表値を再計算する。")}</text>
 {chr(10).join(parts)}
-    <path d="M220 155 H270" stroke="{MUTED}" stroke-width="3"/>
-    <path d="M460 155 H510" stroke="{MUTED}" stroke-width="3"/>
-    <path d="M700 155 H750" stroke="{MUTED}" stroke-width="3"/>
+{links}
     <text x="40" y="250" fill="{MUTED}" font-size="13">{T("Guard: scripts/check_metric_claims.py · Hygiene: scripts/check_public_hygiene.py", "照合: scripts/check_metric_claims.py · 衛生: scripts/check_public_hygiene.py")}</text>
     <text x="40" y="278" fill="{MUTED}" font-size="13">{T("Caveats must sit in the same Markdown section as the numbers they qualify.", "制約の記述は、対象数値と同一の節に置く。")}</text>"""
     write(
         "evidence_chain.svg",
         _svg(960, 310, T("Evidence chain for metrics", "指標の根拠連鎖"), T("Flow from README claim to scalars.", "READMEの記載からスカラー値への経路。"), body),
+    )
+
+
+def smoke_flow() -> None:
+    """Static replacement for Mermaid flowchart TD (GitHub often fails to render JA Mermaid)."""
+    cx = 480
+    main_w, main_h, gap = 400, 56, 44
+    ys = [70 + i * (main_h + gap) for i in range(5)]
+    colors = [SKY, TEAL, AMBER, LIME, ROSE]
+    titles = [
+        T("1. Install pinned deps", "1. 固定した依存を入れる"),
+        T("2. Smoke test (dummy data)", "2. ダミーデータで動作確認"),
+        T("3. Import every module", "3. 全モジュールをimport"),
+        T("4. Recompute metrics from JSON", "4. JSONから指標を再計算"),
+        T("5. All checks pass?", "5. すべて合格か"),
+    ]
+    parts = []
+    for y, color, title in zip(ys, colors, titles):
+        x = cx - main_w // 2
+        parts.append(
+            f"""    <rect x="{x}" y="{y}" rx="14" ry="14" width="{main_w}" height="{main_h}" fill="{CARD}" stroke="{color}" stroke-width="3"/>
+    <text x="{x + 24}" y="{y + 35}" fill="{TEXT}" font-size="16" font-weight="700">{title}</text>"""
+        )
+    branch_w = 360
+    by = ys[-1] + main_h + gap + 8
+    yes_x, no_x = cx - 400, cx + 40
+    parts.append(
+        f"""    <rect x="{yes_x}" y="{by}" rx="14" ry="14" width="{branch_w}" height="{main_h}" fill="{CARD}" stroke="{LIME}" stroke-width="3"/>
+    <text x="{yes_x + 20}" y="{by + 35}" fill="{TEXT}" font-size="16" font-weight="700">{T("Yes → read evaluation notes", "はい → 評価ノートを読む")}</text>
+    <rect x="{no_x}" y="{by}" rx="14" ry="14" width="{branch_w}" height="{main_h}" fill="{CARD}" stroke="{ROSE}" stroke-width="3"/>
+    <text x="{no_x + 20}" y="{by + 35}" fill="{TEXT}" font-size="16" font-weight="700">{T("No → inspect failing output", "いいえ → 失敗した出力を見る")}</text>"""
+    )
+    links = [_arrow(cx, y + main_h, cx, y + main_h + gap) for y in ys[:-1]]
+    yes_cx = yes_x + branch_w // 2
+    no_cx = no_x + branch_w // 2
+    jy = ys[-1] + main_h + gap // 2
+    links.append(_elbow([(cx, ys[-1] + main_h), (cx, jy), (yes_cx, jy), (yes_cx, by)]))
+    links.append(_elbow([(cx, jy), (no_cx, jy), (no_cx, by)]))
+    height = by + main_h + 30
+    body = f"""    <text x="40" y="42" fill="{TEXT}" font-size="28" font-weight="700">{T("Smoke-test path (no medical data)", "動作確認の手順（医療データなし）")}</text>
+{chr(10).join(parts)}
+{chr(10).join(links)}"""
+    write(
+        "smoke_flow.svg",
+        _svg(960, height, T("Smoke-test flowchart", "動作確認の流れ図"), T("Top-down path without medical data.", "医療データを用いない上から下への確認手順。"), body),
     )
 
 
@@ -416,6 +512,7 @@ def main() -> None:
         reader_path()
         included_excluded()
         evidence_chain()
+        smoke_flow()
 
 
 if __name__ == "__main__":

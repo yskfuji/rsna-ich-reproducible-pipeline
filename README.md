@@ -18,15 +18,6 @@ Reproducible intracranial hemorrhage classification for the RSNA ICH challenge â
 
 <p align="center"><img src="docs/assets/reader_path.png" alt="Pick your path" width="100%" /></p>
 
-```mermaid
-flowchart LR
-  A[CT / SQLite] --> B[Study split + audit]
-  B --> C[ConvNeXt 2.5D]
-  C --> D[Calibrate + uncertainty]
-  D --> E[Public reports]
-  E -.-> F[CI recomputes every number]
-```
-
 ## Numbers you will see quoted
 
 <p align="center"><img src="docs/assets/results_snapshot.png" alt="Metrics snapshot" width="100%" /></p>
@@ -69,15 +60,7 @@ python scripts/check_imports.py
 python scripts/check_metric_claims.py
 ```
 
-```mermaid
-flowchart TD
-  S1[Install pinned deps] --> S2[Smoke test with dummy data]
-  S2 --> S3[Import every module]
-  S3 --> S4[Recompute README metrics from JSON]
-  S4 --> S5{All green?}
-  S5 -->|yes| S6[Read evaluation notes]
-  S5 -->|no| S7[Open the failing script output]
-```
+<p align="center"><img src="docs/assets/smoke_flow.png" alt="Smoke-test path without medical data" width="100%" /></p>
 
 Full training and evaluation need your own Kaggle download: [core/pipeline/README_en.md](core/pipeline/README_en.md).
 

@@ -8,6 +8,10 @@
 
 <p align="center"><img src="assets/architecture_ja.png" alt="処理構成" width="100%" /></p>
 
+## 動作確認の流れ
+
+<p align="center"><img src="assets/smoke_flow_ja.png" alt="動作確認の流れ" width="100%" /></p>
+
 ## 予測ラベル
 
 <p align="center"><img src="assets/labels_taxonomy_ja.png" alt="予測ラベル" width="100%" /></p>

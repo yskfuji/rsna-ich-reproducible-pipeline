@@ -21,19 +21,26 @@
     <text x="690" y="148" fill="#F1F5F9" font-size="20" font-weight="700">3. モデル</text>
     <text x="660" y="188" fill="#94A3B8" font-size="15">ConvNeXt 2.5D</text>
     <text x="660" y="214" fill="#94A3B8" font-size="15">加重対数損失</text>
-    <rect x="190" y="300" rx="16" ry="16" width="260" height="140" fill="#152033" stroke="#84CC16" stroke-width="3"/>
-    <circle cx="218" cy="332" r="12" fill="#84CC16"/>
-    <text x="240" y="338" fill="#F1F5F9" font-size="20" font-weight="700">4. 校正</text>
-    <text x="210" y="378" fill="#94A3B8" font-size="15">温度スケーリングとECE</text>
-    <text x="210" y="404" fill="#94A3B8" font-size="15">MC Dropout</text>
-    <rect x="490" y="300" rx="16" ry="16" width="260" height="140" fill="#152033" stroke="#F43F5E" stroke-width="3"/>
-    <circle cx="518" cy="332" r="12" fill="#F43F5E"/>
-    <text x="540" y="338" fill="#F1F5F9" font-size="20" font-weight="700">5. 公開</text>
-    <text x="510" y="378" fill="#94A3B8" font-size="15">報告書と検査</text>
-    <text x="510" y="404" fill="#94A3B8" font-size="15">患者画像なし</text>
-    <path d="M300 180 H330" stroke="#94A3B8" stroke-width="4" stroke-linecap="round"/>
-    <path d="M600 180 H630" stroke="#94A3B8" stroke-width="4" stroke-linecap="round"/>
-    <path d="M450 250 V290" stroke="#94A3B8" stroke-width="4" stroke-linecap="round"/>
+    <rect x="340" y="300" rx="16" ry="16" width="260" height="140" fill="#152033" stroke="#84CC16" stroke-width="3"/>
+    <circle cx="368" cy="332" r="12" fill="#84CC16"/>
+    <text x="390" y="338" fill="#F1F5F9" font-size="20" font-weight="700">4. 校正</text>
+    <text x="360" y="378" fill="#94A3B8" font-size="15">温度スケーリングとECE</text>
+    <text x="360" y="404" fill="#94A3B8" font-size="15">MC Dropout</text>
+    <rect x="640" y="300" rx="16" ry="16" width="260" height="140" fill="#152033" stroke="#F43F5E" stroke-width="3"/>
+    <circle cx="668" cy="332" r="12" fill="#F43F5E"/>
+    <text x="690" y="338" fill="#F1F5F9" font-size="20" font-weight="700">5. 公開</text>
+    <text x="660" y="378" fill="#94A3B8" font-size="15">報告書と検査</text>
+    <text x="660" y="404" fill="#94A3B8" font-size="15">患者画像なし</text>
+    <line x1="300.0" y1="180.0" x2="329.0" y2="180.0" stroke="#94A3B8" stroke-width="4" stroke-linecap="round"/>
+    <polygon points="340.0,180.0 330.0,185.0 330.0,175.0" fill="#94A3B8"/>
+    <line x1="600.0" y1="180.0" x2="629.0" y2="180.0" stroke="#94A3B8" stroke-width="4" stroke-linecap="round"/>
+    <polygon points="640.0,180.0 630.0,185.0 630.0,175.0" fill="#94A3B8"/>
+    <line x1="770.0" y1="250.0" x2="770.0" y2="275.0" stroke="#94A3B8" stroke-width="4" stroke-linecap="round"/>
+    <line x1="770.0" y1="275.0" x2="470.0" y2="275.0" stroke="#94A3B8" stroke-width="4" stroke-linecap="round"/>
+    <line x1="470.0" y1="275.0" x2="470.0" y2="289.0" stroke="#94A3B8" stroke-width="4" stroke-linecap="round"/>
+    <polygon points="470.0,300.0 465.0,290.0 475.0,290.0" fill="#94A3B8"/>
+    <line x1="600.0" y1="370.0" x2="629.0" y2="370.0" stroke="#94A3B8" stroke-width="4" stroke-linecap="round"/>
+    <polygon points="640.0,370.0 630.0,375.0 630.0,365.0" fill="#94A3B8"/>
     <text x="40" y="480" fill="#94A3B8" font-size="14">公開物はコード・設定・要約JSONである。Datasets/、results/、*.pt は含めない。</text>
   </g>
 </svg>

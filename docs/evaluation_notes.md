@@ -18,18 +18,6 @@ This page explains what the headline metrics in the READMEs measure, what they d
 
 <p align="center"><img src="assets/uncertainty_seeds.png" alt="Uncertainty by seed" width="100%" /></p>
 
-```mermaid
-flowchart TB
-  H[Headline number] --> C1[1-epoch fine-tune]
-  H --> C2[shared initial checkpoint]
-  H --> C3[temperature on same holdout]
-  H --> C4[not a medical device]
-  C1 --> N[evaluation_notes.md]
-  C2 --> N
-  C3 --> N
-  C4 --> N
-```
-
 ## 1. Headline numbers
 
 Values are mean ± sample standard deviation (ddof=1).

@@ -26,15 +26,6 @@
 
 *想定読者は、採用審査、機械学習実装、研究再現の三経路である。いずれの経路も、評価上の制約の確認に帰着する。*
 
-```mermaid
-flowchart LR
-  A[CT / SQLite] --> B[検査単位分割と監査]
-  B --> C[ConvNeXt 2.5D]
-  C --> D[校正と不確実性]
-  D --> E[公開レポート]
-  E -.-> F[継続的統合が数値を再計算]
-```
-
 ## 代表指標
 
 <p align="center"><img src="docs/assets/results_snapshot_ja.png" alt="代表指標の要約" width="100%" /></p>
@@ -79,15 +70,7 @@ python scripts/check_imports.py
 python scripts/check_metric_claims.py
 ```
 
-```mermaid
-flowchart TD
-  S1[固定した依存を入れる] --> S2[ダミーデータで動作確認]
-  S2 --> S3[全モジュールをimport]
-  S3 --> S4[JSONから指標を再計算]
-  S4 --> S5{すべて合格?}
-  S5 -->|はい| S6[評価ノートを読む]
-  S5 -->|いいえ| S7[失敗した出力を見る]
-```
+<p align="center"><img src="docs/assets/smoke_flow_ja.png" alt="動作確認の流れ" width="100%" /></p>
 
 実データによる学習および評価手順は [core/pipeline/README.md](core/pipeline/README.md) に記す。
 

@@ -14,9 +14,12 @@
     <text x="536" y="162" fill="#F1F5F9" font-size="15" font-weight="700">3. 要約JSON</text>
     <rect x="760" y="110" rx="12" width="180" height="90" fill="#152033" stroke="#F43F5E" stroke-width="3"/>
     <text x="776" y="162" fill="#F1F5F9" font-size="15" font-weight="700">4. fold / シード</text>
-    <path d="M220 155 H270" stroke="#94A3B8" stroke-width="3"/>
-    <path d="M460 155 H510" stroke="#94A3B8" stroke-width="3"/>
-    <path d="M700 155 H750" stroke="#94A3B8" stroke-width="3"/>
+    <line x1="220.0" y1="155.0" x2="269.0" y2="155.0" stroke="#94A3B8" stroke-width="3" stroke-linecap="round"/>
+    <polygon points="280.0,155.0 270.0,160.0 270.0,150.0" fill="#94A3B8"/>
+    <line x1="460.0" y1="155.0" x2="509.0" y2="155.0" stroke="#94A3B8" stroke-width="3" stroke-linecap="round"/>
+    <polygon points="520.0,155.0 510.0,160.0 510.0,150.0" fill="#94A3B8"/>
+    <line x1="700.0" y1="155.0" x2="749.0" y2="155.0" stroke="#94A3B8" stroke-width="3" stroke-linecap="round"/>
+    <polygon points="760.0,155.0 750.0,160.0 750.0,150.0" fill="#94A3B8"/>
     <text x="40" y="250" fill="#94A3B8" font-size="13">照合: scripts/check_metric_claims.py · 衛生: scripts/check_public_hygiene.py</text>
     <text x="40" y="278" fill="#94A3B8" font-size="13">制約の記述は、対象数値と同一の節に置く。</text>
   </g>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 664" width="100%" preserveAspectRatio="xMidYMid meet" role="img" aria-labelledby="title desc">
+  <title id="title">動作確認の流れ図</title>
+  <desc id="desc">医療データを用いない上から下への確認手順。</desc>
+  <rect width="960" height="664" fill="#0B1220"/>
+  <g font-family="Helvetica, Arial, sans-serif">
+    <text x="40" y="42" fill="#F1F5F9" font-size="28" font-weight="700">動作確認の手順（医療データなし）</text>
+    <rect x="280" y="70" rx="14" ry="14" width="400" height="56" fill="#152033" stroke="#38BDF8" stroke-width="3"/>
+    <text x="304" y="105" fill="#F1F5F9" font-size="16" font-weight="700">1. 固定した依存を入れる</text>
+    <rect x="280" y="170" rx="14" ry="14" width="400" height="56" fill="#152033" stroke="#14B8A6" stroke-width="3"/>
+    <text x="304" y="205" fill="#F1F5F9" font-size="16" font-weight="700">2. ダミーデータで動作確認</text>
+    <rect x="280" y="270" rx="14" ry="14" width="400" height="56" fill="#152033" stroke="#F59E0B" stroke-width="3"/>
+    <text x="304" y="305" fill="#F1F5F9" font-size="16" font-weight="700">3. 全モジュールをimport</text>
+    <rect x="280" y="370" rx="14" ry="14" width="400" height="56" fill="#152033" stroke="#84CC16" stroke-width="3"/>
+    <text x="304" y="405" fill="#F1F5F9" font-size="16" font-weight="700">4. JSONから指標を再計算</text>
+    <rect x="280" y="470" rx="14" ry="14" width="400" height="56" fill="#152033" stroke="#F43F5E" stroke-width="3"/>
+    <text x="304" y="505" fill="#F1F5F9" font-size="16" font-weight="700">5. すべて合格か</text>
+    <rect x="80" y="578" rx="14" ry="14" width="360" height="56" fill="#152033" stroke="#84CC16" stroke-width="3"/>
+    <text x="100" y="613" fill="#F1F5F9" font-size="16" font-weight="700">はい → 評価ノートを読む</text>
+    <rect x="520" y="578" rx="14" ry="14" width="360" height="56" fill="#152033" stroke="#F43F5E" stroke-width="3"/>
+    <text x="540" y="613" fill="#F1F5F9" font-size="16" font-weight="700">いいえ → 失敗した出力を見る</text>
+    <line x1="480.0" y1="126.0" x2="480.0" y2="159.0" stroke="#94A3B8" stroke-width="4" stroke-linecap="round"/>
+    <polygon points="480.0,170.0 475.0,160.0 485.0,160.0" fill="#94A3B8"/>
+    <line x1="480.0" y1="226.0" x2="480.0" y2="259.0" stroke="#94A3B8" stroke-width="4" stroke-linecap="round"/>
+    <polygon points="480.0,270.0 475.0,260.0 485.0,260.0" fill="#94A3B8"/>
+    <line x1="480.0" y1="326.0" x2="480.0" y2="359.0" stroke="#94A3B8" stroke-width="4" stroke-linecap="round"/>
+    <polygon points="480.0,370.0 475.0,360.0 485.0,360.0" fill="#94A3B8"/>
+    <line x1="480.0" y1="426.0" x2="480.0" y2="459.0" stroke="#94A3B8" stroke-width="4" stroke-linecap="round"/>
+    <polygon points="480.0,470.0 475.0,460.0 485.0,460.0" fill="#94A3B8"/>
+    <line x1="480.0" y1="526.0" x2="480.0" y2="548.0" stroke="#94A3B8" stroke-width="4" stroke-linecap="round"/>
+    <line x1="480.0" y1="548.0" x2="260.0" y2="548.0" stroke="#94A3B8" stroke-width="4" stroke-linecap="round"/>
+    <line x1="260.0" y1="548.0" x2="260.0" y2="567.0" stroke="#94A3B8" stroke-width="4" stroke-linecap="round"/>
+    <polygon points="260.0,578.0 255.0,568.0 265.0,568.0" fill="#94A3B8"/>
+    <line x1="480.0" y1="548.0" x2="700.0" y2="548.0" stroke="#94A3B8" stroke-width="4" stroke-linecap="round"/>
+    <line x1="700.0" y1="548.0" x2="700.0" y2="567.0" stroke="#94A3B8" stroke-width="4" stroke-linecap="round"/>
+    <polygon points="700.0,578.0 695.0,568.0 705.0,568.0" fill="#94A3B8"/>
+  </g>
+</svg>

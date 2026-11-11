@@ -22,18 +22,6 @@
 
 <p align="center"><img src="assets/uncertainty_seeds_ja.png" alt="シード別の不確実性" width="100%" /></p>
 
-```mermaid
-flowchart TB
-  H[代表指標] --> C1[1エポックの追加学習]
-  H --> C2[共通の初期重み]
-  H --> C3[同じ検証データで温度推定]
-  H --> C4[医療機器ではない]
-  C1 --> N[evaluation_notes_ja.md]
-  C2 --> N
-  C3 --> N
-  C4 --> N
-```
-
 ## 1. 代表指標
 
 表記は「平均 ± 標本標準偏差（ddof=1）」とする。
