@@ -46,3 +46,27 @@ jobs:
         run: python -m pytest -q tests
       - name: Smoke test (must finish within 60 s)
         run: timeout 60 python scripts/smoke_test.py --use_dummy_data
+
+  xai:
+    name: SHAP explanations on synthetic data (CPU)
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+          cache-dependency-path: |
+            core/pipeline/requirements.txt
+            core/pipeline/requirements-xai.txt
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install --index-url https://download.pytorch.org/whl/cpu torch==2.6.0 torchvision==0.21.0
+          pip install -r core/pipeline/requirements-xai.txt
+      - name: SHAP end-to-end test
+        working-directory: core/pipeline
+        env:
+          MPLBACKEND: Agg
+        run: python -m pytest -q tests/test_explain_rsna_shap.py

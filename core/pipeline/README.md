@@ -677,6 +677,58 @@ TORCH_DEVICE=mps python tools/eval_rsna_uncertainty.py \
 - `curve_png`: coverage–risk 曲線の保存先
 - `reliability_png`: reliability diagram（any）の保存先
 
+### 8.1 SHAP による説明（ConvNeXt 2.5D の重み向け）
+
+`tools/explain_rsna_shap.py` は、学習済みの重みに対して、入力のどの画素とチャネルが1つのクラスの出力に効いたかを SHAP で可視化します。
+
+> **読み方の注意**
+> - SHAP の `GradientExplainer` は、期待勾配（expected gradients）による近似です。厳密な Shapley 値ではなく、`--shap-nsamples` が小さいほど値のばらつきが大きくなります。
+> - 説明の図は、モデルが判断に使った領域の目安です。病変の位置を示すものではなく、臨床的な妥当性も検証していません。顕著性マップの手法によっては、モデルの重みやラベルを乱数に置き換えても、ほぼ同じ図になります（Adebayo et al., 2018）。
+> - 出力には、CT画像から作った配列と図、画像ID、手元の絶対パスが含まれます。`results/` の下（Gitの除外対象）に置き、公開しないでください。
+
+実行は `core/pipeline/` で行います。依存は `requirements.txt` の固定版に SHAP を加えた `requirements-xai.txt` で入れます。
+
+```bash
+cd core/pipeline
+python -m pip install -r requirements-xai.txt
+```
+
+主な出力は次のとおりです。
+
+- `manifest.json`：実行設定、重み、背景データ、対象サンプルの一覧
+- `<target>/<image_id>/arrays.npz`：入力、SHAP値、ロジット、確率
+- `<target>/<image_id>/*.png`：入力チャネル、|SHAP| のチャネル別の図、重ね合わせ、スライス別とウィンドウ別の寄与
+- `<target>/<image_id>/summary.json`：サンプルごとの要約
+
+6クラスをまとめて説明する例です。
+
+```bash
+cd core/pipeline
+
+python tools/explain_rsna_shap.py \
+  --ckpt results/rsna_convnext25d_final2_full_mps_20260202_062959/best_auc.pt \
+  --device mps \
+  --max-samples 4 \
+  --candidate-pool 1024 \
+  --background-size 4 \
+  --shap-nsamples 32 \
+  --all-targets \
+  --out-dir results/rsna_shap/final2_all
+```
+
+- `--all-targets` を付けると、6クラスすべてをまとめて説明します。対象は `epidural`、`intraparenchymal`、`intraventricular`、`subarachnoid`、`subdural`、`any` です。
+- 1つのクラスだけを見る場合は、`--target any` のように `--target` を指定します。複数指定もできます。
+- 動作を軽く確かめるには、`--max-samples 2 --shap-nsamples 8 --device cpu` 程度に減らします。
+- 説明する画像は、既定では `any` が陽性の画像から選びます（`--select-class any --select-positive-only`）。
+- 重みのキーがモデルの構成と一致しない場合は、途中まで乱数のモデルを説明することになるため、エラーで止まります。
+- 合成データでの動作確認は `tests/test_explain_rsna_shap.py` です（SHAP が入っていない環境では飛ばされます）。
+
+参考文献は次のとおりです。
+
+- Lundberg and Lee, 2017（[arXiv:1705.07874](https://arxiv.org/abs/1705.07874)）
+- Erion et al., 2021（期待勾配、[arXiv:1906.10670](https://arxiv.org/abs/1906.10670)）
+- Adebayo et al., 2018（[arXiv:1810.03292](https://arxiv.org/abs/1810.03292)）
+
 ---
 
 ## 9. 制限と次の一手（透明性のために明記）

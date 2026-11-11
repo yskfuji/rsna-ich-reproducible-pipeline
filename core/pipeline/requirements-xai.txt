@@ -1,0 +1,7 @@
+# Optional SHAP explanations (tools/explain_rsna_shap.py), on top of the base pins.
+# Resolved together with requirements.txt on Python 3.11 (2026-11-11).
+#   python -m pip install -r requirements-xai.txt
+-r requirements.txt
+shap==0.51.0
+numba==0.68.1
+llvmlite==0.50.0
