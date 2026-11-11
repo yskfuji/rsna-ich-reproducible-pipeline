@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 360" width="100%" preserveAspectRatio="xMidYMid meet" role="img" aria-labelledby="title desc">
+  <title id="title">評価手順上の制約</title>
+  <desc id="desc">指標解釈のための四つの制約。</desc>
+  <rect width="960" height="360" fill="#0B1220"/>
+  <g font-family="Helvetica, Arial, sans-serif">
+    <text x="40" y="42" fill="#F1F5F9" font-size="28" font-weight="700">数値解釈における制約</text>
+    <text x="40" y="74" fill="#94A3B8" font-size="16">代表指標は追加学習の安定性を示すものであり、未知の検査に対する性能ではない。</text>
+    <rect x="40" y="110" rx="14" ry="14" width="200" height="170" fill="#152033" stroke="#F43F5E" stroke-width="3"/>
+    <rect x="40" y="110" width="200" height="8" fill="#F43F5E"/>
+    <text x="54" y="158" fill="#F1F5F9" font-size="18" font-weight="700">1エポックのみ</text>
+    <text x="54" y="198" fill="#94A3B8" font-size="13">各fold・各シードで1回のみ追加学習</text>
+    <text x="54" y="222" fill="#94A3B8" font-size="13">6,852枚の部分標本</text>
+    <rect x="260" y="110" rx="14" ry="14" width="200" height="170" fill="#152033" stroke="#F59E0B" stroke-width="3"/>
+    <rect x="260" y="110" width="200" height="8" fill="#F59E0B"/>
+    <text x="274" y="158" fill="#F1F5F9" font-size="18" font-weight="700">共通の初期重み</text>
+    <text x="274" y="198" fill="#94A3B8" font-size="13">全実行で同一の初期重み</text>
+    <text x="274" y="222" fill="#94A3B8" font-size="13">検査の約98%で学習済み</text>
+    <rect x="480" y="110" rx="14" ry="14" width="200" height="170" fill="#152033" stroke="#38BDF8" stroke-width="3"/>
+    <rect x="480" y="110" width="200" height="8" fill="#38BDF8"/>
+    <text x="494" y="158" fill="#F1F5F9" font-size="18" font-weight="700">同一の検証データ</text>
+    <text x="494" y="198" fill="#94A3B8" font-size="13">温度推定とECE評価が同一集合</text>
+    <text x="494" y="222" fill="#94A3B8" font-size="13">校正指標は楽観的になりうる</text>
+    <rect x="700" y="110" rx="14" ry="14" width="200" height="170" fill="#152033" stroke="#14B8A6" stroke-width="3"/>
+    <rect x="700" y="110" width="200" height="8" fill="#14B8A6"/>
+    <text x="714" y="158" fill="#F1F5F9" font-size="18" font-weight="700">医療機器ではない</text>
+    <text x="714" y="198" fill="#94A3B8" font-size="13">研究・ポートフォリオ用途</text>
+    <text x="714" y="222" fill="#94A3B8" font-size="13">臨床妥当性は未検証</text>
+    <text x="40" y="320" fill="#94A3B8" font-size="13">詳細は docs/evaluation_notes_ja.md。出典は rsna_cv_summary.json。</text>
+  </g>
+</svg>

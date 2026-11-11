@@ -5,11 +5,11 @@
   <rect width="960" height="340" fill="#0B1220"/>
   <g font-family="Helvetica, Arial, sans-serif">
     <text x="40" y="42" fill="#F1F5F9" font-size="28" font-weight="700">Where to look</text>
-    <text x="40" y="74" fill="#94A3B8" font-size="16">Four doors. Open them in order if you have five minutes.</text>
+    <text x="40" y="74" fill="#94A3B8" font-size="16">Four primary areas. Review left to right for a short pass.</text>
     <rect x="40" y="110" rx="14" ry="14" width="200" height="150" fill="#152033" stroke="#38BDF8" stroke-width="3"/>
     <text x="56" y="152" fill="#F1F5F9" font-size="20" font-weight="700">README</text>
-    <text x="56" y="190" fill="#94A3B8" font-size="14">30-second picture</text>
-    <text x="56" y="216" fill="#94A3B8" font-size="14">then quickstart</text>
+    <text x="56" y="190" fill="#94A3B8" font-size="14">overview</text>
+    <text x="56" y="216" fill="#94A3B8" font-size="14">then smoke test</text>
     <rect x="270" y="110" rx="14" ry="14" width="200" height="150" fill="#152033" stroke="#14B8A6" stroke-width="3"/>
     <text x="286" y="152" fill="#F1F5F9" font-size="20" font-weight="700">docs/</text>
     <text x="286" y="190" fill="#94A3B8" font-size="14">figures · notes</text>

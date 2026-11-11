@@ -1,14 +1,15 @@
-# 再現性チェックリスト
+# 再現性点検表
 
-本稿は、公開版 RSNA ICH リポジトリを外部レビューする際の簡易チェックリストである。
+本稿は、公開版 RSNA ICH リポジトリを外部レビューする際の点検項目を列挙する。
 
-図による概観を先に確認する場合は [visual_index_ja.md](visual_index_ja.md) を参照する。
+図による整理を先に確認する場合は [visual_index_ja.md](visual_index_ja.md) を参照する。
 
 ## 1. パッケージの完全性
 
 - READMEおよびリリースノートが参照する安定スナップショットのタグを確認する。
 - リポジトリに機微な医療データや非公開の実行成果物が含まれていないことを確認する。
-- 必要に応じ、`core/pipeline` で `python scripts/smoke_test.py --use_dummy_data` または `python tools/make_manifest.py` を実行し、マニフェストを更新する。
+- 必要に応じ、`core/pipeline` で `python scripts/smoke_test.py --use_dummy_data` を実行する。
+- 必要に応じ、`python tools/make_manifest.py` を実行し、マニフェストを更新する。
 
 ## 2. ドキュメントの整合性
 
@@ -39,17 +40,18 @@
 
 ## 6. モデル登録の検証
 
-- リポジトリ直下では `python core/pipeline/tools/verify_registration.py --run-dir <REPRESENTATIVE_RUN_DIR> --model-name rsna-convnext25d --checkpoint best_wlogloss.pt --promotion-rule "val_logloss_weighted<=0.055" --registered-model-name rsna-convnext25d-verify`、`core/pipeline` では `python tools/verify_registration.py ...` を実行する。
+- リポジトリ直下では `python core/pipeline/tools/verify_registration.py` を、代表的な実行ディレクトリと昇格条件を引数に付けて実行する。
+- `core/pipeline` 配下では `python tools/verify_registration.py` を同等の引数で実行する。
 - `artifacts/verification/registered_models/.../registration.json` が生成されることを確認する。
 - 標準出力のJSON要約に、想定どおりの `promotion_status` およびalias結果が含まれることを確認する。
 
 ## 7. レビュー上の合格条件
 
-- 主要指標、リーク対策、最初に実行するコマンドを3分以内に把握できる。
-- train → evaluate → audit → API demo の流れを、非公開スクリプトに頼らず追跡できる。
+- 主要指標、情報リーク対策、最初に実行するコマンドを短時間で把握できる。
+- 学習、評価、監査、APIデモの流れを、非公開スクリプトに頼らず追跡できる。
 - 保護データがなくても、リポジトリの配線および再現性の考え方を確認できる。
 
 ## 8. 既知の制約
 
-- 本チェックリストが検証するのは公開物としての再現性導線であり、Kaggle本番スコアの完全再現そのものではない。
+- 本点検表が検証するのは公開物としての再現性導線であり、Kaggle本番スコアの完全再現そのものではない。
 - 指標の完全再現には、別途用意したRSNAデータおよび対応する学習環境が必要である。

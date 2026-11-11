@@ -1,14 +1,16 @@
 # RSNA ICH（P1 / Tier A）実験ランブック
 
-目的: Kaggle RSNA ICH の **weighted multi-label log loss ≤ 0.060（Tier A）** を最短で狙う。
+目的: Kaggle RSNA ICH の加重マルチラベル対数損失 ≤ 0.060（Tier A）を最短で狙う。
 
 ## 前提
-- RSNAデータ配置: `<RSNA_ROOT>/stage_2_train.csv` と `<RSNA_ROOT>/stage_2_train/*.dcm`
-- 実行は `core/pipeline/` から行います（スクリプトが自身の位置から `core/pipeline/` に `cd` します）
-- デバイスは `TORCH_DEVICE`（例: `mps`）で選択
+
+- RSNAデータの配置は `<RSNA_ROOT>/stage_2_train.csv` および `<RSNA_ROOT>/stage_2_train/*.dcm` とする。
+- 実行は `core/pipeline/` から行う（スクリプトは自身の位置から `core/pipeline/` に移動する）。
+- デバイスは `TORCH_DEVICE`（例: `mps`）で選択する。
 
 ## 実行（推奨順）
-最小のA/Bで「不均衡対策（pos_weight vs sampler）」と「2.5D + 強バックボーン」の効きを確認します。
+
+最小の A/B 比較で、不均衡対策（`pos_weight` と sampler）および 2.5D と強バックボーンの効果を確認する。
 
 ```zsh
 cd core/pipeline
@@ -18,26 +20,31 @@ chmod +x scripts/run_rsna_p1_tierA_ab.zsh
 ./scripts/run_rsna_p1_tierA_ab.zsh <RSNA_ROOT> results/rsna_p1 mps
 ```
 
-## 何を見るか（重要）
-各 run ディレクトリに以下が出ます。
+## 確認すべき成果物
 
-- `meta.json`: 実験条件（split/arch/stack_slices/windows など）
-- `log.jsonl`: 各epochの指標
-- `best_wlogloss.pt`: **主KPI（val_logloss_weighted）が最小**のチェックポイント
+各実行ディレクトリに次が出力される。
 
-最重要KPI:
-- `val_logloss_weighted`（=Kaggle weighted logloss。**小さいほど良い**）
+- `meta.json`: 実験条件（分割、アーキテクチャ、`stack_slices`、窓処理など）
+- `log.jsonl`: 各エポックの指標
+- `best_wlogloss.pt`: 主指標（`val_logloss_weighted`）が最小のチェックポイント
 
-併記:
-- `val_auc_mean`（大きいほど良いが、Tier A判定は logloss 優先）
+最重要の指標は次である。
 
-## 次アクション
-- `val_logloss_weighted` が一番小さい run を採用
-- その run の `best_wlogloss.pt` を使って `src/inference/predict_rsna_ich_submission.py` で submission を作る
-  - `enforce_any_max` はON推奨（anyの論理整合）
-  - ただし `enforce_any_max` は `val_logloss_weighted` を悪化させる傾向があるため、必要に応じて `log.jsonl` の `val_logloss_weighted_raw`（後処理前）も併記して診断
+- `val_logloss_weighted`（Kaggle の加重対数損失。小さいほど良い）
 
-最短（best run を自動選択して submission 生成）:
+併記する指標は次である。
+
+- `val_auc_mean`（大きいほど良いが、Tier A 判定は対数損失を優先する）
+
+## 次の作業
+
+- `val_logloss_weighted` が最小の実行結果を採用する。
+- その実行結果の `best_wlogloss.pt` を用い、`src/inference/predict_rsna_ich_submission.py` で提出用ファイルを作成する。
+  - `enforce_any_max` は有効を推奨する（`any` の論理整合）。
+  - ただし `enforce_any_max` は `val_logloss_weighted` を悪化させうる。
+  - 必要に応じて `log.jsonl` の `val_logloss_weighted_raw`（後処理前）も併記して診断する。
+
+最短手順は、最良の実行結果を自動選択して提出用ファイルを生成することである。
 
 ```zsh
 cd core/pipeline

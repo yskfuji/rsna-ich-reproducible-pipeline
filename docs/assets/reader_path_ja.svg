@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 360" width="100%" preserveAspectRatio="xMidYMid meet" role="img" aria-labelledby="title desc">
+  <title id="title">想定読者と閲覧経路</title>
+  <desc id="desc">三つの想定読者。</desc>
+  <rect width="960" height="360" fill="#0B1220"/>
+  <g font-family="Helvetica, Arial, sans-serif">
+    <text x="40" y="42" fill="#F1F5F9" font-size="28" font-weight="700">想定読者と閲覧の順序</text>
+    <text x="40" y="74" fill="#94A3B8" font-size="16">同一リポジトリに三つの閲覧深度がある。いずれの経路も評価上の制約の確認に帰着する。</text>
+    <rect x="40" y="100" rx="12" ry="12" width="880" height="60" fill="#152033"/>
+    <rect x="40" y="100" width="10" height="60" fill="#38BDF8"/>
+    <text x="70" y="136" fill="#F1F5F9" font-size="18" font-weight="700">採用担当</text>
+    <text x="300" y="136" fill="#94A3B8" font-size="15">図 → 指標 → 制約</text>
+    <text x="820" y="136" fill="#38BDF8" font-size="15" font-weight="700">15分程度</text>
+    <rect x="40" y="180" rx="12" ry="12" width="880" height="60" fill="#152033"/>
+    <rect x="40" y="180" width="10" height="60" fill="#14B8A6"/>
+    <text x="70" y="216" fill="#F1F5F9" font-size="18" font-weight="700">機械学習技術者</text>
+    <text x="300" y="216" fill="#94A3B8" font-size="15">動作確認 → 分割監査 → 実装</text>
+    <text x="820" y="216" fill="#14B8A6" font-size="15" font-weight="700">45分程度</text>
+    <rect x="40" y="260" rx="12" ry="12" width="880" height="60" fill="#152033"/>
+    <rect x="40" y="260" width="10" height="60" fill="#F59E0B"/>
+    <text x="70" y="296" fill="#F1F5F9" font-size="18" font-weight="700">研究者</text>
+    <text x="300" y="296" fill="#94A3B8" font-size="15">評価ノート → JSON → 評価手順</text>
+    <text x="820" y="296" fill="#F59E0B" font-size="15" font-weight="700">2時間程度</text>
+  </g>
+</svg>

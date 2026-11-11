@@ -1,26 +1,26 @@
 # 評価ノート：代表指標の解釈
 
-**言語:** [英語版](evaluation_notes.md) | 日本語
+**言語:** [英語版](evaluation_notes.md) | 日本語。
 
 本稿は、READMEに掲載する代表指標について、測定した内容、測定していない内容、および値の出典を整理する。以下の数値の出典は [`core/pipeline/reports/rsna_cv_summary.json`](../core/pipeline/reports/rsna_cv_summary.json) である。継続的統合（CI）では [`scripts/check_metric_claims.py`](../scripts/check_metric_claims.py) が同JSONから数値を再計算し、文書記載と照合する。
 
 ## 0. 図による整理
 
-<p align="center"><img src="assets/eval_protocol.png" alt="評価の制約" width="100%" /></p>
+<p align="center"><img src="assets/eval_protocol_ja.png" alt="評価の制約" width="100%" /></p>
 
 *要点は次の四点である。追加学習は1エポックに限る。初期重みは共通である。校正と評価は同じ検証データを用いる。医療機器ではない。*
 
-<p align="center"><img src="assets/split_study.png" alt="検査単位の分割" width="100%" /></p>
+<p align="center"><img src="assets/split_study_ja.png" alt="検査単位の分割" width="100%" /></p>
 
-<p align="center"><img src="assets/labels_taxonomy.png" alt="6ラベルの模式" width="100%" /></p>
+<p align="center"><img src="assets/labels_taxonomy_ja.png" alt="6ラベルの模式" width="100%" /></p>
 
 *図は模式図である。実患者の画像ではない。*
 
-<p align="center"><img src="assets/evidence_chain.png" alt="根拠のつながり" width="100%" /></p>
+<p align="center"><img src="assets/evidence_chain_ja.png" alt="根拠のつながり" width="100%" /></p>
 
-<p align="center"><img src="assets/cv_folds.png" alt="fold別指標" width="100%" /></p>
+<p align="center"><img src="assets/cv_folds_ja.png" alt="fold別指標" width="100%" /></p>
 
-<p align="center"><img src="assets/uncertainty_seeds.png" alt="シード別の不確実性" width="100%" /></p>
+<p align="center"><img src="assets/uncertainty_seeds_ja.png" alt="シード別の不確実性" width="100%" /></p>
 
 ```mermaid
 flowchart TB
@@ -89,10 +89,27 @@ erDiagram
 
 ## 5. 参考文献
 
-- Flanders AE, et al. Construction of a Machine Learning Dataset through Collaboration: The RSNA 2019 Brain CT Hemorrhage Challenge. *Radiology: Artificial Intelligence*. 2020;2(3):e190211. <https://doi.org/10.1148/ryai.2020190211>
-- Kaggle. RSNA Intracranial Hemorrhage Detection (2019), Evaluation. <https://www.kaggle.com/competitions/rsna-intracranial-hemorrhage-detection/overview/evaluation>
-- Naeini MP, Cooper GF, Hauskrecht M. Obtaining Well Calibrated Probabilities Using Bayesian Binning. *AAAI*. 2015.
-- Guo C, Pleiss G, Sun Y, Weinberger KQ. On Calibration of Modern Neural Networks. *ICML*. 2017.
-- Gal Y, Ghahramani Z. Dropout as a Bayesian Approximation: Representing Model Uncertainty in Deep Learning. *ICML*. 2016.
-- Geifman Y, Uziel G, El-Yaniv R. Bias-Reduced Uncertainty Estimation for Deep Neural Classifiers. *ICLR*. 2019. <https://arxiv.org/abs/1805.08206>
-- Bengio Y, Grandvalet Y. No Unbiased Estimator of the Variance of K-Fold Cross-Validation. *JMLR*. 2004;5:1089–1105. <https://www.jmlr.org/papers/v5/grandvalet04a.html>
+次の文献を参照する。書誌情報は英語表記のまま示す。
+
+```
+Flanders AE, et al. The RSNA 2019 Brain CT Hemorrhage Challenge.
+Radiology: Artificial Intelligence. 2020;2(3):e190211.
+https://doi.org/10.1148/ryai.2020190211
+
+Kaggle. RSNA Intracranial Hemorrhage Detection (2019), Evaluation.
+https://www.kaggle.com/competitions/rsna-intracranial-hemorrhage-detection/overview/evaluation
+
+Naeini MP, et al. Obtaining Well Calibrated Probabilities Using Bayesian Binning. AAAI. 2015.
+
+Guo C, et al. On Calibration of Modern Neural Networks. ICML. 2017.
+
+Gal Y, Ghahramani Z. Dropout as a Bayesian Approximation. ICML. 2016.
+
+Geifman Y, et al. Bias-Reduced Uncertainty Estimation. ICLR. 2019.
+https://arxiv.org/abs/1805.08206
+
+Bengio Y, Grandvalet Y. No Unbiased Estimator of the Variance of K-Fold CV.
+JMLR. 2004;5:1089–1105.
+https://www.jmlr.org/papers/v5/grandvalet04a.html
+```
+

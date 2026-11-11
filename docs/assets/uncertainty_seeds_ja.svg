@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 390" width="100%" preserveAspectRatio="xMidYMid meet" role="img" aria-labelledby="title desc">
+  <title id="title">シード別の不確実性指標</title>
+  <desc id="desc">シードごとのAUROCとECE。</desc>
+  <rect width="960" height="390" fill="#0B1220"/>
+  <g font-family="Helvetica, Arial, sans-serif">
+    <text x="40" y="42" fill="#F1F5F9" font-size="28" font-weight="700">10シードにわたる不確実性評価</text>
+    <text x="40" y="74" fill="#94A3B8" font-size="15">琥珀は誤り検出AUROC（高いほど良い）。薔薇色はECE（低いほど良い；図では反転表示）。</text>
+    <line x1="50" y1="260" x2="910" y2="260" stroke="#1F2A3D" stroke-width="2"/>
+    <circle cx="70" cy="172" r="8" fill="#F59E0B"/>
+    <circle cx="70" cy="213" r="8" fill="#F43F5E" opacity="0.85"/>
+    <text x="64" y="290" fill="#94A3B8" font-size="12">s0</text>
+    <circle cx="155" cy="149" r="8" fill="#F59E0B"/>
+    <circle cx="155" cy="193" r="8" fill="#F43F5E" opacity="0.85"/>
+    <text x="149" y="290" fill="#94A3B8" font-size="12">s1</text>
+    <circle cx="240" cy="209" r="8" fill="#F59E0B"/>
+    <circle cx="240" cy="207" r="8" fill="#F43F5E" opacity="0.85"/>
+    <text x="234" y="290" fill="#94A3B8" font-size="12">s2</text>
+    <circle cx="325" cy="200" r="8" fill="#F59E0B"/>
+    <circle cx="325" cy="188" r="8" fill="#F43F5E" opacity="0.85"/>
+    <text x="319" y="290" fill="#94A3B8" font-size="12">s3</text>
+    <circle cx="410" cy="212" r="8" fill="#F59E0B"/>
+    <circle cx="410" cy="196" r="8" fill="#F43F5E" opacity="0.85"/>
+    <text x="404" y="290" fill="#94A3B8" font-size="12">s4</text>
+    <circle cx="495" cy="238" r="8" fill="#F59E0B"/>
+    <circle cx="495" cy="221" r="8" fill="#F43F5E" opacity="0.85"/>
+    <text x="489" y="290" fill="#94A3B8" font-size="12">s5</text>
+    <circle cx="580" cy="199" r="8" fill="#F59E0B"/>
+    <circle cx="580" cy="200" r="8" fill="#F43F5E" opacity="0.85"/>
+    <text x="574" y="290" fill="#94A3B8" font-size="12">s6</text>
+    <circle cx="665" cy="242" r="8" fill="#F59E0B"/>
+    <circle cx="665" cy="197" r="8" fill="#F43F5E" opacity="0.85"/>
+    <text x="659" y="290" fill="#94A3B8" font-size="12">s7</text>
+    <circle cx="750" cy="185" r="8" fill="#F59E0B"/>
+    <circle cx="750" cy="185" r="8" fill="#F43F5E" opacity="0.85"/>
+    <text x="744" y="290" fill="#94A3B8" font-size="12">s8</text>
+    <circle cx="835" cy="205" r="8" fill="#F59E0B"/>
+    <circle cx="835" cy="213" r="8" fill="#F43F5E" opacity="0.85"/>
+    <text x="829" y="290" fill="#94A3B8" font-size="12">s9</text>
+    <rect x="70" y="320" width="12" height="12" fill="#F59E0B"/><text x="90" y="331" fill="#94A3B8" font-size="13">AUROC</text>
+    <rect x="180" y="320" width="12" height="12" fill="#F43F5E"/><text x="200" y="331" fill="#94A3B8" font-size="13">ECE（反転表示）</text>
+    <text x="40" y="365" fill="#94A3B8" font-size="13">MC Dropoutの標本数は30。温度は同一検証データで推定する。出典は rsna_cv_summary.json。</text>
+  </g>
+</svg>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 340" width="100%" preserveAspectRatio="xMidYMid meet" role="img" aria-labelledby="title desc">
+  <title id="title">リポジトリの案内</title>
+  <desc id="desc">主要な四つの領域。</desc>
+  <rect width="960" height="340" fill="#0B1220"/>
+  <g font-family="Helvetica, Arial, sans-serif">
+    <text x="40" y="42" fill="#F1F5F9" font-size="28" font-weight="700">参照すべき場所</text>
+    <text x="40" y="74" fill="#94A3B8" font-size="16">主要な四領域である。短時間で確認する場合は左から順に参照する。</text>
+    <rect x="40" y="110" rx="14" ry="14" width="200" height="150" fill="#152033" stroke="#38BDF8" stroke-width="3"/>
+    <text x="56" y="152" fill="#F1F5F9" font-size="20" font-weight="700">README</text>
+    <text x="56" y="190" fill="#94A3B8" font-size="14">構成の概要</text>
+    <text x="56" y="216" fill="#94A3B8" font-size="14">続いて動作確認</text>
+    <rect x="270" y="110" rx="14" ry="14" width="200" height="150" fill="#152033" stroke="#14B8A6" stroke-width="3"/>
+    <text x="286" y="152" fill="#F1F5F9" font-size="20" font-weight="700">docs/</text>
+    <text x="286" y="190" fill="#94A3B8" font-size="14">図と評価ノート</text>
+    <text x="286" y="216" fill="#94A3B8" font-size="14">用語集と監査</text>
+    <rect x="500" y="110" rx="14" ry="14" width="210" height="150" fill="#152033" stroke="#F59E0B" stroke-width="3"/>
+    <text x="516" y="152" fill="#F1F5F9" font-size="20" font-weight="700">core/pipeline/</text>
+    <text x="516" y="190" fill="#94A3B8" font-size="14">学習・評価・API</text>
+    <text x="516" y="216" fill="#94A3B8" font-size="14">試験と報告</text>
+    <rect x="740" y="110" rx="14" ry="14" width="180" height="150" fill="#152033" stroke="#F43F5E" stroke-width="3"/>
+    <text x="756" y="152" fill="#F1F5F9" font-size="20" font-weight="700">scripts/</text>
+    <text x="756" y="190" fill="#94A3B8" font-size="14">継続的統合の検査</text>
+    <text x="756" y="216" fill="#94A3B8" font-size="14">動作確認と指標照合</text>
+    <text x="40" y="300" fill="#94A3B8" font-size="13">rsna_ich/ はポートフォリオ向けの入口である。</text>
+  </g>
+</svg>

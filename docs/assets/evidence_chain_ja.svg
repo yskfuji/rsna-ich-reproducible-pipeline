@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 310" width="100%" preserveAspectRatio="xMidYMid meet" role="img" aria-labelledby="title desc">
+  <title id="title">指標の根拠連鎖</title>
+  <desc id="desc">READMEの記載からスカラー値への経路。</desc>
+  <rect width="960" height="310" fill="#0B1220"/>
+  <g font-family="Helvetica, Arial, sans-serif">
+    <text x="40" y="42" fill="#F1F5F9" font-size="28" font-weight="700">READMEの数値が照合される経路</text>
+    <text x="40" y="74" fill="#94A3B8" font-size="16">継続的統合は、fold別・シード別JSONから代表値を再計算する。</text>
+    <rect x="40" y="110" rx="12" width="180" height="90" fill="#152033" stroke="#38BDF8" stroke-width="3"/>
+    <text x="56" y="162" fill="#F1F5F9" font-size="15" font-weight="700">1. READMEの記載</text>
+    <rect x="280" y="110" rx="12" width="180" height="90" fill="#152033" stroke="#14B8A6" stroke-width="3"/>
+    <text x="296" y="162" fill="#F1F5F9" font-size="15" font-weight="700">2. 平均 ± 標準偏差</text>
+    <rect x="520" y="110" rx="12" width="180" height="90" fill="#152033" stroke="#F59E0B" stroke-width="3"/>
+    <text x="536" y="162" fill="#F1F5F9" font-size="15" font-weight="700">3. 要約JSON</text>
+    <rect x="760" y="110" rx="12" width="180" height="90" fill="#152033" stroke="#F43F5E" stroke-width="3"/>
+    <text x="776" y="162" fill="#F1F5F9" font-size="15" font-weight="700">4. fold / シード</text>
+    <path d="M220 155 H270" stroke="#94A3B8" stroke-width="3"/>
+    <path d="M460 155 H510" stroke="#94A3B8" stroke-width="3"/>
+    <path d="M700 155 H750" stroke="#94A3B8" stroke-width="3"/>
+    <text x="40" y="250" fill="#94A3B8" font-size="13">照合: scripts/check_metric_claims.py · 衛生: scripts/check_public_hygiene.py</text>
+    <text x="40" y="278" fill="#94A3B8" font-size="13">制約の記述は、対象数値と同一の節に置く。</text>
+  </g>
+</svg>

@@ -4,7 +4,7 @@
   <desc id="desc">Four headline metrics as cards.</desc>
   <rect width="960" height="370" fill="#0B1220"/>
   <g font-family="Helvetica, Arial, sans-serif">
-    <text x="40" y="42" fill="#F1F5F9" font-size="28" font-weight="700">3-minute metrics snapshot</text>
+    <text x="40" y="42" fill="#F1F5F9" font-size="28" font-weight="700">Headline metrics snapshot</text>
     <text x="40" y="74" fill="#94A3B8" font-size="15">Mean ± sample SD (ddof=1). Source: core/pipeline/reports/rsna_cv_summary.json</text>
     <rect x="40" y="100" rx="14" ry="14" width="200" height="200" fill="#152033"/>
     <text x="54" y="132" fill="#94A3B8" font-size="13">Weighted logloss ↓</text>

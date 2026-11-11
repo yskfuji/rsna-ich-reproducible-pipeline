@@ -1,6 +1,6 @@
 # 用語集
 
-図による概観は [visual_index_ja.md](visual_index_ja.md) を先に参照する。
+図による整理は [visual_index_ja.md](visual_index_ja.md) を先に参照する。
 
 本リポジトリの日本語文書で用いる用語と、対応する英語表記を示す。新規に書く文章は本表に合わせ、表記の揺れを避ける。
 
