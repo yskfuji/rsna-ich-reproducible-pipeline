@@ -16,7 +16,7 @@ RSNA_ROOT="$1"
 OUT_DIR="$2"
 DEVICE="${3:-mps}"
 
-ROOT_DIR="/Users/yusukefujinami/ToReBrain/ToReBrain-pipeline"
+ROOT_DIR="${ROOT_DIR:-${0:A:h:h}}"
 cd "$ROOT_DIR"
 
 export TORCH_DEVICE="$DEVICE"

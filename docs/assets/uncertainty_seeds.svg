@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="410" viewBox="0 0 1200 410" role="img" aria-labelledby="title desc">
+  <title id="title">Uncertainty metrics by seed</title>
+  <desc id="desc">Per-seed AUROC and ECE markers.</desc>
+  <rect width="1200" height="410" fill="#0B1220"/>
+  <g font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Helvetica, Arial, sans-serif">
+    <text x="40" y="48" fill="#F1F5F9" font-size="32" font-weight="700">Uncertainty sweep across 10 seeds</text>
+    <text x="40" y="82" fill="#94A3B8" font-size="18">Amber = error-detection AUROC (higher better). Rose = ECE (lower better → plotted inverted).</text>
+    <line x1="60" y1="280" x2="1120" y2="280" stroke="#1F2A3D" stroke-width="2"/>
+    <circle cx="80" cy="179" r="10" fill="#F59E0B"/>
+    <circle cx="80" cy="226" r="10" fill="#F43F5E" opacity="0.85"/>
+    <text x="72" y="310" fill="#94A3B8" font-size="13">s0</text>
+    <circle cx="180" cy="153" r="10" fill="#F59E0B"/>
+    <circle cx="180" cy="203" r="10" fill="#F43F5E" opacity="0.85"/>
+    <text x="172" y="310" fill="#94A3B8" font-size="13">s1</text>
+    <circle cx="280" cy="222" r="10" fill="#F59E0B"/>
+    <circle cx="280" cy="220" r="10" fill="#F43F5E" opacity="0.85"/>
+    <text x="272" y="310" fill="#94A3B8" font-size="13">s2</text>
+    <circle cx="380" cy="212" r="10" fill="#F59E0B"/>
+    <circle cx="380" cy="197" r="10" fill="#F43F5E" opacity="0.85"/>
+    <text x="372" y="310" fill="#94A3B8" font-size="13">s3</text>
+    <circle cx="480" cy="225" r="10" fill="#F59E0B"/>
+    <circle cx="480" cy="206" r="10" fill="#F43F5E" opacity="0.85"/>
+    <text x="472" y="310" fill="#94A3B8" font-size="13">s4</text>
+    <circle cx="580" cy="254" r="10" fill="#F59E0B"/>
+    <circle cx="580" cy="236" r="10" fill="#F43F5E" opacity="0.85"/>
+    <text x="572" y="310" fill="#94A3B8" font-size="13">s5</text>
+    <circle cx="680" cy="211" r="10" fill="#F59E0B"/>
+    <circle cx="680" cy="211" r="10" fill="#F43F5E" opacity="0.85"/>
+    <text x="672" y="310" fill="#94A3B8" font-size="13">s6</text>
+    <circle cx="780" cy="260" r="10" fill="#F59E0B"/>
+    <circle cx="780" cy="208" r="10" fill="#F43F5E" opacity="0.85"/>
+    <text x="772" y="310" fill="#94A3B8" font-size="13">s7</text>
+    <circle cx="880" cy="194" r="10" fill="#F59E0B"/>
+    <circle cx="880" cy="194" r="10" fill="#F43F5E" opacity="0.85"/>
+    <text x="872" y="310" fill="#94A3B8" font-size="13">s8</text>
+    <circle cx="980" cy="217" r="10" fill="#F59E0B"/>
+    <circle cx="980" cy="226" r="10" fill="#F43F5E" opacity="0.85"/>
+    <text x="972" y="310" fill="#94A3B8" font-size="13">s9</text>
+    <rect x="80" y="340" width="14" height="14" fill="#F59E0B"/><text x="104" y="352" fill="#94A3B8" font-size="14">AUROC</text>
+    <rect x="200" y="340" width="14" height="14" fill="#F43F5E"/><text x="224" y="352" fill="#94A3B8" font-size="14">ECE (inverted)</text>
+    <text x="40" y="385" fill="#94A3B8" font-size="15">MC Dropout n=30 · temperature fitted on the same holdout · source: rsna_cv_summary.json</text>
+  </g>
+</svg>

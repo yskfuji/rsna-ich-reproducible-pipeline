@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="400" viewBox="0 0 1200 400" role="img" aria-labelledby="title desc">
+  <title id="title">Cross-validation fold metrics</title>
+  <desc id="desc">Bar charts of logloss and AUC for five folds.</desc>
+  <rect width="1200" height="400" fill="#0B1220"/>
+  <g font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Helvetica, Arial, sans-serif">
+    <text x="40" y="48" fill="#F1F5F9" font-size="32" font-weight="700">Per-fold view (5-fold GroupKFold)</text>
+    <text x="40" y="82" fill="#94A3B8" font-size="18">Lower logloss and higher AUC are better. Values recomputed from rsna_cv_summary.json.</text>
+    <text x="90" y="120" fill="#38BDF8" font-size="20" font-weight="700">Weighted logloss ↓</text>
+    <text x="620" y="120" fill="#84CC16" font-size="20" font-weight="700">Mean AUC ↑</text>
+    <line x1="70" y1="300" x2="520" y2="300" stroke="#1F2A3D" stroke-width="2"/>
+    <line x1="600" y1="300" x2="1050" y2="300" stroke="#1F2A3D" stroke-width="2"/>
+    <rect x="90" y="184" width="55" height="116" rx="8" fill="#38BDF8"/>
+    <text x="98" y="325" fill="#94A3B8" font-size="14">f0</text>
+    <text x="90" y="174" fill="#F1F5F9" font-size="13">0.047</text>
+    <rect x="180" y="144" width="55" height="156" rx="8" fill="#38BDF8"/>
+    <text x="188" y="325" fill="#94A3B8" font-size="14">f1</text>
+    <text x="180" y="134" fill="#F1F5F9" font-size="13">0.063</text>
+    <rect x="270" y="175" width="55" height="125" rx="8" fill="#38BDF8"/>
+    <text x="278" y="325" fill="#94A3B8" font-size="14">f2</text>
+    <text x="270" y="165" fill="#F1F5F9" font-size="13">0.051</text>
+    <rect x="360" y="165" width="55" height="135" rx="8" fill="#38BDF8"/>
+    <text x="368" y="325" fill="#94A3B8" font-size="14">f3</text>
+    <text x="360" y="155" fill="#F1F5F9" font-size="13">0.055</text>
+    <rect x="450" y="176" width="55" height="124" rx="8" fill="#38BDF8"/>
+    <text x="458" y="325" fill="#94A3B8" font-size="14">f4</text>
+    <text x="450" y="166" fill="#F1F5F9" font-size="13">0.051</text>
+    <rect x="620" y="246" width="55" height="54" rx="8" fill="#84CC16"/>
+    <text x="628" y="325" fill="#94A3B8" font-size="14">f0</text>
+    <text x="620" y="236" fill="#F1F5F9" font-size="13">0.9861</text>
+    <rect x="710" y="261" width="55" height="39" rx="8" fill="#84CC16"/>
+    <text x="718" y="325" fill="#94A3B8" font-size="14">f1</text>
+    <text x="710" y="251" fill="#F1F5F9" font-size="13">0.9844</text>
+    <rect x="800" y="204" width="55" height="96" rx="8" fill="#84CC16"/>
+    <text x="808" y="325" fill="#94A3B8" font-size="14">f2</text>
+    <text x="800" y="194" fill="#F1F5F9" font-size="13">0.9907</text>
+    <rect x="890" y="231" width="55" height="69" rx="8" fill="#84CC16"/>
+    <text x="898" y="325" fill="#94A3B8" font-size="14">f3</text>
+    <text x="890" y="221" fill="#F1F5F9" font-size="13">0.9877</text>
+    <rect x="980" y="194" width="55" height="106" rx="8" fill="#84CC16"/>
+    <text x="988" y="325" fill="#94A3B8" font-size="14">f4</text>
+    <text x="980" y="184" fill="#F1F5F9" font-size="13">0.9919</text>
+    <text x="40" y="370" fill="#94A3B8" font-size="15">Fold SD understates variance because folds share training data (Bengio &amp; Grandvalet, 2004).</text>
+  </g>
+</svg>

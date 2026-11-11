@@ -27,7 +27,7 @@ RUNS_BASE_2="$3"
 OUT_CSV="${4:-submission_ensemble.csv}"
 DEVICE="${5:-mps}"
 
-ROOT_DIR="/Users/yusukefujinami/ToReBrain/ToReBrain-pipeline"
+ROOT_DIR="${ROOT_DIR:-${0:A:h:h}}"
 cd "$ROOT_DIR"
 
 export TORCH_DEVICE="$DEVICE"

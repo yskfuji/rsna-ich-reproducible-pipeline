@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="400" viewBox="0 0 1200 400" role="img" aria-labelledby="title desc">
+  <title id="title">Reader paths</title>
+  <desc id="desc">Three reviewer personas and suggested paths.</desc>
+  <rect width="1200" height="400" fill="#0B1220"/>
+  <g font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Helvetica, Arial, sans-serif">
+    <text x="40" y="48" fill="#F1F5F9" font-size="32" font-weight="700">Pick your path</text>
+    <text x="40" y="82" fill="#94A3B8" font-size="18">Same repository, three depths. Every path ends at the evaluation caveats.</text>
+    <rect x="40" y="120" rx="16" ry="16" width="1120" height="70" fill="#152033"/>
+    <rect x="40" y="120" width="12" height="70" fill="#38BDF8"/>
+    <text x="80" y="162" fill="#F1F5F9" font-size="22" font-weight="700">Hiring manager</text>
+    <text x="360" y="162" fill="#94A3B8" font-size="18">Look at pictures → metrics → caveats</text>
+    <text x="1040" y="162" fill="#38BDF8" font-size="18" font-weight="700">15 min</text>
+    <rect x="40" y="210" rx="16" ry="16" width="1120" height="70" fill="#152033"/>
+    <rect x="40" y="210" width="12" height="70" fill="#14B8A6"/>
+    <text x="80" y="252" fill="#F1F5F9" font-size="22" font-weight="700">ML engineer</text>
+    <text x="360" y="252" fill="#94A3B8" font-size="18">Smoke test → split audit → training code</text>
+    <text x="1040" y="252" fill="#14B8A6" font-size="18" font-weight="700">45 min</text>
+    <rect x="40" y="300" rx="16" ry="16" width="1120" height="70" fill="#152033"/>
+    <rect x="40" y="300" width="12" height="70" fill="#F59E0B"/>
+    <text x="80" y="342" fill="#F1F5F9" font-size="22" font-weight="700">Researcher</text>
+    <text x="360" y="342" fill="#94A3B8" font-size="18">evaluation_notes → JSON → re-run protocol</text>
+    <text x="1040" y="342" fill="#F59E0B" font-size="18" font-weight="700">2 h</text>
+  </g>
+</svg>

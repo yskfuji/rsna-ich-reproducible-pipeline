@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="420" viewBox="0 0 1200 420" role="img" aria-labelledby="title desc">
+  <title id="title">Study-level split vs image-level split</title>
+  <desc id="desc">Comparison of study grouping versus risky image splits.</desc>
+  <rect width="1200" height="420" fill="#0B1220"/>
+  <g font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Helvetica, Arial, sans-serif">
+    <text x="40" y="48" fill="#F1F5F9" font-size="32" font-weight="700">How the split avoids image-level leakage</text>
+    <text x="40" y="82" fill="#94A3B8" font-size="18">Grouping key = StudyInstanceUID. Patient-level split is not implemented yet.</text>
+
+    <rect x="40" y="120" rx="18" ry="18" width="540" height="230" fill="#152033" stroke="#14B8A6" stroke-width="3"/>
+    <text x="70" y="165" fill="#14B8A6" font-size="22" font-weight="700">This repo (study split)</text>
+    <rect x="70" y="190" rx="10" width="140" height="50" fill="#14B8A6"/>
+    <text x="95" y="222" fill="#0F172A" font-size="16" font-weight="700">Study A</text>
+    <rect x="230" y="190" rx="10" width="140" height="50" fill="#14B8A6"/>
+    <text x="255" y="222" fill="#0F172A" font-size="16" font-weight="700">Study B</text>
+    <rect x="390" y="190" rx="10" width="140" height="50" fill="#38BDF8"/>
+    <text x="415" y="222" fill="#0F172A" font-size="16" font-weight="700">Study C</text>
+    <text x="70" y="280" fill="#94A3B8" font-size="15">train ← A,B · val ← C</text>
+    <text x="70" y="308" fill="#94A3B8" font-size="15">All slices of a study stay on one side.</text>
+
+    <rect x="620" y="120" rx="18" ry="18" width="540" height="230" fill="#152033" stroke="#F43F5E" stroke-width="3"/>
+    <text x="650" y="165" fill="#F43F5E" font-size="22" font-weight="700">Risky (image split)</text>
+    <rect x="650" y="190" rx="8" width="70" height="40" fill="#F43F5E"/>
+    <rect x="735" y="190" rx="8" width="70" height="40" fill="#F59E0B"/>
+    <rect x="820" y="190" rx="8" width="70" height="40" fill="#F43F5E"/>
+    <rect x="905" y="190" rx="8" width="70" height="40" fill="#F59E0B"/>
+    <rect x="990" y="190" rx="8" width="70" height="40" fill="#F43F5E"/>
+    <text x="650" y="270" fill="#94A3B8" font-size="15">Slices from the same study can land in</text>
+    <text x="650" y="298" fill="#94A3B8" font-size="15">both train and val → optimistic scores.</text>
+
+    <text x="40" y="390" fill="#94A3B8" font-size="15">Audit hook: core/pipeline/tools/audit_rsna_split.py reports group and image-id intersections.</text>
+  </g>
+</svg>

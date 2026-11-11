@@ -1,0 +1,48 @@
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  integrity:
+    name: Publication integrity (no ML deps)
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0  # v7.1.0
+        with:
+          python-version: "3.11"
+      - name: Metric claims match reports/rsna_cv_summary.json
+        run: python scripts/check_metric_claims.py
+      - name: Ignore rules, local paths, patient tags, relative links
+        run: python scripts/check_public_hygiene.py
+
+  tests:
+    name: Imports, unit tests and smoke test (CPU)
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1  # v7.0.1
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0  # v7.1.0
+        with:
+          python-version: "3.11"
+          cache: pip
+          cache-dependency-path: core/pipeline/requirements.txt
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install --index-url https://download.pytorch.org/whl/cpu torch==2.14.1 torchvision==0.29.1
+          pip install -r core/pipeline/requirements.txt
+      - name: Import every module from the checkout
+        run: python scripts/check_imports.py --in-place
+      - name: Unit tests
+        working-directory: core/pipeline
+        run: python -m pytest -q tests
+      - name: Smoke test (must finish within 60 s)
+        run: timeout 60 python scripts/smoke_test.py --use_dummy_data

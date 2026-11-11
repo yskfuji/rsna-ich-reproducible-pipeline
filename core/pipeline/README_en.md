@@ -13,13 +13,38 @@ Active development continues in the repository.
 This folder (pipeline/) is a minimal pipeline to run RSNA ICH training/evaluation/inference in an **auditable, reproducible** way.
 To help reviewers decide quickly, this README starts with **reproducibility, split design (leakage prevention), comparison axes, and ablation results**.
 
+## Look at the pictures first
+
+![Pipeline](../../docs/assets/architecture.svg)
+
+![Split design](../../docs/assets/split_study.svg)
+
+![Metrics](../../docs/assets/results_snapshot.svg)
+
+![Constraints](../../docs/assets/eval_protocol.svg)
+
+![Per-fold](../../docs/assets/cv_folds.svg)
+
+![Uncertainty](../../docs/assets/uncertainty_seeds.svg)
+
+Picture-first landing page: [../../README.md](../../README.md)
+
 ---
 
 ## TL;DR (what you can verify here)
 
+> **Evaluation boundary (read first).** All headline numbers are mean ± sample standard deviation (ddof=1) recomputed in CI from [`reports/rsna_cv_summary.json`](reports/rsna_cv_summary.json).
+> - Each CV fold and each uncertainty seed fine-tunes for **1 epoch** on a subsample drawn with `limit_images=8000` (6,852 images remained in the CV run after dropping images missing from the preprocessed store).
+> - Every run starts from the same **initial checkpoint** (`rsna_convnext25d_final2_full_mps_nosamp_nopw_20260202_222608/best.pt`), trained for 6 epochs on 98% of the studies in the preprocessed training pool (645,793 slices). About 98% of each validation fold is therefore expected to have been training data for that checkpoint (expected value, not measured). The numbers show fine-tuning stability, not performance on unseen studies.
+> - Temperature scaling is fitted on the **same holdout** used to report ECE, Brier and AURC.
+> - Splits group by study; patient-level grouping is not implemented.
+> - This is a research and portfolio implementation, **not a medical device**.
+>
+> Full list of limitations and references: [../../docs/evaluation_notes.md](../../docs/evaluation_notes.md)
+
 - Reproducibility (this bundle): supported by recorded artifacts (`meta.json` / `log.jsonl`, including `split_stats`) and fixed CLI commands (e.g., `results/rsna_convnext25d_ft_repro_val05_short_20260210_101836_run1` and `_run2`).
 - Source commit (upstream, reference): `9bc2684fe0b564c792025b52694f9c4fe1a0d32d` (commit id of the upstream repository at the time this code snapshot was exported).
-- Source repo URL: this distribution does not include git metadata, so the upstream URL/history cannot be traced from this bundle alone (no `.git`).
+- Source repo URL: the upstream research repository is private. Changes to this exported snapshot are traced by the Git history of this public repository.
 - Distribution integrity (optional): generate a file manifest (paths + sha256) via `python tools/make_manifest.py` (e.g., `--out MANIFEST.sha256`) to fingerprint this bundle.
 
 - **Robustness ("was it just luck?")**: Study-level **GroupKFold(5)** with `split_by=study` yields `val_logloss_weighted = 0.05346 ± 0.00624` (`epochs=1` / `kept=6852`, fast CV).
@@ -29,12 +54,13 @@ To help reviewers decide quickly, this README starts with **reproducibility, spl
 - **Leakage audit status (2026-02-14)**: across 10 seeds, Study/Series intersections are 0, and with **pre-split tensor-hash dedup (default ON)**, exact-duplicate hash intersection between train/val is also 0.
 - **Primary metric**: Kaggle-style weighted multi-label logloss (`val_logloss_weighted`); AUC is auxiliary.
 - **Uncertainty and calibration (10 seeds, `split_by=study`, dedup enabled, retrained with dropout)**:
-  - Error-detection AUROC(any): **0.9424 ± 0.0190**
-  - ECE(any): **0.0231 ± 0.0032**
-  - Brier(any): **0.0209 ± 0.0054**
-  - AURC(weighted logloss): **0.00837 ± 0.00214**
-  - coverage=0.8 accuracy(any) gain: **+2.53 ± 0.89 pp**
+  - Error-detection AUROC(any): **0.9424 ± 0.0200**
+  - ECE(any): **0.0231 ± 0.0034**
+  - Brier(any): **0.0209 ± 0.0057**
+  - AURC(weighted logloss): **0.00837 ± 0.00225**
+  - coverage=0.8 accuracy(any) gain: **+2.53 ± 0.94 pp** (the baseline arm gains +2.98 pp under the same protocol)
   - vs. baseline (same protocol): ECE **-0.0091**, Brier **-0.0040**, AURC **-0.00139**, AUROC **+0.0046**
+  - The AUROC difference is within noise: paired by seed, it improved in only 5 of 10 seeds.
 - **Temperature-scaling boundary (important)**: the uncertainty numbers in this README come from running `--fit-temperature` on the same holdout validation split used for evaluation (fit set = eval set), so ECE/Brier may look optimistic. For strict reporting, use a calib/eval split or a separate evaluation holdout.
 - **Audit hook (subset identity)**: in addition to `split_stats` consistency, record sorted `image_id` SHA256 as `subset_fingerprint_sha256` in **`meta.json` (implemented)**. `tools/eval_rsna_uncertainty.py` also outputs `adopted_subset_fingerprint_sha256` / `val_subset_fingerprint_sha256` in its JSON.
   - `subset_fingerprint_sha256` definition: sort adopted `image_id` ascending, join with `\n`, take SHA256 of the UTF-8 string (hex)
@@ -47,7 +73,7 @@ To help reviewers decide quickly, this README starts with **reproducibility, spl
 |---|---|---|---|---|
 | Robustness | GroupKFold(5), `split_by=study`, `epochs=1`, `kept=6852` | weighted logloss `0.05346 ± 0.00624` | mean AUC `0.98815 ± 0.00311` | Shows the signal survives fold changes rather than a single lucky holdout |
 | Reproducibility | holdout `val_frac=0.05`, same seed/args run twice | weighted logloss `0.0555525` | mean AUC `0.9915841`, `abs_diff=0` for recorded `val_*` metrics in this environment | Demonstrates the exported recipe can be rerun deterministically |
-| Uncertainty / calibration | 10 seeds, `split_by=study`, de-dup enabled, dropout retrain | error-detection AUROC(any) `0.9424 ± 0.0190` | ECE(any) `0.0231 ± 0.0032`, Brier(any) `0.0209 ± 0.0054`, coverage=0.8 accuracy gain `+2.53 ± 0.89 pp` | Shows the probabilities are useful beyond raw classification accuracy |
+| Uncertainty / calibration | 10 seeds, `split_by=study`, de-dup enabled, dropout retrain | error-detection AUROC(any) `0.9424 ± 0.0200` | ECE(any) `0.0231 ± 0.0034`, Brier(any) `0.0209 ± 0.0057`, coverage=0.8 accuracy gain `+2.53 ± 0.94 pp` | Shows the probabilities are useful beyond raw classification accuracy |
 
 - Quick reproduce (holdout, 1 epoch):
 
@@ -146,7 +172,7 @@ CV results (val):
 Note: all scores above are computed with `enforce_any_max=True` (default) applied after sigmoid (see §5.1 for details).
 
 Aggregation (reproducible definition):
-- Extract `val_logloss_weighted` / `val_auc_mean` from the **last line** of each fold’s `log.jsonl`, then compute mean±std (and min/max) across folds.
+- Extract `val_logloss_weighted` / `val_auc_mean` from the **last line** of each fold’s `log.jsonl`, then compute mean±std (and min/max) across folds. Throughout this README, "std" is the sample standard deviation (ddof=1, `statistics.stdev`).
 - Use `tools/summarize_cv.py` to aggregate automatically (see §2.3).
 
 Run directory:
@@ -230,6 +256,7 @@ Pass criteria (reproducibility, recommended):
 Tested environment (this report):
 - Python 3.12.4
 - PyTorch 2.6.0 / torchvision 0.21.0
+  - Note: `requirements.txt` pins PyTorch 2.14.1 / torchvision 0.29.1 to avoid known vulnerabilities in 2.6.0. A different version may not meet the `abs_diff <= 1e-6` criterion above. To reproduce with the recorded version, use an isolated environment without network access.
 - timm: not used (`convnext_tiny` is `torchvision.models.convnext_tiny`)
 - device: `mps`
 - matmul precision: in these runs `torch.get_float32_matmul_precision() == "highest"` (default)
@@ -293,7 +320,8 @@ TORCH_DEVICE=mps python train_rsna_cnn2d_classifier.py train \
 Where `init_from` comes from:
 - `results/rsna_convnext25d_final2_full_mps_nosamp_nopw_20260202_222608/best.pt`
   - A checkpoint saved as **minimum `val_loss`** on holdout validation (`split_by=study`, `val_frac=0.02`) in another run.
-  - That run is independent from this README’s evaluation split (`val_frac=0.05`), and its selection did not use this report’s evaluation results.
+  - Its selection did not use this report’s evaluation results.
+  - **Its training data are not independent of this README’s validation folds.** It was trained on 632,808 slices (98% of the studies in the 645,793-slice preprocessed training pool), and the CV and holdout subsamples are drawn from the same pool. Most validation images were therefore probably seen by this checkpoint. A strict generalization estimate needs a CV that starts from ImageNet weights, or an initial checkpoint whose training studies exclude every validation study.
   - Used as a stable fine-tuning initialization; we do not swap it based on the CV/holdout results in this README.
   - If you want a checkpoint saved by minimum weighted logloss, use `best_wlogloss.pt` in the same folder.
 
@@ -528,7 +556,7 @@ $$
 | Kaggle LB reference (public) | ~0.046–0.060 | Full dataset, raw probs, different eval conditions |
 
 - vs. class-prior baseline: ~4.5× improvement (confirms the model is working).
-- Kaggle LB comparison is **not direct**: data volume (this README uses limit_images=8000 ≈ 1.2% of full data), `enforce_any_max` use, and val set size all differ.
+- Kaggle LB comparison is **not direct**: data volume (this README uses limit_images=8000 ≈ 1.2% of the 645,793 preprocessed slices), `enforce_any_max` use, and val set size all differ.
 
 **Statistical uncertainty of single-holdout estimates**:
 - val_frac=0.05 × limit_images=8000 ≈ **~400 samples** in the val set.

@@ -2,113 +2,114 @@
 
 **Language:** English | [Japanese](README_ja.md)
 
-Reproducible intracranial hemorrhage classification pipeline for the RSNA ICH challenge, with audit-ready documentation, calibration analysis, and leakage-safe group-split evaluation.
+[![ci](https://github.com/yskfuji/rsna-ich-reproducible-pipeline/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/yskfuji/rsna-ich-reproducible-pipeline/actions/workflows/ci.yml)
 
-**Quick links**
-- English entry: [rsna_ich/README_en.md](rsna_ich/README_en.md)
-- Japanese entry: [rsna_ich/README.md](rsna_ich/README.md)
-- Detailed documentation: [core/pipeline/README_en.md](core/pipeline/README_en.md)
-- API demo notes: [docs/api_demo.md](docs/api_demo.md)
-- Reproducibility checklist: [docs/reproducibility_checklist.md](docs/reproducibility_checklist.md)
-- Suggested review order: [EN snapshot guide](docs/releases/v0.6.0-rsna.md) | [JA snapshot guide](docs/releases/v0.6.0-rsna_ja.md)
-- GitHub About settings: [EN](docs/github_about.md) | [JA](docs/github_about_ja.md)
-- Citation: [CITATION.cff](CITATION.cff)
-- Release note source: [EN](docs/releases/v0.6.0-rsna.md) | [JA](docs/releases/v0.6.0-rsna_ja.md)
-- Roadmap: [ROADMAP.md](ROADMAP.md)
+Reproducible intracranial hemorrhage classification for the RSNA ICH challenge — with pictures first, then the numbers, then the caveats.
 
-## What this repository provides
+> Research and portfolio implementation. **Not a medical device.** No patient images ship in this repository.
 
-- A reproducible training and evaluation workflow for RSNA intracranial hemorrhage classification
-- Study-level group splits with leakage-audit hooks
-- Calibration and uncertainty analysis for the `any` label
-- Portfolio-ready documentation for external review
-- A no-data smoke test that checks the public bundle in under a minute
+## Look first (30 seconds)
 
-## Who this is for
+![What happens in this pipeline](docs/assets/architecture.svg)
 
-- Hiring managers reviewing medical AI implementation quality
-- ML engineers looking for an auditable medical-imaging baseline
-- Researchers who need a reproducible CT classification project structure
+![Six labels the model predicts](docs/assets/labels_taxonomy.svg)
 
-## 3-minute overview
+![How the split avoids leakage](docs/assets/split_study.svg)
 
-![RSNA architecture](docs/assets/architecture.svg)
+![Pick your path](docs/assets/reader_path.svg)
 
-![RSNA repository map](docs/assets/repo_map.svg)
+```mermaid
+flowchart LR
+  A[CT / SQLite] --> B[Study split + audit]
+  B --> C[ConvNeXt 2.5D]
+  C --> D[Calibrate + uncertainty]
+  D --> E[Public reports]
+  E -.-> F[CI recomputes every number]
+```
 
-![RSNA metrics snapshot](docs/assets/results_snapshot.svg)
+## Numbers you will see quoted
+
+![Metrics snapshot](docs/assets/results_snapshot.svg)
+
+![Per-fold logloss and AUC](docs/assets/cv_folds.svg)
+
+![Uncertainty across seeds](docs/assets/uncertainty_seeds.svg)
 
 ### Representative results
 
-| Metric | Value | Why it matters |
-|---|---:|---|
-| Weighted multi-label logloss | 0.05346 ± 0.00624 | Primary Kaggle-style optimization target |
-| Mean AUC | 0.98815 ± 0.00311 | Ranking quality across classes |
-| Error-detection AUROC (`any`) | 0.9424 ± 0.0190 | Uncertainty usefulness for error triage |
-| ECE (`any`) | 0.0231 ± 0.0032 | Probability calibration quality |
+Mean ± sample standard deviation (ddof=1). The per-fold and per-seed values are in [core/pipeline/reports/rsna_cv_summary.json](core/pipeline/reports/rsna_cv_summary.json), and CI recomputes every number in this table from that file.
 
-> Notes: values are from the bundled reproducibility reports. Protected medical data is intentionally not included.
+| Metric | Value | n | Why it matters |
+|---|---:|---:|---|
+| Weighted multi-label logloss ↓ | 0.05346 ± 0.00624 | 5 folds | Kaggle competition metric |
+| Mean AUC ↑ | 0.98815 ± 0.00311 | 5 folds | Ranking quality across the 6 labels |
+| Error-detection AUROC (`any`) ↑ | 0.9424 ± 0.0200 | 10 seeds | How well uncertainty flags wrong predictions |
+| ECE (`any`) ↓ | 0.0231 ± 0.0034 | 10 seeds | Probability calibration |
 
-## Quickstart
+![Read these numbers with constraints](docs/assets/eval_protocol.svg)
 
-### 1. Verify the repository without medical data
+> **Read these numbers together with their evaluation conditions.**
+> - Each fold or seed fine-tunes for **1 epoch** on a subsample drawn with `limit_images=8000` (6,852 images remained in the CV run after dropping images missing from the preprocessed store).
+> - Every run starts from the same **initial checkpoint**, which was trained on 98% of the studies in the same preprocessed training pool (632,808 of 645,793 slices). Most validation images were therefore probably seen before fine-tuning. Read the values as fine-tuning stability, not as performance on unseen studies.
+> - Temperature scaling is fitted on the **same holdout** that is used to report ECE, so calibration metrics are optimistic.
+> - Splits group by study, not by patient.
+> - This is a research and portfolio implementation, **not a medical device**.
+>
+> Details and references: [docs/evaluation_notes.md](docs/evaluation_notes.md). Medical images are not included.
+
+![Evidence chain for a README number](docs/assets/evidence_chain.svg)
+
+## Quickstart without medical data
 
 ```bash
+pip install --index-url https://download.pytorch.org/whl/cpu torch==2.14.1 torchvision==0.29.1
+pip install -r core/pipeline/requirements.txt
 python scripts/smoke_test.py --use_dummy_data
+python scripts/check_imports.py
+python scripts/check_metric_claims.py
 ```
 
-### 2. Generate a bundle manifest
+```mermaid
+flowchart TD
+  S1[Install pinned deps] --> S2[Smoke test with dummy data]
+  S2 --> S3[Import every module]
+  S3 --> S4[Recompute README metrics from JSON]
+  S4 --> S5{All green?}
+  S5 -->|yes| S6[Read evaluation notes]
+  S5 -->|no| S7[Open the failing script output]
+```
+
+Full training and evaluation need your own Kaggle download: [core/pipeline/README_en.md](core/pipeline/README_en.md).
+
+## Map of the repository
+
+![Where to look](docs/assets/repo_map.svg)
+
+![What ships publicly](docs/assets/included_excluded.svg)
+
+| Want… | Open… |
+|---|---|
+| DICOM load / HU / de-dup | [rsna_ich_dataset.py](core/pipeline/src/datasets/rsna_ich_dataset.py) |
+| Training + GroupKFold | [train_rsna_cnn2d_classifier.py](core/pipeline/src/training/train_rsna_cnn2d_classifier.py) |
+| Split leakage audit | [audit_rsna_split.py](core/pipeline/tools/audit_rsna_split.py) |
+| ECE / temperature / AURC | [eval_rsna_uncertainty.py](core/pipeline/tools/eval_rsna_uncertainty.py) |
+| Picture-first evaluation notes | [docs/evaluation_notes.md](docs/evaluation_notes.md) |
+| Japanese landing page | [README_ja.md](README_ja.md) |
+| Portfolio entry folder | [rsna_ich/README_en.md](rsna_ich/README_en.md) |
+| Integrity audit | [docs/audit/2026-11-repo-integrity.md](docs/audit/2026-11-repo-integrity.md) |
+
+More: [picture-only index](docs/visual_index.md) · [API demo](docs/api_demo.md) · [reproducibility checklist](docs/reproducibility_checklist.md) · [CITATION.cff](CITATION.cff) · [ROADMAP.md](ROADMAP.md) · [release notes](docs/releases/v0.6.0-rsna.md)
+
+## Regenerate the figures
 
 ```bash
-cd core/pipeline
-python tools/make_manifest.py
+python docs/assets/generate_figures.py
 ```
 
-### 3. Run full training / evaluation with your own data
+Figures are SVG (no patient pixels). Metric cards are filled from `rsna_cv_summary.json`.
 
-- Full guide in English: [core/pipeline/README_en.md](core/pipeline/README_en.md)
-- Full guide in Japanese: [core/pipeline/README.md](core/pipeline/README.md)
+## Snapshot and citation
 
-### 4. Inspect the API demo surface
+Portfolio tag: `v0.6.0-rsna`. Cite via [CITATION.cff](CITATION.cff).
 
-```bash
-cd core/pipeline
-python serve_rsna_ich_api.py
-```
-
-If port `8000` is already in use, run `API_PORT=8011 python serve_rsna_ich_api.py` instead.
-
-Then open `/docs` locally to inspect the FastAPI schema.
-
-## What is included vs excluded
-
-Included:
-- source code
-- configs
-- audit and evaluation documentation
-- static summary figures and release-note sources
-
-Not included:
-- `Datasets/`
-- `runs/`
-- `results/`
-- `logs/`
-
-## Current portfolio snapshot
-
-Active development continues in this repository. The current portfolio snapshot is:
-
-✅ `v0.6.0-rsna`
-
-## How to cite
-
-See [CITATION.cff](CITATION.cff).
-
-## Commit message convention
-
-To keep ongoing changes reviewable, future commits follow Conventional Commits (`type: summary`):
-
-- `fix: leakage check in group split`
-- `feat: add calibration evaluation`
-- `refactor: manifest validation logic`
-- `docs: evaluation protocol clarification`
+Commits follow Conventional Commits (`fix: …`, `feat: …`, `docs: …`).

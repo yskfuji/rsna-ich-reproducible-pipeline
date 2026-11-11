@@ -21,7 +21,7 @@ Env (optional):
   LR             (default: 3e-4)
 
 Example:
-  export RSNA_ROOT="/Volumes/YSKFUJI's WDB 4TB/Datasets/rsna-intracranial-hemorrhage-detection"
+  export RSNA_ROOT="/path/to/rsna-intracranial-hemorrhage-detection"
   LIMIT_IMAGES=200000 EPOCHS=6 ./scripts/run_rsna_target058_shortest.zsh "$RSNA_ROOT" mps
 USAGE
   exit 2
@@ -34,7 +34,7 @@ if [[ -z "$RSNA_ROOT" ]]; then
 fi
 DEVICE="${2:-${TORCH_DEVICE:-mps}}"
 
-ROOT_DIR="/Users/yusukefujinami/ToReBrain/ToReBrain-pipeline"
+ROOT_DIR="${ROOT_DIR:-${0:A:h:h}}"
 cd "$ROOT_DIR"
 
 export TORCH_DEVICE="$DEVICE"
