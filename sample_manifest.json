@@ -1,0 +1,30 @@
+{
+  "repo": "rsna-ich-reproducible-pipeline",
+  "task": "intracranial hemorrhage classification",
+  "dataset_mode": "dummy",
+  "sample_cases": [
+    {
+      "image_id": "demo_rsna_000001",
+      "study_id": "demo_study_0001",
+      "split": "train",
+      "labels": {
+        "any": 1,
+        "epidural": 0,
+        "intraparenchymal": 1,
+        "intraventricular": 0,
+        "subarachnoid": 0,
+        "subdural": 0
+      },
+      "notes": "Illustrative sample only. No patient data is bundled."
+    }
+  ],
+  "expected_outputs": [
+    "artifacts/smoke_dummy/summary.json",
+    "artifacts/smoke_dummy/MANIFEST.sha256.txt"
+  ],
+  "entrypoints": [
+    "train_rsna_cnn2d_classifier.py",
+    "predict_rsna_ich_submission.py",
+    "core/pipeline/tools/make_manifest.py"
+  ]
+}

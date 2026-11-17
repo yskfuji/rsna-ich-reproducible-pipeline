@@ -1,0 +1,28 @@
+# datasets / generated artifacts (do not publish)
+Datasets/
+datasets/
+# With core.ignorecase=true the two lines above also match the source package.
+!core/pipeline/src/datasets/
+runs/
+results/
+logs/
+artifacts/
+
+# common large files
+*.pt
+*.pth
+*.ckpt
+*.onnx
+*.npz
+*.npy
+*.sqlite
+*.db
+
+# python
+__pycache__/
+.pytest_cache/
+.venv/
+*.pyc
+
+# macOS
+.DS_Store
